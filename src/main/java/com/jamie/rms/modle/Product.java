@@ -1,6 +1,7 @@
 package com.jamie.rms.modle;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,25 +13,35 @@ public class Product {
 	@Id
 	@GeneratedValue()
 	@Column(name = "productId")
-	Long productId;
+	private Long productId;
+	
 	@Column(name = "productCode")
-    String productCode;
+	private String productCode;
+	
 	@Column(name = "productName")
-    String productName;
+	private String productName;
+	
 	@Column(name = "partyId")
-    String partyId;
+	private String partyId;
+	
 	@Column(name = "status")
-    String status;
+	private String status;
+	
 	@Column(name = "createDate" )
-    Date createDate;
+	private Date createDate;
+	
 	@Column(name = "closeDate")
-	Date closeDate;
+	private Date closeDate;
+	
 	@Column(name = "remark")
-    String remark;
+	private String remark;
+	
 	@Column(name = "productDescriptionEN")
-    String productDescriptionEN;
+	private String productDescriptionEN;
+	
 	@Column(name = "productDescriptionCH")
-    String productDescriptionCH;
+	private String productDescriptionCH;
+	
 	
 	public Long getProductId() {
 		return productId;

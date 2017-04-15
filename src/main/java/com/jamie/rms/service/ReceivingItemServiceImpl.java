@@ -18,5 +18,15 @@ public class ReceivingItemServiceImpl implements ReceivingItemService{
 		// TODO Auto-generated method stub
 		return receivingItemDao.findAll();
 	}
+	@Override
+	public List<ReceivingItem> save(List<ReceivingItem> receivingItems) {
+		// TODO Auto-generated method stub
+		return receivingItemDao.save(receivingItems);
+	}
+	@Override
+	public List<ReceivingItem> findByPartyId(String partyId) {
+		// TODO Auto-generated method stub
+		return receivingItemDao.findByPartyId(partyId);
+	}
 
 }

@@ -7,4 +7,8 @@ import com.jamie.rms.modle.ReceivingItem;
 public interface ReceivingItemService {
 
 	List<ReceivingItem> findAll();
+	
+	List<ReceivingItem> save(List<ReceivingItem> receivingItems);
+	
+	List<ReceivingItem> findByPartyId(String partyId);
 }

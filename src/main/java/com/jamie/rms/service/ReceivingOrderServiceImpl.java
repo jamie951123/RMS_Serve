@@ -20,4 +20,16 @@ public class ReceivingOrderServiceImpl implements ReceivingOrderService{
 		return receivingOrderDao.findAll();
 	}
 
+	@Override
+	public List<ReceivingOrder> findByPartyId(String partyId) {
+		// TODO Auto-generated method stub
+		return receivingOrderDao.findByPartyId(partyId);
+	}
+
+	@Override
+	public ReceivingOrder save(ReceivingOrder receivingOrder) {
+		// TODO Auto-generated method stub
+		return receivingOrderDao.save(receivingOrder);
+	}
+
 }

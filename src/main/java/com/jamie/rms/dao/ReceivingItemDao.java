@@ -8,5 +8,5 @@ import com.jamie.rms.modle.ReceivingItem;
 
 public interface ReceivingItemDao extends JpaRepository<ReceivingItem,Long>{
 
-	List<ReceivingItem> findAll();
+	List<ReceivingItem> findByPartyId(String partyId);
 }
