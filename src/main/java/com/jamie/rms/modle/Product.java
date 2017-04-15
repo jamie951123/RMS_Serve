@@ -22,7 +22,7 @@ public class Product {
 	private String productName;
 	
 	@Column(name = "partyId")
-	private String partyId;
+    private String partyId;
 	
 	@Column(name = "status")
 	private String status;

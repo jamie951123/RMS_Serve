@@ -6,4 +6,5 @@ import com.jamie.rms.modle.Product;
 
 public interface ProductService {
 	List<Product> findAll();
+	List<Product> findByPartyId(String partyId);
 }

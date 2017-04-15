@@ -18,5 +18,10 @@ public class ProductServiceImpl implements ProductService{
 		// TODO Auto-generated method stub
 		return productDao.findAll();
 	}
+	@Override
+	public List<Product> findByPartyId(String partyId) {
+		// TODO Auto-generated method stub
+		return productDao.findByPartyId(partyId);
+	}
 
 }
