@@ -34,7 +34,7 @@ public class LoginController {
 	@RequestMapping(value="/checklogin") 
 	public @ResponseBody LoginResponse addNewUser () {		
 		List<UserProfile> checklogin = userProfileService.findByUsernameAndPassword("11","11");
-		log.info("checklogin : "+ checklogin);
+		log.info("checklogin  : "+ checklogin);
 		LoginResponse loginResponse = new LoginResponse();
 
 		if(checklogin.size() == 0){
