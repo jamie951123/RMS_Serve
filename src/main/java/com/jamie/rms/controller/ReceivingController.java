@@ -11,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jamie.rms.modle.ReceivingItem;
-import com.jamie.rms.modle.ReceivingOrder;
+import com.jamie.rms.model.ReceivingItem;
+import com.jamie.rms.model.ReceivingOrder;
 import com.jamie.rms.service.ReceivingItemService;
 import com.jamie.rms.service.ReceivingOrderService;
 

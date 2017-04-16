@@ -1,4 +1,4 @@
-package com.jamie.rms.modle;
+package com.jamie.rms.model;
 
 import java.sql.Date;
 

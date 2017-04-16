@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jamie.rms.modle.Product;
+import com.jamie.rms.model.Product;
 import com.jamie.rms.service.ProductService;
 
 @RequestMapping(value="/rms/product")

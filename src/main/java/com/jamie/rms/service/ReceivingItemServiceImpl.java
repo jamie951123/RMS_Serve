@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jamie.rms.dao.ReceivingItemDao;
-import com.jamie.rms.modle.ReceivingItem;
+import com.jamie.rms.model.ReceivingItem;
 
 @Service
 public class ReceivingItemServiceImpl implements ReceivingItemService{

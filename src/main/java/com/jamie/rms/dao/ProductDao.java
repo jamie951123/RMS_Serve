@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.jamie.rms.modle.Product;
-import com.jamie.rms.modle.ReceivingItem;
+import com.jamie.rms.model.Product;
+import com.jamie.rms.model.ReceivingItem;
 
 public interface ProductDao extends JpaRepository<Product,Long>{
 

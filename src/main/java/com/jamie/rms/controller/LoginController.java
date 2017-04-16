@@ -1,20 +1,20 @@
 package com.jamie.rms.controller;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.persistence.Column;
-
-import org.assertj.core.util.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jamie.rms.modle.UserProfile;
+import com.google.gson.Gson;
+import com.jamie.rms.common.ObjectUtil;
+import com.jamie.rms.model.UserProfile;
 import com.jamie.rms.service.UserProfileService;
 
 @RequestMapping(value="/rms/login")
@@ -31,36 +31,56 @@ public class LoginController {
 	final static String successfulAccount 	= "Successful Account";
 	final static String duplicateAccount 	= "Duplicate Account";
 	
-	@RequestMapping(value="/checklogin") 
-	public @ResponseBody LoginResponse addNewUser () {		
-		List<UserProfile> checklogin = userProfileService.findByUsernameAndPassword("11","11");
-		log.info("checklogin1 : "+ checklogin);
+	
+	@RequestMapping(value="/findAll")
+	public @ResponseBody List<UserProfile> findAll(){
+		List<UserProfile> UserProfile = userProfileService.findAll();
+		log.info("User Response(findAll) : "+ UserProfile);
+		return UserProfile;
+	}
+	@RequestMapping(value="/checklogin",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST) 
+	public @ResponseBody LoginResponse checklogin (@RequestBody String json) {	
+		log.info("User Request(JSON) : "+ json);
+		List<UserProfile> checklogin = new ArrayList<>();
+		try{
+			
+			LoginRequeset loginRequest = new LoginRequeset();
+			Gson gson = new Gson();
+			loginRequest = gson.fromJson(json, LoginRequeset.class);
+			String username = loginRequest.getUsername();
+			String password = loginRequest.getPassword();
+			log.info("User Request : "+ "--Username :"+username+"--Password :"+password);
+			
+			if(ObjectUtil.isNotNullEmpty(username) && ObjectUtil.isNotNullEmpty(password)){
+				 checklogin = userProfileService.findByUsernameAndPassword(username,password);
+			}
+		
+		}catch (Exception e){
+			log.info("User Request(JSON-Format) :"+ "Wrong Format");
+		}
+		log.info("User Response(checklogin) : "+ checklogin);
 		LoginResponse loginResponse = new LoginResponse();
-
+		
 		if(checklogin.size() == 0){
 			loginResponse.setLoginStatus(loginFail);
 			loginResponse.setLoginMessage(worngAccount);
 		}else if(checklogin.size() == 1){
+			loginResponse.setUserProfile(checklogin.get(0));
 			loginResponse.setLoginStatus(successful);
 			loginResponse.setLoginMessage(successfulAccount);
-			loginResponse.setPartyId(checklogin.get(0).getPartyId());
-			loginResponse.setUsername(checklogin.get(0).getUsername());
-			loginResponse.setPassword(checklogin.get(0).getPassword());
+
 		}else if (checklogin.size() >1){
 			loginResponse.setLoginStatus(loginFail);
 			loginResponse.setLoginMessage(duplicateAccount);
 		}
-		
+		log.info("User Response(LoginResponse) : "+ loginResponse);
 		return loginResponse;
 	}
 }
 
-class LoginResponse{
-	String username;
-	String password;
-	String partyId;
-	String loginStatus;
-	String loginMessage;
+class LoginRequeset{
+	private String username;
+	private String password;
 	public String getUsername() {
 		return username;
 	}
@@ -73,11 +93,22 @@ class LoginResponse{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getPartyId() {
-		return partyId;
+	@Override
+	public String toString() {
+		return "LoginRequeset [username=" + username + ", password=" + password + "]";
 	}
-	public void setPartyId(String partyId) {
-		this.partyId = partyId;
+	
+	
+}
+class LoginResponse{
+	private UserProfile userProfile;
+	private String loginStatus;
+	private String loginMessage;
+	public UserProfile getUserProfile() {
+		return userProfile;
+	}
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
 	}
 	public String getLoginStatus() {
 		return loginStatus;
@@ -91,6 +122,14 @@ class LoginResponse{
 	public void setLoginMessage(String loginMessage) {
 		this.loginMessage = loginMessage;
 	}
+	@Override
+	public String toString() {
+		return "LoginResponse [userProfile=" + userProfile + ", loginStatus=" + loginStatus + ", loginMessage="
+				+ loginMessage + "]";
+	}
+	
+	
+	
 	
 	
 }

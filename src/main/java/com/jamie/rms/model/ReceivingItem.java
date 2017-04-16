@@ -1,4 +1,4 @@
-package com.jamie.rms.modle;
+package com.jamie.rms.model;
 
 import java.math.BigDecimal;
 import java.util.Date;

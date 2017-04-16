@@ -2,7 +2,7 @@ package com.jamie.rms.service;
 
 import java.util.List;
 
-import com.jamie.rms.modle.ReceivingOrder;
+import com.jamie.rms.model.ReceivingOrder;
 
 public interface ReceivingOrderService {
 	List<ReceivingOrder> findAll();

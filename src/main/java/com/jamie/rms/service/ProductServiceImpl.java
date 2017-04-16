@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jamie.rms.dao.ProductDao;
-import com.jamie.rms.modle.Product;
+import com.jamie.rms.model.Product;
 
 @Service
 public class ProductServiceImpl implements ProductService{

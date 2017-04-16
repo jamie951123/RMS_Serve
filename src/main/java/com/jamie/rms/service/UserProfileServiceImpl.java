@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jamie.rms.dao.UserProfileDao;
-import com.jamie.rms.modle.UserProfile;
+import com.jamie.rms.model.UserProfile;
 
 @Service
 public class UserProfileServiceImpl implements UserProfileService{

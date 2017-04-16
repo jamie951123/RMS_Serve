@@ -2,9 +2,9 @@ package com.jamie.rms.service;
 
 import java.util.List;
 
-import com.jamie.rms.modle.UserProfile;
+import com.jamie.rms.model.UserProfile;
 
 public interface UserProfileService {
 	List<UserProfile> findAll();
-	List<UserProfile> findByUsernameAndPassword(String username, String password) ;
+	List<UserProfile> findByUsernameAndPassword(String username, String password);
 }

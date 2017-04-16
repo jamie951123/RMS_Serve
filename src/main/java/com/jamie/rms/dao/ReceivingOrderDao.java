@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.jamie.rms.modle.ReceivingOrder;
+import com.jamie.rms.model.ReceivingOrder;
 
 public interface ReceivingOrderDao extends JpaRepository<ReceivingOrder,Long>{
 	

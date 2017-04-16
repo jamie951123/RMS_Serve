@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.jamie.rms.modle.UserProfile;
+import com.jamie.rms.model.UserProfile;
 
 public interface UserProfileDao extends JpaRepository<UserProfile,Long>{
 
