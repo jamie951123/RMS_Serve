@@ -10,5 +10,5 @@ import com.jamie.rms.model.ReceivingItem;
 public interface ProductDao extends JpaRepository<Product,Long>{
 
 	List<Product> findByPartyId(String partyId);
-
+	
 }

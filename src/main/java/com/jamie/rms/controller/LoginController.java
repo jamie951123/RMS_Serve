@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.jamie.rms.common.ObjectUtil;
 import com.jamie.rms.model.UserProfile;
 import com.jamie.rms.service.UserProfileService;
+import com.jamie.rms.util.GsonUtil;
+import com.jamie.rms.util.ObjectUtil;
 
 @RequestMapping(value="/rms/login")
 @Controller
@@ -40,12 +41,12 @@ public class LoginController {
 	}
 	@RequestMapping(value="/checklogin",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST) 
 	public @ResponseBody LoginResponse checklogin (@RequestBody String json) {	
-		log.info("User Request(JSON) : "+ json);
+		log.info("[login]-[checklogin]-User Request(JSON) : "+ json);
 		List<UserProfile> checklogin = new ArrayList<>();
 		try{
 			
 			LoginRequeset loginRequest = new LoginRequeset();
-			Gson gson = new Gson();
+			Gson gson = GsonUtil.getGson();
 			loginRequest = gson.fromJson(json, LoginRequeset.class);
 			String username = loginRequest.getUsername();
 			String password = loginRequest.getPassword();
@@ -56,9 +57,9 @@ public class LoginController {
 			}
 		
 		}catch (Exception e){
-			log.info("User Request(JSON-Format) :"+ "Wrong Format");
+			log.error("[login]-[checklogin]-User Request(JSON-Format) :"+ "Wrong Format");
 		}
-		log.info("User Response(checklogin) : "+ checklogin);
+		log.info("[login]-[checklogin]-User Response(checklogin) : "+ checklogin);
 		LoginResponse loginResponse = new LoginResponse();
 		
 		if(checklogin.size() == 0){
@@ -73,7 +74,7 @@ public class LoginController {
 			loginResponse.setLoginStatus(loginFail);
 			loginResponse.setLoginMessage(duplicateAccount);
 		}
-		log.info("User Response(LoginResponse) : "+ loginResponse);
+		log.info("[login]-[checklogin]-User Response(LoginResponse) : "+ loginResponse);
 		return loginResponse;
 	}
 }

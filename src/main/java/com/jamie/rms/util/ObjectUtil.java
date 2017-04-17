@@ -1,4 +1,4 @@
-package com.jamie.rms.common;
+package com.jamie.rms.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
