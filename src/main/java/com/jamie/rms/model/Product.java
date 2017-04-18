@@ -6,12 +6,14 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity(name="product")
 public class Product {
 	@Id
-	@GeneratedValue()
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "productId")
 	private Long productId;
 	
@@ -42,7 +44,7 @@ public class Product {
 	@Column(name = "productDescriptionCH")
 	private String productDescriptionCH;
 	
-	
+
 	public Long getProductId() {
 		return productId;
 	}

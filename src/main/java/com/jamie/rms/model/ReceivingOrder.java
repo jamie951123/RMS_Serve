@@ -5,14 +5,18 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity(name="receiving_order")
 public class ReceivingOrder {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long orderId;
 	
 	@Column(name = "partyId")
@@ -33,6 +37,7 @@ public class ReceivingOrder {
     private Integer estimateQty;
 	@Column(name = "itemQty")
     private Integer itemQty;
+	
 	public Long getOrderId() {
 		return orderId;
 	}
