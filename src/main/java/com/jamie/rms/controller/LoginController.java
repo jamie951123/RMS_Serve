@@ -44,7 +44,6 @@ public class LoginController {
 		log.info("[login]-[checklogin]-User Request(JSON) : "+ json);
 		List<UserProfile> checklogin = new ArrayList<>();
 		try{
-			
 			LoginRequeset loginRequest = new LoginRequeset();
 			Gson gson = GsonUtil.getGson();
 			loginRequest = gson.fromJson(json, LoginRequeset.class);

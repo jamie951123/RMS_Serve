@@ -1,5 +1,6 @@
 package com.jamie.rms.controller;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jamie.rms.model.ReceivingItem;
 import com.jamie.rms.model.ReceivingOrder;
+import com.jamie.rms.model.ReceivingOrderAndItemContainer;
 import com.jamie.rms.searchcriteria.object.ReceivingSearchObject;
 import com.jamie.rms.service.ReceivingItemService;
 import com.jamie.rms.service.ReceivingOrderService;
@@ -63,14 +66,21 @@ public class ReceivingController {
 	
 	@RequestMapping(value = "/order/insertReceivingOrder",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
 	public @ResponseBody ReceivingOrder insertReceivingOrder(@RequestBody String json){
-		
-		ReceivingOrder testInsert = new ReceivingOrder();
-		testInsert.setPartyId("JAMES.TL");
-		testInsert.setItemQty(1);
-		testInsert.setCreateDate(new Date());
-		
-		ReceivingOrder receivingOrder = receivingOrderService.save(testInsert);
-		return receivingOrder;
+		log.info("[ReceivingOrder]-[insertReceivingOrder]-User Request(JSON) : "+ json);
+		ReceivingOrder receivingOrder = new ReceivingOrder();
+		try{
+			Gson gson = GsonUtil.getGson();
+			receivingOrder = gson.fromJson(json, ReceivingOrder.class);
+		}catch (Exception e){
+			
+		}
+		log.info("[ReceivingOrder]-[insertReceivingOrder]-User Request(GSON) : "+ receivingOrder);
+		ReceivingOrder result = new ReceivingOrder();
+		if(receivingOrder != null){
+			result = receivingOrderService.save(receivingOrder);
+		}
+		log.info("[ReceivingOrder]-[insertReceivingOrder]-User Request(result) : "+ result);
+		return result;
 	}
 	
 	@RequestMapping(value = "/item/findAll")
@@ -103,14 +113,56 @@ public class ReceivingController {
 	
 	@RequestMapping(value = "/item/insertReceivingItem",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
 	public @ResponseBody List<ReceivingItem> insertReceivingItem(@RequestBody String json){
+		log.info("[ReceivingItem]-[insertReceivingItem]-User Request(JSON) : "+ json);
+		List<ReceivingItem> receivingItems = new ArrayList<ReceivingItem>();
+		Type listType = new TypeToken<List<ReceivingItem>>() {}.getType();
+		try{
+			Gson gson = GsonUtil.getGson();
+			receivingItems = gson.fromJson(json, listType);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		
+		log.info("[ReceivingItem]-[insertReceivingItem]-User Request(GSON) : "+ receivingItems);
+		List<ReceivingItem> result = new ArrayList<>();
+		if(receivingItems != null && !receivingItems.isEmpty()){
+			result = receivingItemService.save(receivingItems);
+		}
+		log.info("[ReceivingItem]-[insertReceivingItem]-User Request(result) : "+ result);
+		return result;
+	}
+	
+	@RequestMapping(value = "/orderitem/saveOrderAndItem",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody ReceivingOrderAndItemContainer saveOrderAndItem(@RequestBody String json){
+		log.info("[ReceivingOrderAndItemContainer]-[saveOrderAndItem]-User Request(JSON) : "+ json);
+		ReceivingOrderAndItemContainer container = new ReceivingOrderAndItemContainer();
+		try{
+			Gson gson = GsonUtil.getGson();
+			container = gson.fromJson(json, ReceivingOrderAndItemContainer.class);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		log.info("[ReceivingOrderAndItemContainer]-[saveOrderAndItem]-User Request(GSON) : "+ container);
+		List<ReceivingOrderAndItemContainer> result = new ArrayList<>();
+		try{		
+			if(container != null){
+				ReceivingOrder receivingOrder 		= receivingOrderService.save(container.getReceivingOrderModel());
+				log.info("[ReceivingOrderAndItemContainer]-[saveOrderAndItem]-User Response(ReceivingOrder) : "+ receivingOrder);
+				Long orderId = receivingOrder.getOrderId();
+				for(ReceivingItem item :container.getReceivingItemModelList()){
+					item.setOrderId(orderId);
+				}
+				List<ReceivingItem> receivingItem	= receivingItemService.save(container.getReceivingItemModelList());
+				log.info("[ReceivingOrderAndItemContainer]-[saveOrderAndItem]-User Response(ReceivingItem) : "+ receivingItem);
+				
+			}
+			log.info("[ReceivingOrderAndItemContainer]-[saveOrderAndItem]-User Response(insert Successful) : ");
+			return container;
+		}catch (Exception e){
+			e.printStackTrace();
+			log.info("[ReceivingItem]-[insertReceivingItem]-User Response(Error) : Insert Fail !!");
+		}
+		return null;
 		
-		List<ReceivingItem> receivingItem = new ArrayList<>();
-		ReceivingItem item = new ReceivingItem();
-		item.setPartyId("JAMES.TL");
-		item.setOrderId(Long.valueOf(1));
-		receivingItem.add(item);
-		List<ReceivingItem> receivingItems = receivingItemService.save(receivingItem);
-		return receivingItems;
 	}
 }
