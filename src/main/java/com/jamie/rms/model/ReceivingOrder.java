@@ -26,7 +26,7 @@ public class ReceivingOrder {
 	@Column(name = "remark")
     private String remark;
 	@Column(name = "status")
-    private String status;
+    private Status status;
 	@Column(name = "createDate")
     private Date createDate;
 	@Column(name = "closeDate")
@@ -62,10 +62,10 @@ public class ReceivingOrder {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 	public Date getCreateDate() {

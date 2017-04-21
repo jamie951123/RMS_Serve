@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +29,8 @@ public class Product {
     private String partyId;
 	
 	@Column(name = "status")
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private Status status;
 	
 	@Column(name = "createDate" )
 	private Date createDate;
@@ -69,10 +72,10 @@ public class Product {
 	public void setPartyId(String partyId) {
 		this.partyId = partyId;
 	}
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 	public Date getCreateDate() {

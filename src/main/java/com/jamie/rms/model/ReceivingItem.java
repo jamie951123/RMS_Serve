@@ -5,12 +5,16 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Filter;
 
 @Entity(name = "receiving_item")
 public class ReceivingItem {
@@ -23,7 +27,8 @@ public class ReceivingItem {
     private Long productId;
 	
 	@Column(name = "itemStatus")
-    private String itemStatus;
+	@Enumerated(EnumType.STRING)
+    private Status itemStatus;
 	
 	@Column(name = "orderId")
     private Long orderId;
@@ -54,6 +59,7 @@ public class ReceivingItem {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="productId", insertable=false, updatable =false)
+	@Filter(name="status",condition="status = :PROGRESS' ") 
 	private Product Product;
 
 	public Long getReceivingID() {
@@ -72,11 +78,11 @@ public class ReceivingItem {
 		this.productId = productId;
 	}
 
-	public String getItemStatus() {
+	public Status getItemStatus() {
 		return itemStatus;
 	}
 
-	public void setItemStatus(String itemStatus) {
+	public void setItemStatus(Status itemStatus) {
 		this.itemStatus = itemStatus;
 	}
 
