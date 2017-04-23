@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,20 +23,29 @@ public class ReceivingOrder {
 	
 	@Column(name = "partyId")
     private String partyId;
-	@Column(name = "receivingDate")
-    private String receivingDate;
+	
 	@Column(name = "remark")
     private String remark;
+	
 	@Column(name = "status")
+	@Enumerated(EnumType.STRING)
     private Status status;
+	
+	@Column(name = "receivingDate")
+    private Date receivingDate;
+	
 	@Column(name = "createDate")
     private Date createDate;
+	
 	@Column(name = "closeDate")
     private Date closeDate;
+	
 	@Column(name = "actualQty")
     private Integer actualQty;
+	
 	@Column(name = "estimateQty")
     private Integer estimateQty;
+	
 	@Column(name = "itemQty")
     private Integer itemQty;
 	
@@ -50,10 +61,10 @@ public class ReceivingOrder {
 	public void setPartyId(String partyId) {
 		this.partyId = partyId;
 	}
-	public String getReceivingDate() {
+	public Date getReceivingDate() {
 		return receivingDate;
 	}
-	public void setReceivingDate(String receivingDate) {
+	public void setReceivingDate(Date receivingDate) {
 		this.receivingDate = receivingDate;
 	}
 	public String getRemark() {

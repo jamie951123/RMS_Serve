@@ -156,7 +156,7 @@ public class ReceivingController {
 				log.info("[ReceivingOrderAndItemContainer]-[saveOrderAndItem]-User Response(ReceivingItem) : "+ receivingItem);
 				
 			}
-			log.info("[ReceivingOrderAndItemContainer]-[saveOrderAndItem]-User Response(insert Successful) : ");
+			log.info("[ReceivingOrderAndItemContainer]-[saveOrderAndItem]-User Response(insert Successful) !! ");
 			return container;
 		}catch (Exception e){
 			e.printStackTrace();
