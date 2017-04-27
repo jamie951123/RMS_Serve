@@ -39,7 +39,7 @@ public class ReceivingController {
 	@RequestMapping(value ="/order/findAll")
 	public @ResponseBody List<ReceivingOrder> getReceivingOrder(){
 		List<ReceivingOrder> receivingOrder = receivingOrderService.findAll();
-		log.info("getReceivingOrder :" + receivingOrder);
+		log.info("[ReceivingOrder]-[getReceivingOrder]-User Response() : "+ receivingOrder);
 		return receivingOrder;
 	}
 	
@@ -72,7 +72,7 @@ public class ReceivingController {
 			Gson gson = GsonUtil.getGson();
 			receivingOrder = gson.fromJson(json, ReceivingOrder.class);
 		}catch (Exception e){
-			
+			e.printStackTrace();
 		}
 		log.info("[ReceivingOrder]-[insertReceivingOrder]-User Request(GSON) : "+ receivingOrder);
 		ReceivingOrder result = new ReceivingOrder();
