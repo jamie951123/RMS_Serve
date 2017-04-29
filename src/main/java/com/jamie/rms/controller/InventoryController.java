@@ -1,6 +1,5 @@
 package com.jamie.rms.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -55,5 +54,27 @@ public class InventoryController {
 		return null;
 		
 	}
+	
+	@RequestMapping(value ="/findByPartyIdAndStauts",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody List<Inventory> findByPartyIdAndStauts(@RequestBody String json){
+		log.info("[Inventory]-[findByPartyIdAndStauts]-User Request(JSON) : "+ json);
+		InventorySearchObject inventorySearchObject = new InventorySearchObject();
+		try{
+			Gson gson = GsonUtil.getGson();
+			inventorySearchObject = gson.fromJson(json, InventorySearchObject.class);		
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		log.info("[Inventory]-[findByPartyIdAndStauts]-User Request(GSON) : "+ inventorySearchObject);
+		if(inventorySearchObject != null && ObjectUtil.isNotNullEmpty(inventorySearchObject.getPartyId()) && inventorySearchObject.getStatus() != null){
+			List<Inventory> inventorys = inventoryService.findByPartyIdAndStatus(inventorySearchObject.getPartyId(),inventorySearchObject.getStatus());	
+			log.info("[Inventory]-[Response]-findByPartyIdAndStauts :" + inventorys);
+			return inventorys;
+		}
+		log.warn("[Inventory]-[Error]-findByPartyIdAndStauts : inventorySearchObject is empty");
+		return null;
+		
+	}
+	
 	
 }

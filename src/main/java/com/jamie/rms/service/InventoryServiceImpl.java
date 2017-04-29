@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.jamie.rms.dao.InventoryDao;
 import com.jamie.rms.model.Inventory;
-
+import com.jamie.rms.model.Status;
 @Service
 public class InventoryServiceImpl implements InventoryService{
 
@@ -32,5 +32,12 @@ public class InventoryServiceImpl implements InventoryService{
 		// TODO Auto-generated method stub
 		return inventoryDao.save(inventory);
 	}
+
+	@Override
+	public List<Inventory> findByPartyIdAndStatus(String partyId, Status stauts) {
+		// TODO Auto-generated method stub
+		return inventoryDao.findByPartyIdAndStatus(partyId, stauts);
+	}
+
 
 }
