@@ -39,5 +39,12 @@ public class InventoryServiceImpl implements InventoryService{
 		return inventoryDao.findByPartyIdAndStatus(partyId, stauts);
 	}
 
+	@Override
+	public List<Inventory> saves(List<Inventory> inventorys) {
+		// TODO Auto-generated method stub
+		return inventoryDao.save(inventorys);
+	}
+
+	
 
 }

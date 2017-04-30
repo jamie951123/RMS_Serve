@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jamie.rms.model.Inventory;
 import com.jamie.rms.model.ReceivingItem;
 import com.jamie.rms.model.ReceivingOrder;
 import com.jamie.rms.model.ReceivingOrderAndItemContainer;
 import com.jamie.rms.searchcriteria.object.ReceivingSearchObject;
+import com.jamie.rms.service.InventoryService;
 import com.jamie.rms.service.ReceivingItemService;
 import com.jamie.rms.service.ReceivingOrderService;
 import com.jamie.rms.util.GsonUtil;
@@ -35,6 +37,9 @@ public class ReceivingController {
 	
 	@Autowired 
 	private ReceivingItemService receivingItemService;
+	
+	@Autowired
+	private InventoryService inventoryService;
 	
 	@RequestMapping(value ="/order/findAll")
 	public @ResponseBody List<ReceivingOrder> getReceivingOrder(){
@@ -154,7 +159,9 @@ public class ReceivingController {
 				}
 				List<ReceivingItem> receivingItem	= receivingItemService.save(container.getReceivingItemModelList());
 				log.info("[ReceivingOrderAndItemContainer]-[saveOrderAndItem]-User Response(ReceivingItem) : "+ receivingItem);
-				
+				List<Inventory> inventoryList = inventoryService.saves(receivingItemGetInventory(receivingItem));
+				log.info("[ReceivingOrderAndItemContainer]-[saveInventory]-User Response(Inventory) : "+ inventoryList);
+
 			}
 			log.info("[ReceivingOrderAndItemContainer]-[saveOrderAndItem]-User Response(insert Successful) !! ");
 			return container;
@@ -164,5 +171,14 @@ public class ReceivingController {
 		}
 		return null;
 		
+	}
+	
+	public List<Inventory> receivingItemGetInventory(List<ReceivingItem> receivingItem){
+		 List<Inventory> inventorys = new ArrayList<>();
+		for(ReceivingItem rl :receivingItem) {
+			Inventory inv = rl.getInventory();
+			inventorys.add(inv);
+		}
+		return inventorys;
 	}
 }

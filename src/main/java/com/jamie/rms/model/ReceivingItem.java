@@ -62,6 +62,21 @@ public class ReceivingItem {
 	@Filter(name="status",condition="status = :PROGRESS' ") 
 	private Product Product;
 
+	public Inventory getInventory(){
+		Inventory inv = new Inventory();
+		inv.setPartyId(this.getPartyId());
+		inv.setProductId(this.getProductId());
+		inv.setCreateDate(this.getItemCreateDate());
+		inv.setStockInDate(this.getItemReceivingDate());
+		inv.setStatus(this.getItemStatus());
+		inv.setGrossWeight(this.getItemGrossWeight());
+		inv.setGrossWeightUnit(this.getItemGrossWeightUnit());
+		inv.setItemQty(this.getItemQty());
+		inv.setQtyUnit(this.getItemQtyUnit());
+		return inv;
+		
+	}
+	
 	public Long getReceivingID() {
 		return receivingID;
 	}

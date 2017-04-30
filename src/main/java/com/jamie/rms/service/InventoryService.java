@@ -14,4 +14,6 @@ public interface InventoryService {
 	List<Inventory> findByPartyIdAndStatus(String partyId, Status stauts);
 	
 	Inventory save(Inventory inventory);
+	
+	List<Inventory> saves(List<Inventory> inventory);
 }

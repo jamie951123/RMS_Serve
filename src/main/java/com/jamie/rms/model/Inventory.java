@@ -51,10 +51,10 @@ public class Inventory {
 	private Status status;
 	
 	@Column(name = "grossWeight")
-    private BigDecimal GrossWeight;
+    private BigDecimal grossWeight;
 	
 	@Column(name = "grossWeightUnit")
-    private String GrossWeightUnit;
+    private String grossWeightUnit;
 	
 	@Column(name = "qty")
     private Integer itemQty;
@@ -65,7 +65,7 @@ public class Inventory {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="productId", insertable=false, updatable =false)
 	@Filter(name="status",condition="status = :PROGRESS' ") 
-	private Product Product;
+	private Product product;
 
 	public Long getInventoryId() {
 		return inventoryId;
@@ -132,19 +132,19 @@ public class Inventory {
 	}
 
 	public BigDecimal getGrossWeight() {
-		return GrossWeight;
+		return grossWeight;
 	}
 
 	public void setGrossWeight(BigDecimal grossWeight) {
-		GrossWeight = grossWeight;
+		this.grossWeight = grossWeight;
 	}
 
 	public String getGrossWeightUnit() {
-		return GrossWeightUnit;
+		return grossWeightUnit;
 	}
 
 	public void setGrossWeightUnit(String grossWeightUnit) {
-		GrossWeightUnit = grossWeightUnit;
+		this.grossWeightUnit = grossWeightUnit;
 	}
 
 	public Integer getItemQty() {
@@ -164,20 +164,20 @@ public class Inventory {
 	}
 
 	public Product getProduct() {
-		return Product;
+		return product;
 	}
 
 	public void setProduct(Product product) {
-		Product = product;
+		product = product;
 	}
 
 	@Override
 	public String toString() {
 		return "Inventory [inventoryId=" + inventoryId + ", partyId=" + partyId + ", productId=" + productId
 				+ ", createDate=" + createDate + ", closeDate=" + closeDate + ", stockOutDate=" + stockOutDate
-				+ ", stockInDate=" + stockInDate + ", status=" + status + ", GrossWeight=" + GrossWeight
-				+ ", GrossWeightUnit=" + GrossWeightUnit + ", itemQty=" + itemQty + ", qtyUnit=" + qtyUnit
-				+ ", Product=" + Product + "]";
+				+ ", stockInDate=" + stockInDate + ", status=" + status + ", grossWeight=" + grossWeight
+				+ ", grossWeightUnit=" + grossWeightUnit + ", itemQty=" + itemQty + ", qtyUnit=" + qtyUnit
+				+ ", Product=" + product + "]";
 	}
 
 }

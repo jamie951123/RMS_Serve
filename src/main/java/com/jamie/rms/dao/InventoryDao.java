@@ -12,5 +12,5 @@ public interface InventoryDao extends JpaRepository<Inventory,Long> {
 	List<Inventory> findByPartyId(String party);
 	
 	List<Inventory> findByPartyIdAndStatus(String partyId, Status stauts);
-
+	
 }
