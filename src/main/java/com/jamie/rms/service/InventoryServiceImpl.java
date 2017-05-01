@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.jamie.rms.dao.InventoryDao;
 import com.jamie.rms.model.Inventory;
+import com.jamie.rms.model.InventorySum;
 import com.jamie.rms.model.Status;
 @Service
 public class InventoryServiceImpl implements InventoryService{

@@ -71,7 +71,7 @@ public class ReceivingItem {
 		inv.setStatus(this.getItemStatus());
 		inv.setGrossWeight(this.getItemGrossWeight());
 		inv.setGrossWeightUnit(this.getItemGrossWeightUnit());
-		inv.setItemQty(this.getItemQty());
+		inv.setQty(this.getItemQty());
 		inv.setQtyUnit(this.getItemQtyUnit());
 		return inv;
 		

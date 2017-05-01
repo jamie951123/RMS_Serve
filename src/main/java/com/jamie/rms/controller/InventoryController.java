@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jamie.rms.model.Inventory;
+import com.jamie.rms.model.InventorySum;
 import com.jamie.rms.model.ReceivingItem;
+import com.jamie.rms.model.Status;
 import com.jamie.rms.searchcriteria.object.InventorySearchObject;
 import com.jamie.rms.service.InventoryService;
+import com.jamie.rms.service.InventorySumService;
 import com.jamie.rms.util.GsonUtil;
 import com.jamie.rms.util.ObjectUtil;
 
@@ -29,6 +32,9 @@ public class InventoryController {
 	
 	@Autowired
 	private InventoryService inventoryService;
+	
+	@Autowired
+	private InventorySumService inventorySumService;
 	
 	@RequestMapping(value ="/findAll")
 	public @ResponseBody List<Inventory> findAll(){
@@ -118,6 +124,5 @@ public class InventoryController {
 		log.info("[Inventory]-[insertInventory]-User Request(result) : "+ result);
 		return null;
 	}
-	
 	
 }

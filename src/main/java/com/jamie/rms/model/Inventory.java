@@ -20,6 +20,10 @@ import org.hibernate.annotations.Filter;
  * @author jamie
  *
  */
+/**
+ * @author jamie
+ *
+ */
 @Entity(name = "inventory")
 public class Inventory {
 	
@@ -57,7 +61,7 @@ public class Inventory {
     private String grossWeightUnit;
 	
 	@Column(name = "qty")
-    private Integer itemQty;
+    private Integer qty;
 	
 	@Column(name = "qtyUnit")
     private String qtyUnit;
@@ -147,12 +151,12 @@ public class Inventory {
 		this.grossWeightUnit = grossWeightUnit;
 	}
 
-	public Integer getItemQty() {
-		return itemQty;
+	public Integer getQty() {
+		return qty;
 	}
 
-	public void setItemQty(Integer itemQty) {
-		this.itemQty = itemQty;
+	public void setQty(Integer qty) {
+		this.qty = qty;
 	}
 
 	public String getQtyUnit() {
@@ -168,7 +172,7 @@ public class Inventory {
 	}
 
 	public void setProduct(Product product) {
-		product = product;
+		this.product = product;
 	}
 
 	@Override
@@ -176,8 +180,12 @@ public class Inventory {
 		return "Inventory [inventoryId=" + inventoryId + ", partyId=" + partyId + ", productId=" + productId
 				+ ", createDate=" + createDate + ", closeDate=" + closeDate + ", stockOutDate=" + stockOutDate
 				+ ", stockInDate=" + stockInDate + ", status=" + status + ", grossWeight=" + grossWeight
-				+ ", grossWeightUnit=" + grossWeightUnit + ", itemQty=" + itemQty + ", qtyUnit=" + qtyUnit
-				+ ", Product=" + product + "]";
+				+ ", grossWeightUnit=" + grossWeightUnit + ", qty=" + qty + ", qtyUnit=" + qtyUnit + ", product="
+				+ product + "]";
 	}
+
+	
+	
+	
 
 }

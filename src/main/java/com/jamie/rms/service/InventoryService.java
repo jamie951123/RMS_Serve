@@ -2,7 +2,10 @@ package com.jamie.rms.service;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
+
 import com.jamie.rms.model.Inventory;
+import com.jamie.rms.model.InventorySum;
 import com.jamie.rms.model.Status;
 
 public interface InventoryService {
