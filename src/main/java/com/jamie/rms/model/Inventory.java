@@ -14,8 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.Filter;
-
 /**
  * @author jamie
  *
@@ -32,12 +30,12 @@ public class Inventory {
 	@Column(name = "inventoryId")
 	private Long inventoryId;
 	
-	@Column(name = "partyId")
-	private String partyId;
-	
 	@Column(name = "productId")
 	private Long productId;
 	
+	@Column(name = "partyId")
+	private String partyId;
+		
 	@Column(name = "createDate" )
 	private Date createDate;
 	
@@ -68,7 +66,6 @@ public class Inventory {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="productId", insertable=false, updatable =false)
-	@Filter(name="status",condition="status = :PROGRESS' ") 
 	private Product product;
 
 	public Long getInventoryId() {
@@ -85,14 +82,6 @@ public class Inventory {
 
 	public void setPartyId(String partyId) {
 		this.partyId = partyId;
-	}
-
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
 	}
 
 	public Date getCreateDate() {
@@ -175,14 +164,26 @@ public class Inventory {
 		this.product = product;
 	}
 
+	public Long getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
+
 	@Override
 	public String toString() {
-		return "Inventory [inventoryId=" + inventoryId + ", partyId=" + partyId + ", productId=" + productId
+		return "Inventory [inventoryId=" + inventoryId + ", productId=" + productId + ", partyId=" + partyId
 				+ ", createDate=" + createDate + ", closeDate=" + closeDate + ", stockOutDate=" + stockOutDate
 				+ ", stockInDate=" + stockInDate + ", status=" + status + ", grossWeight=" + grossWeight
 				+ ", grossWeightUnit=" + grossWeightUnit + ", qty=" + qty + ", qtyUnit=" + qtyUnit + ", product="
 				+ product + "]";
 	}
+
+	
+	
+	
 
 	
 	

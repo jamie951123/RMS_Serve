@@ -13,7 +13,7 @@ public class WeightProfile {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long profileId;
+	private Long weightId;
 	
 	@Column(name = "partyId")
     private String partyId;
@@ -24,12 +24,12 @@ public class WeightProfile {
 	@Column(name = "createDate")
     private Date createDate;
 
-	public Long getProfileId() {
-		return profileId;
+	public Long getWeightId() {
+		return weightId;
 	}
 
-	public void setProfileId(Long profileId) {
-		this.profileId = profileId;
+	public void setWeightId(Long weightId) {
+		this.weightId = weightId;
 	}
 
 	public String getPartyId() {
@@ -58,10 +58,11 @@ public class WeightProfile {
 
 	@Override
 	public String toString() {
-		return "WeightProfile [profileId=" + profileId + ", partyId=" + partyId + ", weightUnit=" + weightUnit
+		return "WeightProfile [weightId=" + weightId + ", partyId=" + partyId + ", weightUnit=" + weightUnit
 				+ ", createDate=" + createDate + "]";
 	}
 
+	
 	
 	
 	

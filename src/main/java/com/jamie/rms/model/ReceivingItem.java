@@ -66,6 +66,7 @@ public class ReceivingItem {
 		Inventory inv = new Inventory();
 		inv.setPartyId(this.getPartyId());
 		inv.setProductId(this.getProductId());
+		inv.setProduct(this.getProduct());
 		inv.setCreateDate(this.getItemCreateDate());
 		inv.setStockInDate(this.getItemReceivingDate());
 		inv.setStatus(this.getItemStatus());

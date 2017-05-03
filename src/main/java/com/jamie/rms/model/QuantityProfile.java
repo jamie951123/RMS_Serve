@@ -17,7 +17,7 @@ public class QuantityProfile {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long profileId;
+	private Long quantityId;
 	
 	@Column(name = "partyId")
     private String partyId;
@@ -28,12 +28,12 @@ public class QuantityProfile {
 	@Column(name = "createDate")
     private Date createDate;
 
-	public Long getProfileId() {
-		return profileId;
+	public Long getQuantityId() {
+		return quantityId;
 	}
 
-	public void setProfileId(Long profileId) {
-		this.profileId = profileId;
+	public void setQuantityId(Long quantityId) {
+		this.quantityId = quantityId;
 	}
 
 	public String getPartyId() {
@@ -62,9 +62,11 @@ public class QuantityProfile {
 
 	@Override
 	public String toString() {
-		return "QuantityProfile [profileId=" + profileId + ", partyId=" + partyId + ", quantityUnit=" + quantityUnit
+		return "QuantityProfile [quantityId=" + quantityId + ", partyId=" + partyId + ", quantityUnit=" + quantityUnit
 				+ ", createDate=" + createDate + "]";
 	}
+
+	
 
 	
 	
