@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * @author jamie
@@ -26,6 +28,7 @@ public class QuantityProfile {
     private String quantityUnit;
 
 	@Column(name = "createDate")
+	@Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 
 	public Long getQuantityId() {

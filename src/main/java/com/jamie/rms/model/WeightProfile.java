@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity(name = "weight_profile")
 public class WeightProfile {
@@ -22,6 +24,7 @@ public class WeightProfile {
     private String weightUnit;
 
 	@Column(name = "createDate")
+	@Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 
 	public Long getWeightId() {
