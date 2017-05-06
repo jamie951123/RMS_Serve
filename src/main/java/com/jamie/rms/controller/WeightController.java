@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.jamie.rms.model.ResponseMessage;
 import com.jamie.rms.model.WeightProfile;
 import com.jamie.rms.searchcriteria.object.QuantitySearchObject;
 import com.jamie.rms.searchcriteria.object.WeightSearchObject;
@@ -54,5 +56,28 @@ public class WeightController {
 		log.warn("[WeightProfile]-[Error]-findByPartyId : quantitySearchObject is empty");
 		return null;
 	}
+	
+	@RequestMapping(value = "/delete",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody ResponseMessage delete(@RequestBody String json){
+		log.info("[WeightProfile]-[delete]-User Request(JSON) : "+ json);
+		WeightProfile weightProfile = new WeightProfile();
+		try{
+			Gson gson = GsonUtil.getGson();
+			weightProfile = gson.fromJson(json, WeightProfile.class);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		log.info("[WeightProfile]-[delete]-User Request(GSON) : "+ weightProfile);
+		if(weightProfile != null ){
+			ResponseMessage responseMessage = weightProfileService.delete(weightProfile);
+			log.info("[ResponseMessage]-[Response]-delete :" + responseMessage);
+			return responseMessage;
+		}
+		
+		log.warn("[WeightProfile]-[Error]-delete : weightProfile is empty");
+		return null;
+	}
+
+
 	
 }

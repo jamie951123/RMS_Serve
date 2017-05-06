@@ -5,16 +5,20 @@ CREATE
 VIEW `rms`.`v_inventory_sum` AS
     SELECT 
         UUID() AS `id`,
-        `rms`.`inventory`.`product_id` AS `product_id`,
-        `rms`.`inventory`.`party_id` AS `party_id`,
-        `rms`.`inventory`.`status` AS `status`,
-        COALESCE(SUM(`rms`.`inventory`.`gross_weight`),0) AS `gross_weight`,
-        `rms`.`inventory`.`gross_weight_unit` AS `gross_weight_unit`,
-        COALESCE(SUM(`rms`.`inventory`.`qty`),0) AS `qty`,
-        `rms`.`inventory`.`qty_unit` AS `qty_unit`,
+        `rms`.`product`.`product_id` AS `product_id`,
+        `rms`.`product`.`party_id` AS `party_id`,
+        `rms`.`product`.`status` AS `status`,
+        `rms`.`product`.`weight_id` AS `weight_id`,
+        `rms`.`product`.`quantity_id` AS `quantity_id`,
         `rms`.`product`.`product_code` AS `product_code`,
-        `rms`.`product`.`product_name` AS `product_name`
+        `rms`.`product`.`product_name` AS `product_name`,
+        COALESCE(SUM(`rms`.`inventory`.`gross_weight`), 0) AS `gross_weight`,
+        COALESCE(SUM(`rms`.`inventory`.`qty`), 0) AS `qty`,
+        `rms`.`weight_profile`.`weight_unit` AS `weight_unit`,
+        `rms`.`quantity_profile`.`quantity_unit` AS `quantity_unit`
     FROM
-        (`rms`.`inventory`
-        LEFT JOIN `rms`.`product` ON ((`rms`.`product`.`product_id` = `rms`.`inventory`.`product_id`)))
-    GROUP BY `rms`.`inventory`.`product_id` , `rms`.`inventory`.`party_id` , `rms`.`inventory`.`status` , `rms`.`inventory`.`qty_unit` , `rms`.`inventory`.`gross_weight_unit`
+        (((`rms`.`product`
+        LEFT JOIN `rms`.`inventory` ON ((`rms`.`product`.`product_id` = `rms`.`inventory`.`product_id`)))
+        LEFT JOIN `rms`.`weight_profile` ON ((`rms`.`product`.`weight_id` = `rms`.`weight_profile`.`weight_id`)))
+        LEFT JOIN `rms`.`quantity_profile` ON ((`rms`.`product`.`quantity_id` = `rms`.`quantity_profile`.`quantity_id`)))
+    GROUP BY `rms`.`product`.`product_id` , `rms`.`product`.`party_id` , `rms`.`product`.`status` , `rms`.`product`.`weight_id` , `rms`.`product`.`quantity_id` , `rms`.`product`.`product_code` , `rms`.`product`.`product_name` , `rms`.`weight_profile`.`weight_unit` , `rms`.`quantity_profile`.`quantity_unit`

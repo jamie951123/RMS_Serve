@@ -3,6 +3,7 @@ package com.jamie.rms.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -56,11 +57,11 @@ public class Product {
 	@Column(name = "quantityId")
 	private Long quantityId;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
 	@JoinColumn(name="weightId", insertable=false, updatable =false)
 	WeightProfile weightprofile;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
 	@JoinColumn(name="quantityId", insertable=false, updatable =false)
 	QuantityProfile quantityProfile;
 

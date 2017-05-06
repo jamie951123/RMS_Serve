@@ -9,6 +9,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author jamie
+ *
+ */
 @Entity
 @Table(name = "v_inventory_sum")
 public class InventorySum implements Serializable {
@@ -21,6 +25,13 @@ public class InventorySum implements Serializable {
 	@Column(name = "productId", updatable = false)
 	private Long productId;
 	
+	@Column(name = "weightId", updatable = false)
+    private Long weightId;
+	
+	@Column(name = "quantityId", updatable = false)
+    private Long quantityId;
+	
+	
 	@Column(name = "partyId", updatable = false)
 	private String partyId;
 	
@@ -31,14 +42,14 @@ public class InventorySum implements Serializable {
 	@Column(name = "grossWeight", updatable = false)
     private BigDecimal grossWeight;
 	
-	@Column(name = "grossWeightUnit", updatable = false)
-    private String grossWeightUnit;
+	@Column(name = "weightUnit", updatable = false)
+    private String weightUnit;
 	
 	@Column(name = "qty", updatable = false)
     private Integer qty;
 	
-	@Column(name = "qtyUnit", updatable = false)
-    private String qtyUnit;
+	@Column(name = "quantityUnit", updatable = false)
+    private String quantityUnit;
 	
 	@Column(name = "productCode", updatable = false)
     private String productCode;
@@ -60,6 +71,22 @@ public class InventorySum implements Serializable {
 
 	public void setProductId(Long productId) {
 		this.productId = productId;
+	}
+
+	public Long getWeightId() {
+		return weightId;
+	}
+
+	public void setWeightId(Long weightId) {
+		this.weightId = weightId;
+	}
+
+	public Long getQuantityId() {
+		return quantityId;
+	}
+
+	public void setQuantityId(Long quantityId) {
+		this.quantityId = quantityId;
 	}
 
 	public String getPartyId() {
@@ -86,12 +113,12 @@ public class InventorySum implements Serializable {
 		this.grossWeight = grossWeight;
 	}
 
-	public String getGrossWeightUnit() {
-		return grossWeightUnit;
+	public String getWeightUnit() {
+		return weightUnit;
 	}
 
-	public void setGrossWeightUnit(String grossWeightUnit) {
-		this.grossWeightUnit = grossWeightUnit;
+	public void setWeightUnit(String weightUnit) {
+		this.weightUnit = weightUnit;
 	}
 
 	public Integer getQty() {
@@ -102,12 +129,12 @@ public class InventorySum implements Serializable {
 		this.qty = qty;
 	}
 
-	public String getQtyUnit() {
-		return qtyUnit;
+	public String getQuantityUnit() {
+		return quantityUnit;
 	}
 
-	public void setQtyUnit(String qtyUnit) {
-		this.qtyUnit = qtyUnit;
+	public void setQuantityUnit(String quantityUnit) {
+		this.quantityUnit = quantityUnit;
 	}
 
 	public String getProductCode() {
@@ -126,12 +153,19 @@ public class InventorySum implements Serializable {
 		this.productName = productName;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
-		return "InventorySum [id=" + id + ", productId=" + productId + ", partyId=" + partyId + ", status=" + status
-				+ ", grossWeight=" + grossWeight + ", grossWeightUnit=" + grossWeightUnit + ", qty=" + qty
-				+ ", qtyUnit=" + qtyUnit + ", productCode=" + productCode + ", productName=" + productName + "]";
+		return "InventorySum [id=" + id + ", productId=" + productId + ", weightId=" + weightId + ", quantityId="
+				+ quantityId + ", partyId=" + partyId + ", status=" + status + ", grossWeight=" + grossWeight
+				+ ", weightUnit=" + weightUnit + ", qty=" + qty + ", quantityUnit=" + quantityUnit + ", productCode="
+				+ productCode + ", productName=" + productName + "]";
 	}
+	
+	
 	
 	
 	
