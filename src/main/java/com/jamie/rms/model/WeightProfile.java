@@ -1,12 +1,17 @@
 package com.jamie.rms.model;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -27,6 +32,11 @@ public class WeightProfile {
 	@Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 
+//	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.EAGER,orphanRemoval = true)
+//	@JoinColumn(name="productId", insertable=false, updatable =false)
+//	private Set<Product> product;
+	
+	
 	public Long getWeightId() {
 		return weightId;
 	}

@@ -28,5 +28,11 @@ public class ProductServiceImpl implements ProductService{
 		// TODO Auto-generated method stub
 		return productDao.save(product);
 	}
+	@Override
+	public int updateWeightIdNullByWeightIdAndPartyId(Long weightId,String partyId) {
+		// TODO Auto-generated method stub
+		return productDao.updateWeightIdNullByWeightIdAndPartyId(weightId, partyId);
+//		return null;
+	}
 
 }

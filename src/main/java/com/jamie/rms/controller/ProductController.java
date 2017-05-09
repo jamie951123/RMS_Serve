@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.jamie.rms.model.Product;
+import com.jamie.rms.model.WeightProfile;
 import com.jamie.rms.searchcriteria.object.ProductSearchObject;
 import com.jamie.rms.service.ProductService;
 import com.jamie.rms.util.GsonUtil;
@@ -79,4 +80,28 @@ public class ProductController {
 		log.warn("[Product]-[Error]-insertProduct : insertProduct Wrong!!");
 		return null;
 	}
+	
+	@RequestMapping(value="/updateWeightIdNullByWeightIdAndPartyId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody Integer updateWeightIdNullByPartyIdAndWeightId(@RequestBody String json){
+		log.info("[Product]-[updateWeightIdNullByWeightIdAndPartyId]-User Request(JSON) : "+ json);
+		WeightProfile weightProfile = new WeightProfile();
+		try{
+			Gson gson = GsonUtil.getGson();
+			weightProfile = gson.fromJson(json,WeightProfile.class);
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("[Product]-[updateWeightIdNullByWeightIdAndPartyId]-[Error] : Create GSON Error");
+		}finally{
+			log.info("[Product]-[updateWeightIdNullByWeightIdAndPartyId]-User Request(GSON) : " + weightProfile);
+		}
+		
+		if(weightProfile != null && weightProfile.getPartyId() != null && weightProfile.getWeightId() != null){
+			int response = productService.updateWeightIdNullByWeightIdAndPartyId(weightProfile.getWeightId(), weightProfile.getPartyId());
+			log.info("[Product]-[updateWeightIdNullByWeightIdAndPartyId]-[Response] :" + response);
+			return response;
+		}
+		log.warn("[Product]-[Error]-updateWeightIdNullByWeightIdAndPartyId : UpdateProduct Wrong!!");
+		return null;
+	}
+	
 }

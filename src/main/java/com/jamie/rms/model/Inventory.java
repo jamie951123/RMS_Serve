@@ -55,14 +55,8 @@ public class Inventory {
 	@Column(name = "grossWeight")
     private BigDecimal grossWeight;
 	
-	@Column(name = "grossWeightUnit")
-    private String grossWeightUnit;
-	
 	@Column(name = "qty")
     private Integer qty;
-	
-	@Column(name = "qtyUnit")
-    private String qtyUnit;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="productId", insertable=false, updatable =false)
@@ -132,13 +126,6 @@ public class Inventory {
 		this.grossWeight = grossWeight;
 	}
 
-	public String getGrossWeightUnit() {
-		return grossWeightUnit;
-	}
-
-	public void setGrossWeightUnit(String grossWeightUnit) {
-		this.grossWeightUnit = grossWeightUnit;
-	}
 
 	public Integer getQty() {
 		return qty;
@@ -146,14 +133,6 @@ public class Inventory {
 
 	public void setQty(Integer qty) {
 		this.qty = qty;
-	}
-
-	public String getQtyUnit() {
-		return qtyUnit;
-	}
-
-	public void setQtyUnit(String qtyUnit) {
-		this.qtyUnit = qtyUnit;
 	}
 
 	public Product getProduct() {
@@ -176,10 +155,12 @@ public class Inventory {
 	public String toString() {
 		return "Inventory [inventoryId=" + inventoryId + ", productId=" + productId + ", partyId=" + partyId
 				+ ", createDate=" + createDate + ", closeDate=" + closeDate + ", stockOutDate=" + stockOutDate
-				+ ", stockInDate=" + stockInDate + ", status=" + status + ", grossWeight=" + grossWeight
-				+ ", grossWeightUnit=" + grossWeightUnit + ", qty=" + qty + ", qtyUnit=" + qtyUnit + ", product="
-				+ product + "]";
+				+ ", stockInDate=" + stockInDate + ", status=" + status + ", grossWeight=" + grossWeight + ", qty="
+				+ qty + ", product=" + product + "]";
 	}
+
+	
+
 
 	
 	

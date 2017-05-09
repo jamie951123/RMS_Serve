@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.ForeignKey;
 
 @Entity(name = "receiving_item")
 public class ReceivingItem {
@@ -45,20 +46,15 @@ public class ReceivingItem {
 	@Column(name = "itemGrossWeight")
     private BigDecimal itemGrossWeight;
 	
-	@Column(name = "itemGrossWeightUnit")
-    private String itemGrossWeightUnit;
-	
 	@Column(name = "itemQty")
     private Integer itemQty;
-	
-	@Column(name = "itemQtyUnit")
-    private String itemQtyUnit;
 	
 	@Column(name = "itemRemark")
     private String itemRemark;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="productId", insertable=false, updatable =false)
+	@ForeignKey(name = "product_fk")
 	@Filter(name="status",condition="status = :PROGRESS' ") 
 	private Product Product;
 
@@ -71,13 +67,11 @@ public class ReceivingItem {
 		inv.setStockInDate(this.getItemReceivingDate());
 		inv.setStatus(this.getItemStatus());
 		inv.setGrossWeight(this.getItemGrossWeight());
-		inv.setGrossWeightUnit(this.getItemGrossWeightUnit());
 		inv.setQty(this.getItemQty());
-		inv.setQtyUnit(this.getItemQtyUnit());
 		return inv;
 		
 	}
-	
+
 	public Long getReceivingID() {
 		return receivingID;
 	}
@@ -142,28 +136,12 @@ public class ReceivingItem {
 		this.itemGrossWeight = itemGrossWeight;
 	}
 
-	public String getItemGrossWeightUnit() {
-		return itemGrossWeightUnit;
-	}
-
-	public void setItemGrossWeightUnit(String itemGrossWeightUnit) {
-		this.itemGrossWeightUnit = itemGrossWeightUnit;
-	}
-
 	public Integer getItemQty() {
 		return itemQty;
 	}
 
 	public void setItemQty(Integer itemQty) {
 		this.itemQty = itemQty;
-	}
-
-	public String getItemQtyUnit() {
-		return itemQtyUnit;
-	}
-
-	public void setItemQtyUnit(String itemQtyUnit) {
-		this.itemQtyUnit = itemQtyUnit;
 	}
 
 	public String getItemRemark() {
@@ -186,10 +164,10 @@ public class ReceivingItem {
 	public String toString() {
 		return "ReceivingItem [receivingID=" + receivingID + ", productId=" + productId + ", itemStatus=" + itemStatus
 				+ ", orderId=" + orderId + ", partyId=" + partyId + ", itemCreateDate=" + itemCreateDate
-				+ ", itemReceivingDate=" + itemReceivingDate + ", itemGrossWeight=" + itemGrossWeight
-				+ ", itemGrossWeightUnit=" + itemGrossWeightUnit + ", itemQty=" + itemQty + ", itemQtyUnit="
-				+ itemQtyUnit + ", itemRemark=" + itemRemark + ", Product=" + Product + "]";
+				+ ", itemReceivingDate=" + itemReceivingDate + ", itemGrossWeight=" + itemGrossWeight + ", itemQty="
+				+ itemQty + ", itemRemark=" + itemRemark + ", Product=" + Product + "]";
 	}
+	
 	
 	
 	

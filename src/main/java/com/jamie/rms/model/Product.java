@@ -14,9 +14,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-@Entity(name="product")
+import org.hibernate.annotations.ForeignKey;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+@Entity(name="Product")
+@Table(name ="Product")
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -57,14 +62,26 @@ public class Product {
 	@Column(name = "quantityId")
 	private Long quantityId;
 	
-	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
-	@JoinColumn(name="weightId", insertable=false, updatable =false)
+	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
+	@ForeignKey(name = "weightprofile_fk")
+	@JoinColumn(name="weightId", insertable=false, updatable =false,nullable=true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	WeightProfile weightprofile;
 	
-	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.EAGER)
-	@JoinColumn(name="quantityId", insertable=false, updatable =false)
+	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
+	@ForeignKey(name = "quantityProfile_fk")
+	@JoinColumn(name="quantityId", insertable=false, updatable =false,nullable=true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	QuantityProfile quantityProfile;
 
+//	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.LAZY,orphanRemoval = true)
+//	@JoinColumn(name="receivingID", insertable=false, updatable =false,nullable=true)
+//	private Set<ReceivingItem> receivingItem;
+//	
+//	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.LAZY,orphanRemoval = true)
+//	@JoinColumn(name="inventoryId", insertable=false, updatable =false,nullable=true)
+//	private Set<Inventory> inventory;
+	
 	public Long getProductId() {
 		return productId;
 	}
