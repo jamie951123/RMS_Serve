@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.jamie.rms.model.QuantityProfile;
 import com.jamie.rms.model.ResponseMessage;
-import com.jamie.rms.model.QuantityProfile;
 import com.jamie.rms.searchcriteria.object.QuantitySearchObject;
 import com.jamie.rms.service.QuantityProfileService;
 import com.jamie.rms.util.GsonUtil;
