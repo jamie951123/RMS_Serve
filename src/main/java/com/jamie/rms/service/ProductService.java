@@ -9,4 +9,5 @@ public interface ProductService {
 	List<Product> findByPartyId(String partyId);
 	Product save(Product product);
 	int updateWeightIdNullByWeightIdAndPartyId(Long weightId,String partyId);
+	int updateQuantityIdNullByWeightIdAndPartyId(Long quantityId,String partyId);
 }

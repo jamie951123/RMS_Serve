@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.jamie.rms.model.QuantityProfile;
+import com.jamie.rms.model.ResponseMessage;
+import com.jamie.rms.model.QuantityProfile;
 import com.jamie.rms.searchcriteria.object.QuantitySearchObject;
 import com.jamie.rms.service.QuantityProfileService;
 import com.jamie.rms.util.GsonUtil;
@@ -52,6 +54,27 @@ public class QuantityController {
 			return QuantityProfile;
 		}
 		log.warn("[QuantityProfile]-[Error]-findByPartyId : quantitySearchObject is empty");
+		return null;
+	}
+	
+	@RequestMapping(value = "/delete",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody ResponseMessage delete(@RequestBody String json){
+		log.info("[QuantityProfile]-[delete]-User Request(JSON) : "+ json);
+		QuantityProfile quantityProfile = new QuantityProfile();
+		try{
+			Gson gson = GsonUtil.getGson();
+			quantityProfile = gson.fromJson(json, QuantityProfile.class);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		log.info("[QuantityProfile]-[delete]-User Request(GSON) : "+ quantityProfile);
+		if(quantityProfile != null ){
+			ResponseMessage responseMessage = quantityProfileService.delete(quantityProfile);
+			log.info("[ResponseMessage]-[Response]-delete :" + responseMessage);
+			return responseMessage;
+		}
+		
+		log.warn("[QuantityProfile]-[Error]-delete : QuantityProfile is empty");
 		return null;
 	}
 	

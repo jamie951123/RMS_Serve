@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.jamie.rms.model.Product;
+import com.jamie.rms.model.QuantityProfile;
 import com.jamie.rms.model.WeightProfile;
 import com.jamie.rms.searchcriteria.object.ProductSearchObject;
 import com.jamie.rms.service.ProductService;
@@ -101,6 +102,29 @@ public class ProductController {
 			return response;
 		}
 		log.warn("[Product]-[Error]-updateWeightIdNullByWeightIdAndPartyId : UpdateProduct Wrong!!");
+		return null;
+	}
+	
+	@RequestMapping(value="/updateQuantityIdNullByWeightIdAndPartyId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody Integer updateQuantityIdNullByWeightIdAndPartyId(@RequestBody String json){
+		log.info("[Product]-[updateQuantityIdNullByWeightIdAndPartyId]-User Request(JSON) : "+ json);
+		QuantityProfile quantityProfile = new QuantityProfile();
+		try{
+			Gson gson = GsonUtil.getGson();
+			quantityProfile = gson.fromJson(json,QuantityProfile.class);
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("[Product]-[updateQuantityIdNullByWeightIdAndPartyId]-[Error] : Create GSON Error");
+		}finally{
+			log.info("[Product]-[updateQuantityIdNullByWeightIdAndPartyId]-User Request(GSON) : " + quantityProfile);
+		}
+		
+		if(quantityProfile != null && quantityProfile.getPartyId() != null && quantityProfile.getQuantityId() != null){
+			int response = productService.updateQuantityIdNullByWeightIdAndPartyId(quantityProfile.getQuantityId(), quantityProfile.getPartyId());
+			log.info("[Product]-[updateQuantityIdNullByWeightIdAndPartyId]-[Response] :" + response);
+			return response;
+		}
+		log.warn("[Product]-[Error]-updateQuantityIdNullByWeightIdAndPartyId : UpdateProduct Wrong!!");
 		return null;
 	}
 	
