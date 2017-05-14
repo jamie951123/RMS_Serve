@@ -78,6 +78,26 @@ public class WeightController {
 		return null;
 	}
 
+	@RequestMapping(value = "/save",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody WeightProfile save(@RequestBody String json){
+		log.info("[WeightProfile]-[save]-User Request(JSON) : "+ json);
+		WeightProfile weightProfile = new WeightProfile();
+		try{
+			Gson gson = GsonUtil.getGson();
+			weightProfile = gson.fromJson(json, WeightProfile.class);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		log.info("[WeightProfile]-[save]-User Request(GSON) : "+ weightProfile);
+		if(weightProfile != null && ObjectUtil.isNotNullEmpty(weightProfile.getPartyId())&& ObjectUtil.isNotNullEmpty(weightProfile.getWeightUnit())){
+			WeightProfile result = weightProfileService.save(weightProfile);
+			log.info("[WeightProfile]-[Response]-save :" + result);
+			return result;
+		}
+		
+		log.warn("[WeightProfile]-[Error]-save : WeightProfile is empty");
+		return null;
+	}
 
 	
 }

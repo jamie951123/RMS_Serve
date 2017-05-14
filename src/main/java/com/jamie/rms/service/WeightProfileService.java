@@ -9,4 +9,5 @@ public interface WeightProfileService {
 	List<WeightProfile> findAll ();
 	List<WeightProfile> findByPartyId (String partyId);
 	ResponseMessage delete(WeightProfile weightProfile);
+	WeightProfile save (WeightProfile weightProfile);
 }

@@ -77,6 +77,27 @@ public class QuantityController {
 		return null;
 	}
 	
+	@RequestMapping(value = "/save",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody QuantityProfile save (@RequestBody String json){
+		log.info("[QuantityProfile]-[save]-User Request(JSON) : "+ json);
+		QuantityProfile quantityProfile = new QuantityProfile();
+		try{
+			Gson gson = GsonUtil.getGson();
+			quantityProfile = gson.fromJson(json, QuantityProfile.class);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		log.info("[QuantityProfile]-[save]-User Request(GSON) : "+ quantityProfile);
+		if(quantityProfile != null ){
+			QuantityProfile result = quantityProfileService.save(quantityProfile);
+			log.info("[QuantityProfile]-[Response]-save :" + result);
+			return result;
+		}
+		
+		log.warn("[QuantityProfile]-[Error]-save : QuantityProfile is empty");
+		return null;
+	}
+	
 	
 	
 }

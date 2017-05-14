@@ -45,4 +45,10 @@ public class QuantityProfileServiceImpl implements QuantityProfileService {
 		return r;
 	}
 
+	@Override
+	public QuantityProfile save(QuantityProfile quantityProfile) {
+		// TODO Auto-generated method stub
+		return quantityProfileDao.save(quantityProfile);
+	}
+
 }

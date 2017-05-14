@@ -9,4 +9,5 @@ public interface QuantityProfileService {
 	List<QuantityProfile> findAll();
 	List<QuantityProfile> findByPartyId(String partyId);
 	ResponseMessage delete(QuantityProfile quantityProfile);
+	QuantityProfile save (QuantityProfile quantityProfile);
 }

@@ -49,6 +49,12 @@ public class WeightProfileServiceImpl implements WeightProfileService{
 		return r;
 	}
 
+	@Override
+	public WeightProfile save(WeightProfile weightProfile) {
+		// TODO Auto-generated method stub
+		return weightProfileDao.save(weightProfile);
+	}
+
 
 
 }
