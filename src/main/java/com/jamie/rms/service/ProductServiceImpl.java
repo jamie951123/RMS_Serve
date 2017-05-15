@@ -35,9 +35,9 @@ public class ProductServiceImpl implements ProductService{
 //		return null;
 	}
 	@Override
-	public int updateQuantityIdNullByWeightIdAndPartyId(Long quantityId, String partyId) {
+	public int updateQuantityIdNullByQuantityIdAndPartyId(Long quantityId, String partyId) {
 		// TODO Auto-generated method stub
-		return productDao.updateQuantityIdNullByWeightIdAndPartyId(quantityId, partyId);
+		return productDao.updateQuantityIdNullByQuantityIdAndPartyId(quantityId, partyId);
 	}
 
 }

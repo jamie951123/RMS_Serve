@@ -105,7 +105,7 @@ public class ProductController {
 		return null;
 	}
 	
-	@RequestMapping(value="/updateQuantityIdNullByWeightIdAndPartyId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	@RequestMapping(value="/updateQuantityIdNullByQuantityIdAndPartyId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
 	public @ResponseBody Integer updateQuantityIdNullByWeightIdAndPartyId(@RequestBody String json){
 		log.info("[Product]-[updateQuantityIdNullByWeightIdAndPartyId]-User Request(JSON) : "+ json);
 		QuantityProfile quantityProfile = new QuantityProfile();
@@ -120,7 +120,7 @@ public class ProductController {
 		}
 		
 		if(quantityProfile != null && quantityProfile.getPartyId() != null && quantityProfile.getQuantityId() != null){
-			int response = productService.updateQuantityIdNullByWeightIdAndPartyId(quantityProfile.getQuantityId(), quantityProfile.getPartyId());
+			int response = productService.updateQuantityIdNullByQuantityIdAndPartyId(quantityProfile.getQuantityId(), quantityProfile.getPartyId());
 			log.info("[Product]-[updateQuantityIdNullByWeightIdAndPartyId]-[Response] :" + response);
 			return response;
 		}

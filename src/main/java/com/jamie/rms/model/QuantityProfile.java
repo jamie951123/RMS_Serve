@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,7 +20,12 @@ import javax.persistence.TemporalType;
  * @author jamie
  *
  */
-@Entity(name = "quantity_profile")
+/**
+ * @author jamie
+ *
+ */
+@Entity(name = "QuantityProfile")
+@Table(name ="QuantityProfile")
 public class QuantityProfile {
 
 	@Id
@@ -35,6 +41,13 @@ public class QuantityProfile {
 	@Column(name = "createDate")
 	@Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+	
+	@Column(name = "modifyTime")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifyTime;
+	
+	@Column(name = "modifyBy")
+	private String modifyBy;
 
 //	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.EAGER,orphanRemoval = true)
 //	@JoinColumn(name="productId", insertable=false, updatable =false)
@@ -72,11 +85,29 @@ public class QuantityProfile {
 		this.createDate = createDate;
 	}
 
+	public Date getModifyTime() {
+		return modifyTime;
+	}
+
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+
+	public String getModifyBy() {
+		return modifyBy;
+	}
+
+	public void setModifyBy(String modifyBy) {
+		this.modifyBy = modifyBy;
+	}
+
 	@Override
 	public String toString() {
 		return "QuantityProfile [quantityId=" + quantityId + ", partyId=" + partyId + ", quantityUnit=" + quantityUnit
-				+ ", createDate=" + createDate + "]";
+				+ ", createDate=" + createDate + ", modifyTime=" + modifyTime + ", modifyBy=" + modifyBy + "]";
 	}
+
+	
 
 	
 

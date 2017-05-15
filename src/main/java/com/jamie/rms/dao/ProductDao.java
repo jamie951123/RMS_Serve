@@ -28,6 +28,6 @@ public interface ProductDao extends JpaRepository<Product,Long>,JpaSpecification
 	
 	@Modifying(clearAutomatically = true)
 	@Query("update Product set quantityId = null where quantityId = ?1 and partyId = ?2")
-	int updateQuantityIdNullByWeightIdAndPartyId(Long quantityId,String partyId);
+	int updateQuantityIdNullByQuantityIdAndPartyId(Long quantityId,String partyId);
 
 }

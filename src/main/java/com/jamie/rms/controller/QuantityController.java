@@ -98,6 +98,27 @@ public class QuantityController {
 		return null;
 	}
 	
+	@RequestMapping(value = "/updateQtyByQuantityIdAndPartyIdAndQtyUnit",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody Integer updateQtyByQuantityIdAndPartyIdAndQtyUnit (@RequestBody String json){
+		log.info("[QuantityProfile]-[updateQtyByQuantityIdAndPartyIdAndQtyUnit]-User Request(JSON) : "+ json);
+		QuantityProfile quantityProfile = new QuantityProfile();
+		try{
+			Gson gson = GsonUtil.getGson();
+			quantityProfile = gson.fromJson(json, QuantityProfile.class);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		log.info("[QuantityProfile]-[updateQtyByQuantityIdAndPartyIdAndQtyUnit]-User Request(GSON) : "+ quantityProfile);
 	
+		if(quantityProfile != null){
+			Integer result = quantityProfileService.updateQtyByQuantityIdAndPartyIdAndQtyUnit(quantityProfile);
+			log.info("[QuantityProfile]-[Response]-save :" + result);
+			return result;
+		}
+		
+		
+		log.warn("[QuantityProfile]-[Error]-updateQtyByQuantityIdAndPartyIdAndQtyUnit : QuantityProfile is empty");
+		return null;
+	}
 	
 }

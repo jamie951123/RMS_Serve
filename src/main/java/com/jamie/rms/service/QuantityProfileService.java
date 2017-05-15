@@ -10,4 +10,5 @@ public interface QuantityProfileService {
 	List<QuantityProfile> findByPartyId(String partyId);
 	ResponseMessage delete(QuantityProfile quantityProfile);
 	QuantityProfile save (QuantityProfile quantityProfile);
+	int updateQtyByQuantityIdAndPartyIdAndQtyUnit(QuantityProfile quantityProfile);
 }

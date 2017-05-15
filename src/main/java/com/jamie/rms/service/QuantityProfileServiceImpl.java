@@ -1,5 +1,6 @@
 package com.jamie.rms.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,19 @@ public class QuantityProfileServiceImpl implements QuantityProfileService {
 	public QuantityProfile save(QuantityProfile quantityProfile) {
 		// TODO Auto-generated method stub
 		return quantityProfileDao.save(quantityProfile);
+	}
+
+	@Override
+	public int updateQtyByQuantityIdAndPartyIdAndQtyUnit(QuantityProfile quantityProfile) {
+		// TODO Auto-generated method stub
+		Long qtyId = quantityProfile.getQuantityId();
+		String qtyPartyId = quantityProfile.getPartyId();
+		String qtyUnit = quantityProfile.getQuantityUnit();
+		Date modifyTime = quantityProfile.getModifyTime();
+		String modifyBy = quantityProfile.getModifyBy();
+		
+//		if(qtyId )
+		return quantityProfileDao.updateQtyByQuantityIdAndPartyIdAndQtyUnit(qtyId, qtyPartyId, qtyUnit);
 	}
 
 }
