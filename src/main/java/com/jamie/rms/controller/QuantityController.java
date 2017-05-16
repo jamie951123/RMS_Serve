@@ -112,7 +112,7 @@ public class QuantityController {
 	
 		if(quantityProfile != null){
 			Integer result = quantityProfileService.updateQtyByQuantityIdAndPartyIdAndQtyUnit(quantityProfile);
-			log.info("[QuantityProfile]-[Response]-save :" + result);
+			log.info("[QuantityProfile]-[Response]-updateQtyByQuantityIdAndPartyIdAndQtyUnit :" + result);
 			return result;
 		}
 		

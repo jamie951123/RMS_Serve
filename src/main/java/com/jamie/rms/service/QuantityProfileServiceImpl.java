@@ -61,7 +61,7 @@ public class QuantityProfileServiceImpl implements QuantityProfileService {
 		Date modifyTime = quantityProfile.getModifyTime();
 		String modifyBy = quantityProfile.getModifyBy();
 		
-//		if(qtyId )
+
 		return quantityProfileDao.updateQtyByQuantityIdAndPartyIdAndQtyUnit(qtyId, qtyPartyId, qtyUnit);
 	}
 
