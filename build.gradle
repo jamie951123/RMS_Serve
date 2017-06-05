@@ -8,14 +8,14 @@ buildscript {
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE"
           //tomcat
-    compile("org.springframework.boot:spring-boot-starter-web")
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    //compile("org.springframework.boot:spring-boot-starter-web")
+    //providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     }
 }
 
-springBoot {
-	layoutFactory = new com.jamie.rms.Application()
-}
+//springBoot {
+//	layoutFactory = new com.jamie.rms.Application()
+//}
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
