@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jamie.rms.model.Inventory;
-import com.jamie.rms.model.InventorySum;
-import com.jamie.rms.model.ReceivingItem;
-import com.jamie.rms.model.Status;
+import com.jamie.rms.model.Product;
+import com.jamie.rms.model.ResponseMessage;
 import com.jamie.rms.searchcriteria.object.InventorySearchObject;
 import com.jamie.rms.service.InventoryService;
 import com.jamie.rms.service.InventorySumService;
@@ -124,5 +123,26 @@ public class InventoryController {
 		log.info("[Inventory]-[insertInventory]-User Request(result) : "+ result);
 		return null;
 	}
+	
+	@RequestMapping(value = "/deleteByProductId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody ResponseMessage deleteByProductId(@RequestBody String product_json){
+		log.info("[Inventory]-[deleteByProductId]-User Request(JSON) : "+ product_json);
+		Product product = new Product();
+		try{
+			Gson gson = GsonUtil.getGson();
+			product = gson.fromJson(product_json, Product.class);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		log.info("[Inventory]-[deleteByProductId]-User Request(GSON) : "+ product);
+		if(product != null && product.getProductId() != null){
+			ResponseMessage responseMessage =  inventoryService.deleteByProductId(product.getProductId());
+			log.info("[Inventory]-[deleteByProductId]-[Response] :" + responseMessage);
+			return responseMessage;
+		}
+		log.warn("[Inventory]-[Error]-deleteByProductId : Inventory is empty");
+		return null;
+	}
+
 	
 }

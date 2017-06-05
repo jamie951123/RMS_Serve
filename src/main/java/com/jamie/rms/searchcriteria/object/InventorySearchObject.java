@@ -1,25 +1,22 @@
 package com.jamie.rms.searchcriteria.object;
 
-
-import com.jamie.rms.model.Status;
-
 public class InventorySearchObject extends HomeSearchObject {
 
-	 Status status;
+	private Long productId;
 
-	    public Status getStatus() {
-	        return status;
-	    }
+	public Long getProductId() {
+		return productId;
+	}
 
-	    public void setStatus(Status status) {
-	        this.status = status;
-	    }
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
 
-	    @Override
-	    public String toString() {
-	        return "InventorySearchObject{" +
-	                "status=" + status +
-	                '}';
-	    }
+	@Override
+	public String toString() {
+		return "InventorySearchObject [productId=" + productId + "]";
+	}
+	
+	
 	    
 }

@@ -9,4 +9,5 @@ import com.jamie.rms.model.ReceivingItem;
 public interface ReceivingItemDao extends JpaRepository<ReceivingItem,Long>{
 
 	List<ReceivingItem> findByPartyId(String partyId);
+	ReceivingItem findByReceivingID(Long receivingID);
 }

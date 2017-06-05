@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * @author jamie
@@ -22,7 +23,8 @@ import javax.persistence.ManyToOne;
  * @author jamie
  *
  */
-@Entity(name = "inventory")
+@Entity(name = "Inventory")
+@Table(name ="Inventory")
 public class Inventory {
 	
 	@Id

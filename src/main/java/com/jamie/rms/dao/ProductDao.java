@@ -2,8 +2,6 @@ package com.jamie.rms.dao;
 
 import java.util.List;
 
-
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -30,4 +28,10 @@ public interface ProductDao extends JpaRepository<Product,Long>,JpaSpecification
 	@Query("update Product set quantityId = null where quantityId = ?1 and partyId = ?2")
 	int updateQuantityIdNullByQuantityIdAndPartyId(Long quantityId,String partyId);
 
+	Product findByProductId (Long productId);
+	
+	@Modifying(clearAutomatically = true)
+	@Query("update Product set quantityId = null, weightId = null where productId = ?1")
+	int updateQuantityIdAndWeightIdNullByProductId(Long productId);
+	
 }

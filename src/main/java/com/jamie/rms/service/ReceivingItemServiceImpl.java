@@ -28,5 +28,10 @@ public class ReceivingItemServiceImpl implements ReceivingItemService{
 		// TODO Auto-generated method stub
 		return receivingItemDao.findByPartyId(partyId);
 	}
+	@Override
+	public ReceivingItem findByReceivingID(Long receivingID) {
+		// TODO Auto-generated method stub
+		return receivingItemDao.findByReceivingID(receivingID);
+	}
 
 }

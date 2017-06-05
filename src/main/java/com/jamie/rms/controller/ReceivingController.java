@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jamie.rms.model.Inventory;
+import com.jamie.rms.model.Product;
 import com.jamie.rms.model.ReceivingItem;
 import com.jamie.rms.model.ReceivingOrder;
 import com.jamie.rms.model.ReceivingOrderAndItemContainer;
@@ -48,6 +49,30 @@ public class ReceivingController {
 		return receivingOrder;
 	}
 	
+	@RequestMapping(value = "/order/findByOrderId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody ReceivingOrder findByOrderId(@RequestBody String receivingSearchObject_json){
+		log.info("[ReceivingOrder]-[findByOrderId]-User Request(JSON) : "+ receivingSearchObject_json);
+		ReceivingSearchObject receivingSearchObject = new ReceivingSearchObject();
+		
+		try{
+			Gson gson = GsonUtil.getGson();
+			receivingSearchObject = gson.fromJson(receivingSearchObject_json, ReceivingSearchObject.class);
+		}catch (Exception e){
+			log.error("[ReceivingOrder]-[findByOrderId]-[Error] : Create GSON Error");
+		}finally{
+			log.info("[ReceivingOrder]-[findByOrderId]-User Request(GSON) : " + receivingSearchObject);
+		}
+		
+		if(receivingSearchObject != null && receivingSearchObject.getId() != null){
+			ReceivingOrder receivingOrder = receivingOrderService.findByOrderId(receivingSearchObject.getId());
+			log.info("[ReceivingOrder]-[Response]-findByOrderId :" + receivingOrder);
+			return receivingOrder;
+		}
+		
+		log.warn("[ReceivingOrder]-[Error]-findByOrderId : receivingSearchObject is empty");
+		return null;
+	}
+
 	@RequestMapping(value = "/order/findByPartyId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
 	public @ResponseBody List<ReceivingOrder> orderFindByPartyId(@RequestBody String json){
 		log.info("[ReceivingOrder]-[orderFindByPartyId]-User Request(JSON) : "+ json);
@@ -113,6 +138,27 @@ public class ReceivingController {
 			return receivingItem;
 		}
 		log.error("[ReceivingItem]-[Error]-itemFindByPartyId : Serve response is empty");
+		return null;
+	}
+	
+	@RequestMapping(value = "/item/findByReceivingID",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody ReceivingItem itemFindByReceivingID(@RequestBody String json){
+		log.info("[ReceivingItem]-[itemFindByReceivingID]-User Request(JSON) : "+ json);
+		ReceivingSearchObject receivingSearchObject = new ReceivingSearchObject();
+		
+		try{
+			Gson gson = GsonUtil.getGson();
+			receivingSearchObject = gson.fromJson(json, ReceivingSearchObject.class);
+		}catch (Exception e){
+			
+		}
+		log.info("[ReceivingItem]-[itemFindByReceivingID]-User Request(GSON) : "+ receivingSearchObject);
+		if(receivingSearchObject != null && receivingSearchObject.getId() != null){
+			ReceivingItem receivingItem = receivingItemService.findByReceivingID(receivingSearchObject.getId());
+			log.info("[ReceivingItem]-[Response]-findByPartyId :" + receivingItem);
+			return receivingItem;
+		}
+		log.error("[ReceivingItem]-[Error]-itemFindByReceivingID : Serve response is empty");
 		return null;
 	}
 	

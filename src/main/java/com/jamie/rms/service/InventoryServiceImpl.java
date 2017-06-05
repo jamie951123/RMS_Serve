@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jamie.rms.common.ResponseStatus;
 import com.jamie.rms.dao.InventoryDao;
 import com.jamie.rms.model.Inventory;
 import com.jamie.rms.model.InventorySum;
+import com.jamie.rms.model.ResponseMessage;
 import com.jamie.rms.model.Status;
 @Service
 public class InventoryServiceImpl implements InventoryService{
@@ -44,6 +46,26 @@ public class InventoryServiceImpl implements InventoryService{
 	public List<Inventory> saves(List<Inventory> inventorys) {
 		// TODO Auto-generated method stub
 		return inventoryDao.save(inventorys);
+	}
+
+	@Override
+	public ResponseMessage deleteByProductId(Long productId) {
+		// TODO Auto-generated method stub
+		if(productId == null){
+			return null;
+		}
+		ResponseMessage r = new ResponseMessage();
+		r.setRequest(String.valueOf(productId));
+		try{
+			int count = inventoryDao.deleteByProductId(productId);
+			r.setStatus(ResponseStatus.getSuccessful());
+			r.setResponse(String.valueOf(count));
+			r.setMessage("The record have been deleted");
+		}catch (IllegalArgumentException e){
+			r.setStatus(ResponseStatus.getFail());
+			r.setMessage("The record do not appear into table");
+		}
+		return r;
 	}
 
 	

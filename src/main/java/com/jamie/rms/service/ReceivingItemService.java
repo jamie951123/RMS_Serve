@@ -11,4 +11,6 @@ public interface ReceivingItemService {
 	List<ReceivingItem> save(List<ReceivingItem> receivingItems);
 	
 	List<ReceivingItem> findByPartyId(String partyId);
+	
+	ReceivingItem findByReceivingID(Long receivingID);
 }

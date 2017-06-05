@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.jamie.rms.model.Product;
 import com.jamie.rms.model.QuantityProfile;
+import com.jamie.rms.model.ResponseMessage;
 import com.jamie.rms.model.WeightProfile;
 import com.jamie.rms.searchcriteria.object.ProductSearchObject;
 import com.jamie.rms.service.ProductService;
@@ -34,6 +36,28 @@ public class ProductController {
 		List<Product> getAllProduct = productService.findAll();
 		log.info("[Product]-[findAll]-[Response] :" + getAllProduct);
 		return getAllProduct;
+	}
+	
+	@RequestMapping(value="/findByProductId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody Product findByProductId(@RequestBody String json){
+		log.info("[Product]-[findByPartyId]-User Request(JSON) : "+ json);
+		ProductSearchObject productSearchObject = new ProductSearchObject();
+		try{
+			Gson gson = new Gson();
+			productSearchObject = gson.fromJson(json, ProductSearchObject.class);
+		}catch (Exception e){
+			log.error("[Product]-[findByProductId]-[Error] : Create GSON Error");
+		}finally{
+			log.info("[Product]-[findByProductId]-User Request(GSON) : " + productSearchObject);
+		}
+		
+		if(productSearchObject != null && productSearchObject.getId() != null){
+			Product product = productService.findByProductId(productSearchObject.getId());
+			log.info("[Product]-[Response]-findByPartyId :" + product);
+			return product;
+		}
+		log.warn("[Product]-[Error]-findByPartyId : productSearchObject is empty");
+		return null;
 	}
 	
 	@RequestMapping(value="/findByPartyId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
@@ -128,4 +152,56 @@ public class ProductController {
 		return null;
 	}
 	
+	@RequestMapping(value="/updateQuantityIdAndWeightIdNullByProductId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody Integer updateQuantityIdAndWeightIdNullByProductId(@RequestBody String product_json){
+		log.info("[Product]-[updateQuantityIdAndWeightIdNullByProductId]-User Request(JSON) : "+ product_json);
+		Product product = new Product();
+		try{
+			Gson gson = GsonUtil.getGson();
+			product = gson.fromJson(product_json, Product.class);
+		}catch (Exception e){
+			log.error("[Product]-[updateQuantityIdAndWeightIdNullByProductId]-[Error] : Create GSON Error");
+		}finally{
+			log.info("[Product]-[updateQuantityIdAndWeightIdNullByProductId]-User Request(GSON) : " + product);
+		}
+		
+		if(product != null && product.getProductId() != null){
+			int response = productService.updateQuantityIdAndWeightIdNullByProductId(product.getProductId());
+			log.info("[Product]-[updateQuantityIdAndWeightIdNullByProductId]-[Response] :" + response);
+			return response;
+		}
+		log.warn("[Product]-[Error]-updateQuantityIdAndWeightIdNullByProductId : UpdateProduct Wrong!!");
+		return null;
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	@RequestMapping(value="/deleteByProductId",produces="application/json;charset=UTF-8", method = RequestMethod.POST)
+	public @ResponseBody ResponseMessage deleteByProductId(@RequestBody String product_json){
+		log.info("[Product]-[deleteByProductId]-User Request(JSON) : "+ product_json);
+		//clear quanlityId and weightId  
+		try{
+			updateQuantityIdAndWeightIdNullByProductId(product_json);
+		}catch(Exception e){
+			throw e;
+		}
+		//
+		Product product = new Product();
+		try{
+			Gson gson = GsonUtil.getGson();
+			product = gson.fromJson(product_json, Product.class);
+		}catch (Exception e){
+			log.error("[Product]-[deleteByProductId]-[Error] : Create GSON Error");
+			throw e;
+		}finally{
+			log.info("[Product]-[deleteByProductId]-User Request(GSON) : " + product);
+		}
+		
+		if(product != null && product.getProductId() != null){
+			ResponseMessage response = productService.deleteByProductId(product.getProductId());
+			log.info("[Product]-[deleteByProductId]-[Response] :" + response);
+			return response;
+		}
+		log.warn("[Product]-[Error]-deleteByProductId : Product is empty");
+		return null;
+	}
 }
