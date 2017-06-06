@@ -36,15 +36,17 @@ public class WeightProfileServiceImpl implements WeightProfileService{
 	@Override
 	public ResponseMessage delete(WeightProfile weightProfile) {
 		ResponseMessage r = new ResponseMessage();
-		r.setRequest(weightProfile.toString());
+		r.setMessage_request(weightProfile.toString());
 		// TODO Auto-generated method stub
 		try{
 			weightProfileDao.delete(weightProfile);
-			r.setStatus(ResponseStatus.getSuccessful());
-			r.setMessage("The record have been deleted");
+			r.setMessage_status(ResponseStatus.getSuccessful());
+			r.setMessage_count(1);
+			r.setMessage_content("The record have been deleted");
 		}catch (IllegalArgumentException e){
-			r.setStatus(ResponseStatus.getFail());
-			r.setMessage("The record do not appear into table");
+			r.setMessage_status(ResponseStatus.getFail());
+			r.setMessage_content("The record do not appear into table");
+			r.setMessage_count(0);
 		}
 		return r;
 	}

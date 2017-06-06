@@ -33,15 +33,17 @@ public class QuantityProfileServiceImpl implements QuantityProfileService {
 	public ResponseMessage delete(QuantityProfile quantityProfile) {
 		// TODO Auto-generated method stub
 		ResponseMessage r = new ResponseMessage();
-		r.setRequest(quantityProfile.toString());
+		r.setMessage_request(quantityProfile.toString());
 		// TODO Auto-generated method stub
 		try{
 			quantityProfileDao.delete(quantityProfile);
-			r.setStatus(ResponseStatus.getSuccessful());
-			r.setMessage("The record have been deleted");
+			r.setMessage_status(ResponseStatus.getSuccessful());
+			r.setMessage_count(1);
+			r.setMessage_content("The record have been deleted");
 		}catch (IllegalArgumentException e){
-			r.setStatus(ResponseStatus.getFail());
-			r.setMessage("The record do not appear into table");
+			r.setMessage_status(ResponseStatus.getFail());
+			r.setMessage_content("The record do not appear into table");
+			r.setMessage_count(0);
 		}
 		return r;
 	}

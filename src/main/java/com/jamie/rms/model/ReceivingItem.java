@@ -13,11 +13,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.ForeignKey;
 
-@Entity(name = "receiving_item")
+@Entity(name = "ReceivingItem")
+@Table(name ="ReceivingItem")
 public class ReceivingItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

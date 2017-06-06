@@ -58,14 +58,36 @@ public class ProductServiceImpl implements ProductService{
 			return null;
 		}
 		ResponseMessage r = new ResponseMessage();
-		r.setRequest(String.valueOf(productId));
+		r.setMessage_request(String.valueOf(productId));
 		try{
 			productDao.delete(productId);
-			r.setStatus(ResponseStatus.getSuccessful());
-			r.setMessage("The record have been deleted");
+			r.setMessage_status(ResponseStatus.getSuccessful());
+			r.setMessage_count(1);
+			r.setMessage_content("The record have been deleted");
 		}catch (IllegalArgumentException e){
-			r.setStatus(ResponseStatus.getFail());
-			r.setMessage("The record do not appear into table");
+			r.setMessage_status(ResponseStatus.getFail());
+			r.setMessage_content("The record do not appear into table");
+			r.setMessage_count(0);
+		}
+		return r;
+	}
+	@Override
+	public ResponseMessage delete(Product product) {
+		// TODO Auto-generated method stub
+		if(product == null){
+			return null;
+		}
+		ResponseMessage r = new ResponseMessage();
+		r.setMessage_request(product.toString());
+		try{
+			productDao.delete(product);
+			r.setMessage_status(ResponseStatus.getSuccessful());
+			r.setMessage_count(1);
+			r.setMessage_content("The record have been deleted");
+		}catch (IllegalArgumentException e){
+			r.setMessage_status(ResponseStatus.getFail());
+			r.setMessage_content("The record do not appear into table");
+			r.setMessage_count(0);
 		}
 		return r;
 	}

@@ -55,15 +55,16 @@ public class InventoryServiceImpl implements InventoryService{
 			return null;
 		}
 		ResponseMessage r = new ResponseMessage();
-		r.setRequest(String.valueOf(productId));
+		r.setMessage_request(String.valueOf(productId));
 		try{
 			int count = inventoryDao.deleteByProductId(productId);
-			r.setStatus(ResponseStatus.getSuccessful());
-			r.setResponse(String.valueOf(count));
-			r.setMessage("The record have been deleted");
+			r.setMessage_status(ResponseStatus.getSuccessful());
+			r.setMessage_count(count);
+			r.setMessage_content("The record have been deleted");
 		}catch (IllegalArgumentException e){
-			r.setStatus(ResponseStatus.getFail());
-			r.setMessage("The record do not appear into table");
+			r.setMessage_status(ResponseStatus.getFail());
+			r.setMessage_content("The record do not appear into table");
+			r.setMessage_count(0);
 		}
 		return r;
 	}

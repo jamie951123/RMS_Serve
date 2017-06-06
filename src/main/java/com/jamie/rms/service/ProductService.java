@@ -14,4 +14,5 @@ public interface ProductService {
 	Product findByProductId (Long productId);
 	int updateQuantityIdAndWeightIdNullByProductId(Long productId);
 	ResponseMessage deleteByProductId(Long productId);
+	ResponseMessage delete(Product product);
 }

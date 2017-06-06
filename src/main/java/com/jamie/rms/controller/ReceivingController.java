@@ -2,7 +2,6 @@ package com.jamie.rms.controller;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -21,6 +20,7 @@ import com.jamie.rms.model.Product;
 import com.jamie.rms.model.ReceivingItem;
 import com.jamie.rms.model.ReceivingOrder;
 import com.jamie.rms.model.ReceivingOrderAndItemContainer;
+import com.jamie.rms.model.ResponseMessage;
 import com.jamie.rms.searchcriteria.object.ReceivingSearchObject;
 import com.jamie.rms.service.InventoryService;
 import com.jamie.rms.service.ReceivingItemService;
@@ -213,10 +213,29 @@ public class ReceivingController {
 			return container;
 		}catch (Exception e){
 			e.printStackTrace();
-			log.info("[ReceivingItem]-[insertReceivingItem]-User Response(Error) : Insert Fail !!");
+			log.info("[ReceivingOrderAndItemContainer]-[saveOrderAndItem]-User Response(Error) : Insert Fail !!");
 		}
 		return null;
 		
+	}
+	
+	@RequestMapping(value = "/item/deleteByProductId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody ResponseMessage deleteByProductId(@RequestBody String product_json){
+		log.info("[ReceivingItem]-[deleteByProductId]-User Request(JSON) : "+ product_json);
+		Product product = new Product();
+		try{
+			Gson gson = GsonUtil.getGson();
+			product = gson.fromJson(product_json, Product.class);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		log.info("[ReceivingItem]-[deleteByProductId]-User Request(GSON) : "+ product);
+		if(product != null && product.getProductId() != null){
+			ResponseMessage responseMessage =  receivingItemService.deleteByProductId(product.getProductId());
+			log.info("[ReceivingItem]-[deleteByProductId]-[Response] :" + responseMessage);
+			return responseMessage;
+		}
+		return null;
 	}
 	
 	public List<Inventory> receivingItemGetInventory(List<ReceivingItem> receivingItem){

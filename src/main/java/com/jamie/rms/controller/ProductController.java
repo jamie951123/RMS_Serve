@@ -31,6 +31,12 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	@Autowired
+	private ReceivingController receivingController;
+	
+	@Autowired
+	private InventoryController inventoryController;
+	
 	@RequestMapping(value="/findAll")
 	public @ResponseBody List<Product> getAllProduct(){
 		List<Product> getAllProduct = productService.findAll();
@@ -178,12 +184,6 @@ public class ProductController {
 	@RequestMapping(value="/deleteByProductId",produces="application/json;charset=UTF-8", method = RequestMethod.POST)
 	public @ResponseBody ResponseMessage deleteByProductId(@RequestBody String product_json){
 		log.info("[Product]-[deleteByProductId]-User Request(JSON) : "+ product_json);
-		//clear quanlityId and weightId  
-		try{
-			updateQuantityIdAndWeightIdNullByProductId(product_json);
-		}catch(Exception e){
-			throw e;
-		}
 		//
 		Product product = new Product();
 		try{
@@ -196,6 +196,18 @@ public class ProductController {
 			log.info("[Product]-[deleteByProductId]-User Request(GSON) : " + product);
 		}
 		
+		//clear quanlityId and weightId  
+		try{
+			this.updateQuantityIdAndWeightIdNullByProductId(product_json);
+			receivingController.deleteByProductId(product_json);
+			inventoryController.deleteByProductId(product_json);
+			log.info("[Product]-[deleteByProductId]-Successful Clear All FK ");
+			
+		}catch(Exception e){
+			throw e;
+		}
+		
+		
 		if(product != null && product.getProductId() != null){
 			ResponseMessage response = productService.deleteByProductId(product.getProductId());
 			log.info("[Product]-[deleteByProductId]-[Response] :" + response);
@@ -204,4 +216,58 @@ public class ProductController {
 		log.warn("[Product]-[Error]-deleteByProductId : Product is empty");
 		return null;
 	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	@RequestMapping(value="/delete",produces="application/json;charset=UTF-8", method = RequestMethod.POST)
+	public @ResponseBody ResponseMessage delete(@RequestBody String product_json){
+		log.info("[Product]-[delete]-User Request(JSON) : "+ product_json);
+
+		//
+		Product product = new Product();
+		try{
+			Gson gson = GsonUtil.getGson();
+			product = gson.fromJson(product_json, Product.class);
+		}catch (Exception e){
+			log.error("[Product]-[delete]-[Error] : Create GSON Error");
+			throw e;
+		}finally{
+			log.info("[Product]-[delete]-User Request(GSON) : " + product);
+		}
+		
+		//clear quanlityId and weightId  
+		try{
+			this.updateQuantityIdAndWeightIdNullByProductId(product_json);
+			receivingController.deleteByProductId(product_json);
+			inventoryController.deleteByProductId(product_json);
+			log.info("[Product]-[delete]-Successful Clear All FK ");
+			
+		}catch(Exception e){
+			throw e;
+		}
+		
+		try{
+			Long productId = product.getProductId();
+			ProductSearchObject productSearchObject = new ProductSearchObject();
+			productSearchObject.setId(productId);
+			String result = "";
+			Gson gson = GsonUtil.getGson();
+			result = gson.toJson(productSearchObject);
+			product = findByProductId(result);
+		}catch (Exception e){
+			e.printStackTrace();
+			throw e;
+		}
+		
+		
+		log.info("[Product]-[delete]-[newProduct] :" + product);
+		
+		if(product != null){
+			ResponseMessage response = productService.delete(product);
+			log.info("[Product]-[delete]-[Response] :" + response);
+			return response;
+		}
+		log.warn("[Product]-[delete]-[Error] : Product is empty");
+		return null;
+	}
+	
 }
