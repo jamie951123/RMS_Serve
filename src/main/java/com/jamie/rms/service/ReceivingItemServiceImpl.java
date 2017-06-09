@@ -1,6 +1,7 @@
 package com.jamie.rms.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class ReceivingItemServiceImpl implements ReceivingItemService{
 		return receivingItemDao.findAll();
 	}
 	@Override
-	public List<ReceivingItem> save(List<ReceivingItem> receivingItems) {
+	public List<ReceivingItem> saves(List<ReceivingItem> receivingItems) {
 		// TODO Auto-generated method stub
 		return receivingItemDao.save(receivingItems);
 	}
@@ -54,6 +55,46 @@ public class ReceivingItemServiceImpl implements ReceivingItemService{
 			r.setMessage_count(0);
 		}
 		return r;
+	}
+	@Override
+	public ResponseMessage updateOrderIdNullByOrderId(Long orderId) {
+		// TODO Auto-generated method stub
+		ResponseMessage r = new ResponseMessage();
+		r.setMessage_request(orderId.toString());
+		try{
+			receivingItemDao.updateOrderIdNullByOrderId(orderId);
+			r.setMessage_status(ResponseStatus.getSuccessful());
+			r.setMessage_count(1);
+			r.setMessage_content("The record have been deleted");
+		}catch (IllegalArgumentException e){
+			r.setMessage_status(ResponseStatus.getFail());
+			r.setMessage_content("The record do not appear into table"); 
+			r.setMessage_count(0);
+		}
+		return r;
+	}
+	@Override
+	public ResponseMessage deleteByOrderId(Long orderId) {
+		// TODO Auto-generated method stub
+		ResponseMessage r = new ResponseMessage();
+		r.setMessage_request(orderId.toString());
+		try{
+			receivingItemDao.delete(orderId);
+			r.setMessage_status(ResponseStatus.getSuccessful());
+			r.setMessage_count(1);
+			r.setMessage_content("The record have been deleted");
+		}catch (IllegalArgumentException e){
+			r.setMessage_status(ResponseStatus.getFail());
+			r.setMessage_content("The record do not appear into table"); 
+			r.setMessage_count(0);
+		}
+		return r;
+
+	}
+	@Override
+	public ReceivingItem save(ReceivingItem receivingItem) {
+		// TODO Auto-generated method stub
+		return receivingItemDao.save(receivingItem);
 	}
 
 }

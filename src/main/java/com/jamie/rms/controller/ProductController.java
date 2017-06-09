@@ -23,6 +23,28 @@ import com.jamie.rms.service.ProductService;
 import com.jamie.rms.util.GsonUtil;
 import com.jamie.rms.util.ObjectUtil;
 
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
+import com.jamie.rms.model.Product;
+import com.jamie.rms.model.QuantityProfile;
+import com.jamie.rms.model.ResponseMessage;
+import com.jamie.rms.model.WeightProfile;
+import com.jamie.rms.searchcriteria.object.ProductSearchObject;
+import com.jamie.rms.service.ProductService;
+import com.jamie.rms.util.GsonUtil;
+import com.jamie.rms.util.ObjectUtil;
+
 @RequestMapping(value="/rms/product")
 @Controller
 public class ProductController {
@@ -32,7 +54,7 @@ public class ProductController {
 	private ProductService productService;
 	
 	@Autowired
-	private ReceivingController receivingController;
+	private ReceivingItemController receivingItemController;
 	
 	@Autowired
 	private InventoryController inventoryController;
@@ -89,8 +111,8 @@ public class ProductController {
 	}
 
 
-	@RequestMapping(value="/insertProduct",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
-	public @ResponseBody Product insertProduct(@RequestBody String json){
+	@RequestMapping(value="/save",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody Product save(@RequestBody String json){
 		log.info("[Product]-[insertProduct]-User Request(JSON) : "+ json);
 		Product product = new Product();
 		try{
@@ -136,12 +158,12 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/updateQuantityIdNullByQuantityIdAndPartyId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
-	public @ResponseBody Integer updateQuantityIdNullByWeightIdAndPartyId(@RequestBody String json){
-		log.info("[Product]-[updateQuantityIdNullByWeightIdAndPartyId]-User Request(JSON) : "+ json);
+	public @ResponseBody Integer updateQuantityIdNullByWeightIdAndPartyId(@RequestBody String quantityProfile_json){
+		log.info("[Product]-[updateQuantityIdNullByWeightIdAndPartyId]-User Request(JSON) : "+ quantityProfile_json);
 		QuantityProfile quantityProfile = new QuantityProfile();
 		try{
 			Gson gson = GsonUtil.getGson();
-			quantityProfile = gson.fromJson(json,QuantityProfile.class);
+			quantityProfile = gson.fromJson(quantityProfile_json,QuantityProfile.class);
 		}catch(Exception e){
 			e.printStackTrace();
 			log.error("[Product]-[updateQuantityIdNullByWeightIdAndPartyId]-[Error] : Create GSON Error");
@@ -199,7 +221,7 @@ public class ProductController {
 		//clear quanlityId and weightId  
 		try{
 			this.updateQuantityIdAndWeightIdNullByProductId(product_json);
-			receivingController.deleteByProductId(product_json);
+			receivingItemController.deleteByProductId(product_json);
 			inventoryController.deleteByProductId(product_json);
 			log.info("[Product]-[deleteByProductId]-Successful Clear All FK ");
 			
@@ -237,7 +259,7 @@ public class ProductController {
 		//clear quanlityId and weightId  
 		try{
 			this.updateQuantityIdAndWeightIdNullByProductId(product_json);
-			receivingController.deleteByProductId(product_json);
+			receivingItemController.deleteByProductId(product_json);
 			inventoryController.deleteByProductId(product_json);
 			log.info("[Product]-[delete]-Successful Clear All FK ");
 			

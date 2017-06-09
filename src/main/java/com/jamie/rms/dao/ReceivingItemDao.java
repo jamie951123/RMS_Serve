@@ -21,4 +21,8 @@ public interface ReceivingItemDao extends JpaRepository<ReceivingItem,Long>{
 	@Query("delete from ReceivingItem where productId = ?1")
 	int deleteByProductId(Long productId);
 	
+	@Modifying(clearAutomatically = true)
+	@Query("update ReceivingItem set orderId = null where orderId = ?1")
+	int updateOrderIdNullByOrderId(Long orderId);
+	
 }

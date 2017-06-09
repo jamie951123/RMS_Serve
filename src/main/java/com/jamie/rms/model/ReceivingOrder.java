@@ -2,7 +2,10 @@ package com.jamie.rms.model;
 
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,9 +15,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-@Entity(name="receiving_order")
+import org.hibernate.annotations.ForeignKey;
+
+@Entity(name = "ReceivingOrder")
+@Table(name ="ReceivingOrder")
 public class ReceivingOrder {
 
 	@Id
@@ -48,6 +55,12 @@ public class ReceivingOrder {
 	
 	@Column(name = "itemQty")
     private Integer itemQty;
+	
+	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.EAGER,orphanRemoval = true)
+	@JoinColumn(name="orderId", insertable=false, updatable =false)
+	@ForeignKey(name = "ReceivingOrder_fk")
+	private List<ReceivingItem> receivingItem;
+	
 	
 	public Long getOrderId() {
 		return orderId;
@@ -109,12 +122,19 @@ public class ReceivingOrder {
 	public void setItemQty(Integer itemQty) {
 		this.itemQty = itemQty;
 	}
+	
+	public List<ReceivingItem> getReceivingItem() {
+		return receivingItem;
+	}
+	public void setReceivingItem(List<ReceivingItem> receivingItem) {
+		this.receivingItem = receivingItem;
+	}
 	@Override
 	public String toString() {
-		return "ReceivingOrder [orderId=" + orderId + ", partyId=" + partyId + ", receivingDate=" + receivingDate
-				+ ", remark=" + remark + ", status=" + status + ", createDate=" + createDate + ", closeDate="
+		return "ReceivingOrder [orderId=" + orderId + ", partyId=" + partyId + ", remark=" + remark + ", status="
+				+ status + ", receivingDate=" + receivingDate + ", createDate=" + createDate + ", closeDate="
 				+ closeDate + ", actualQty=" + actualQty + ", estimateQty=" + estimateQty + ", itemQty=" + itemQty
-				+ "]";
+				+ ", receivingItem=" + receivingItem + "]";
 	}
     
 	

@@ -8,9 +8,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 
 @ComponentScan
@@ -33,6 +36,15 @@ public class Application extends SpringBootServletInitializer{
     @PostConstruct
     public void showIt() {
         System.out.println("Serve Base Path :"+servletContext.getContextPath());
+    }
+    
+    @Bean
+    public FilterRegistrationBean filterRegistrationBean() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        registrationBean.setFilter(characterEncodingFilter);
+        return registrationBean;
     }
     
     @RequestMapping("/")
