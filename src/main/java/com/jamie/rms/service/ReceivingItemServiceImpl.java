@@ -39,12 +39,9 @@ public class ReceivingItemServiceImpl implements ReceivingItemService{
 	@Override
 	public ResponseMessage deleteByProductId(Long productId) {
 		// TODO Auto-generated method stub
-		if(productId == null){
-			return null;
-		}
 		ResponseMessage r = new ResponseMessage();
-		r.setMessage_request(String.valueOf(productId));
 		try{
+			r.setMessage_request(String.valueOf(productId));
 			int count = receivingItemDao.deleteByProductId(productId);
 			r.setMessage_status(ResponseStatus.getSuccessful());
 			r.setMessage_count(count);
@@ -53,6 +50,8 @@ public class ReceivingItemServiceImpl implements ReceivingItemService{
 			r.setMessage_status(ResponseStatus.getFail());
 			r.setMessage_content("The record do not appear into table");
 			r.setMessage_count(0);
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		return r;
 	}
@@ -60,16 +59,17 @@ public class ReceivingItemServiceImpl implements ReceivingItemService{
 	public ResponseMessage updateOrderIdNullByOrderId(Long orderId) {
 		// TODO Auto-generated method stub
 		ResponseMessage r = new ResponseMessage();
-		r.setMessage_request(orderId.toString());
 		try{
+			r.setMessage_request(orderId.toString());
 			receivingItemDao.updateOrderIdNullByOrderId(orderId);
 			r.setMessage_status(ResponseStatus.getSuccessful());
 			r.setMessage_count(1);
 			r.setMessage_content("The record have been deleted");
-		}catch (IllegalArgumentException e){
+		}catch (Exception e){
 			r.setMessage_status(ResponseStatus.getFail());
 			r.setMessage_content("The record do not appear into table"); 
 			r.setMessage_count(0);
+			e.printStackTrace();
 		}
 		return r;
 	}
@@ -77,9 +77,9 @@ public class ReceivingItemServiceImpl implements ReceivingItemService{
 	public ResponseMessage deleteByOrderId(Long orderId) {
 		// TODO Auto-generated method stub
 		ResponseMessage r = new ResponseMessage();
-		r.setMessage_request(orderId.toString());
 		try{
-			receivingItemDao.delete(orderId);
+			r.setMessage_request(orderId.toString());
+			receivingItemDao.deleteByOrderId(orderId);
 			r.setMessage_status(ResponseStatus.getSuccessful());
 			r.setMessage_count(1);
 			r.setMessage_content("The record have been deleted");
@@ -87,6 +87,7 @@ public class ReceivingItemServiceImpl implements ReceivingItemService{
 			r.setMessage_status(ResponseStatus.getFail());
 			r.setMessage_content("The record do not appear into table"); 
 			r.setMessage_count(0);
+			e.printStackTrace();
 		}
 		return r;
 
@@ -96,5 +97,26 @@ public class ReceivingItemServiceImpl implements ReceivingItemService{
 		// TODO Auto-generated method stub
 		return receivingItemDao.save(receivingItem);
 	}
+	@Override
+	public ResponseMessage delete(ReceivingItem receivingItem) {
+		// TODO Auto-generated method stub
+	
+		ResponseMessage r = new ResponseMessage();
+		try{
+			r.setMessage_request(receivingItem.toString());
+			receivingItemDao.delete(receivingItem);
+			r.setMessage_status(ResponseStatus.getSuccessful());
+			r.setMessage_count(1);
+			r.setMessage_content("The record have been deleted");
+		}catch (IllegalArgumentException e){
+			r.setMessage_status(ResponseStatus.getFail());
+			r.setMessage_content("The record do not appear into table"); 
+			r.setMessage_count(0);
+			e.printStackTrace();
+	}
+		return r;
+	}
+	
+
 
 }

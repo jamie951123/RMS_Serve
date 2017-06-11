@@ -17,12 +17,19 @@ public interface ReceivingItemDao extends JpaRepository<ReceivingItem,Long>{
 	List<ReceivingItem> findByPartyId(String partyId);
 	ReceivingItem findByReceivingID(Long receivingID);
 	
+	//Update
+	@Modifying(clearAutomatically = true)
+	@Query("update ReceivingItem set orderId = null where orderId = ?1")
+	int updateOrderIdNullByOrderId(Long orderId);
+	
+	//Delete
+	@Modifying(clearAutomatically = true)
+	@Query("delete from ReceivingItem where orderId = ?1")
+	int deleteByOrderId(Long orderId);
+	
 	@Modifying(clearAutomatically = true)
 	@Query("delete from ReceivingItem where productId = ?1")
 	int deleteByProductId(Long productId);
 	
-	@Modifying(clearAutomatically = true)
-	@Query("update ReceivingItem set orderId = null where orderId = ?1")
-	int updateOrderIdNullByOrderId(Long orderId);
 	
 }
