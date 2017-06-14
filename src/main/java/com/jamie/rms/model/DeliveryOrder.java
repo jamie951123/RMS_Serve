@@ -28,25 +28,26 @@ public class DeliveryOrder {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "orderId",nullable = false, updatable=false)
 	private Long orderId;
 	
-	@Column(name = "partyId")
+	@Column(name = "partyId",nullable = false)
     private String partyId;
 	
 	@Column(name = "remark")
     private String remark;
 	
-	@Column(name = "status")
+	@Column(name = "status",nullable = false)
 	@Enumerated(EnumType.STRING)
     private Status status;
 	
-	@Column(name = "stockOutDate")
+	@Column(name = "stockOutDate",nullable = false)
 	private Date stockOutDate;
 	
-	@Column(name = "createDate")
+	@Column(name = "createDate",nullable = false, updatable=false)
     private Date createDate;
 	
-	@Column(name = "createBy")
+	@Column(name = "createBy",nullable = false, updatable=false)
 	private String createBy;
 	
 	@Column(name = "closeDate")
@@ -69,15 +70,6 @@ public class DeliveryOrder {
 	@JoinColumn(name="orderId", insertable=false, updatable =false)
 	@ForeignKey(name = "DeliveryOrder_fk")
 	private List<DeliveryItem> deliveryItem = new ArrayList<DeliveryItem>();
-	
-	
-	public List<DeliveryItem> getDeliveryItem() {
-		return deliveryItem;
-	}
-
-	public void setDeliveryItem(List<DeliveryItem> deliveryItem) {
-		this.deliveryItem = deliveryItem;
-	}
 
 	public Long getOrderId() {
 		return orderId;
@@ -175,6 +167,14 @@ public class DeliveryOrder {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
+	public List<DeliveryItem> getDeliveryItem() {
+		return deliveryItem;
+	}
+
+	public void setDeliveryItem(List<DeliveryItem> deliveryItem) {
+		this.deliveryItem = deliveryItem;
+	}
+
 	@Override
 	public String toString() {
 		return "DeliveryOrder [orderId=" + orderId + ", partyId=" + partyId + ", remark=" + remark + ", status="
@@ -182,6 +182,8 @@ public class DeliveryOrder {
 				+ ", closeDate=" + closeDate + ", itemQty=" + itemQty + ", doNo=" + doNo + ", lastModifiedDate="
 				+ lastModifiedDate + ", lastModifiedBy=" + lastModifiedBy + ", deliveryItem=" + deliveryItem + "]";
 	}
+	
+	
 	
 	
 	

@@ -1,6 +1,7 @@
 package com.jamie.rms.model;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,33 +10,51 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+/**
+ * @author Jamie
+ *
+ */
 @Entity(name = "user_profile")
 public class UserProfile {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "userProfileId")
+	@Column(name = "userProfileId",nullable = false, updatable=false)
 	private Long userProfileId;
 	
-	@Column(name = "username")
+	@Column(name = "username",nullable = false)
 	private String username;
 	
-	@Column(name = "password")
+	@Column(name = "password",nullable = false)
 	private String password;
 	
-	@Column(name = "partyId")
+	@Column(name = "partyId",nullable = false)
 	private String partyId;
 	
-	@Column(name = "status")
+	@Column(name = "status",nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
-	@Column(name = "createDate")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "createDate",nullable = false, updatable=false)
 	private Date createDate;
 	
+	@Column(name = "createBy",nullable = false, updatable=false)
+	private String createBy;
+	
+	@Column(name = "lastModifiedDate")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastModifiedDate;
+	
+	@Column(name = "lastModifiedBy")
+	private String lastModifiedBy;
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "closeDate")
 	private Date closeDate;
-	
+
 	public Long getUserProfileId() {
 		return userProfileId;
 	}
@@ -84,6 +103,14 @@ public class UserProfile {
 		this.createDate = createDate;
 	}
 
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
 	public Date getCloseDate() {
 		return closeDate;
 	}
@@ -92,12 +119,33 @@ public class UserProfile {
 		this.closeDate = closeDate;
 	}
 
+	
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
 	@Override
 	public String toString() {
 		return "UserProfile [userProfileId=" + userProfileId + ", username=" + username + ", password=" + password
-				+ ", partyId=" + partyId + ", status=" + status + ", createDate=" + createDate + ", closeDate="
-				+ closeDate + "]";
+				+ ", partyId=" + partyId + ", status=" + status + ", createDate=" + createDate + ", createBy="
+				+ createBy + ", lastModifiedDate=" + lastModifiedDate + ", lastModifiedBy=" + lastModifiedBy
+				+ ", closeDate=" + closeDate + "]";
 	}
+
+	
+	
 	
 	
 	

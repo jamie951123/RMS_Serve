@@ -23,30 +23,37 @@ public class DeliveryItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "DeliveryItemId")
-	private Long DeliveryItemId;
+	@Column(name = "deliveryItemId",nullable = false, updatable=false)
+	private Long deliveryItemId;
 	
 	@Column(name = "productId")
     private Long productId;
 	
-	@Column(name = "itemStatus")
+	@Column(name = "itemStatus",nullable = false)
 	@Enumerated(EnumType.STRING)
     private Status itemStatus;
 	
 	@Column(name = "orderId")
     private Long orderId;
 	
-	@Column(name = "partyId")
+	@Column(name = "partyId",nullable = false)
     private String partyId;
 	
 	@Column(name = "itemStockOutDate")
 	private Date itemStockOutDate;
 	
-	@Column(name = "itemCreateDate")
+	@Column(name = "itemCreateDate",nullable = false, updatable=false)
     private Date itemCreateDate;
 	
-	@Column(name = "itemCreateBy")
+	@Column(name = "itemCreateBy",nullable = false, updatable=false)
 	private String itemCreateBy;
+	
+	@Column(name = "lastModifiedDate")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date itemLastModifiedDate;
+	
+	@Column(name = "lastModifiedBy")
+	private String itemLastModifiedBy;
 	
 	@Column(name = "itemCloseDate")
     private Date itemCloseDate;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jamie.rms.common.ResponseStatus;
 import com.jamie.rms.dao.InventoryDao;
@@ -42,10 +43,15 @@ public class InventoryServiceImpl implements InventoryService{
 		return inventoryDao.findByPartyIdAndStatus(partyId, stauts);
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public List<Inventory> saves(List<Inventory> inventorys) {
 		// TODO Auto-generated method stub
-		return inventoryDao.save(inventorys);
+		try{
+			return inventoryDao.save(inventorys);
+		}catch(Exception e){
+			throw e;
+		}
 	}
 
 	@Override

@@ -60,8 +60,8 @@ public class QuantityProfileServiceImpl implements QuantityProfileService {
 		Long qtyId = quantityProfile.getQuantityId();
 		String qtyPartyId = quantityProfile.getPartyId();
 		String qtyUnit = quantityProfile.getQuantityUnit();
-		Date modifyTime = quantityProfile.getModifyTime();
-		String modifyBy = quantityProfile.getModifyBy();
+		Date modifyTime = quantityProfile.getLastModifiedDate();
+		String modifyBy = quantityProfile.getLastModifiedBy();
 		
 
 		return quantityProfileDao.updateQtyByQuantityIdAndPartyIdAndQtyUnit(qtyId, qtyPartyId, qtyUnit);

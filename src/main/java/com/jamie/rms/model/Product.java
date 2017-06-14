@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.OnDelete;
@@ -25,7 +27,7 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "productId")
+	@Column(name = "productId",nullable = false, updatable=false)
 	private Long productId;
 	
 	@Column(name = "productCode")
@@ -34,18 +36,28 @@ public class Product {
 	@Column(name = "productName")
 	private String productName;
 	
-	@Column(name = "partyId")
+	@Column(name = "partyId",nullable = false)
     private String partyId;
 	
-	@Column(name = "status")
+	@Column(name = "status",nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
-	@Column(name = "createDate" )
+	@Column(name = "createDate",nullable = false, updatable=false)
 	private Date createDate;
+	
+	@Column(name = "createBy",nullable = false, updatable=false)
+	private String createBy;
 	
 	@Column(name = "closeDate")
 	private Date closeDate;
+	
+	@Column(name = "lastModifiedDate")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastModifiedDate;
+	
+	@Column(name = "lastModifiedBy")
+	private String lastModifiedBy;
 	
 	@Column(name = "remark")
 	private String remark;
@@ -66,22 +78,14 @@ public class Product {
 	@ForeignKey(name = "weightprofile_fk")
 	@JoinColumn(name="weightId", insertable=false, updatable =false,nullable=true)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	WeightProfile weightprofile;
+	private WeightProfile weightprofile;
 	
 	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
 	@ForeignKey(name = "quantityProfile_fk")
 	@JoinColumn(name="quantityId", insertable=false, updatable =false,nullable=true)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	QuantityProfile quantityProfile;
+	private QuantityProfile quantityProfile;
 
-//	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.LAZY,orphanRemoval = true)
-//	@JoinColumn(name="receivingID", insertable=false, updatable =false,nullable=true)
-//	private Set<ReceivingItem> receivingItem;
-//	
-//	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.LAZY,orphanRemoval = true)
-//	@JoinColumn(name="inventoryId", insertable=false, updatable =false,nullable=true)
-//	private Set<Inventory> inventory;
-	
 	public Long getProductId() {
 		return productId;
 	}
@@ -130,12 +134,36 @@ public class Product {
 		this.createDate = createDate;
 	}
 
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
 	public Date getCloseDate() {
 		return closeDate;
 	}
 
 	public void setCloseDate(Date closeDate) {
 		this.closeDate = closeDate;
+	}
+
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
 	}
 
 	public String getRemark() {
@@ -197,12 +225,13 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", productCode=" + productCode + ", productName=" + productName
-				+ ", partyId=" + partyId + ", status=" + status + ", createDate=" + createDate + ", closeDate="
-				+ closeDate + ", remark=" + remark + ", productDescriptionEN=" + productDescriptionEN
+				+ ", partyId=" + partyId + ", status=" + status + ", createDate=" + createDate + ", createBy="
+				+ createBy + ", closeDate=" + closeDate + ", lastModifiedDate=" + lastModifiedDate + ", lastModifiedBy="
+				+ lastModifiedBy + ", remark=" + remark + ", productDescriptionEN=" + productDescriptionEN
 				+ ", productDescriptionCH=" + productDescriptionCH + ", weightId=" + weightId + ", quantityId="
 				+ quantityId + ", weightprofile=" + weightprofile + ", quantityProfile=" + quantityProfile + "]";
 	}
-	
+
 	
 	
 	

@@ -44,6 +44,7 @@ public class ReceivingOrderController {
 	@Autowired
 	private InventoryService inventoryService;
 	
+	//Find
 	@RequestMapping(value ="/findAll")
 	public @ResponseBody List<ReceivingOrder> findAll(){
 		List<ReceivingOrder> receivingOrder = receivingOrderService.findAll();
@@ -96,8 +97,9 @@ public class ReceivingOrderController {
 		return null;
 	}
 	
+	//Save
 	@RequestMapping(value = "/save",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
-	public @ResponseBody ReceivingOrder insertReceivingOrder(@RequestBody String receivingOrder_json){
+	public @ResponseBody ReceivingOrder save(@RequestBody String receivingOrder_json){
 		log.info("[ReceivingOrder]-[save]-User Request(JSON) : "+ receivingOrder_json);
 		ReceivingOrder receivingOrder = new ReceivingOrder();
 		try{
@@ -114,6 +116,8 @@ public class ReceivingOrderController {
 		log.info("[ReceivingOrder]-[save]-User Request(result) : "+ result);
 		return result;
 	}
+	
+	//Updata
 	
 	@Transactional(rollbackFor = Exception.class)
 	@RequestMapping(value = "/delete",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
@@ -180,6 +184,7 @@ public class ReceivingOrderController {
 			}
 			List<ReceivingItem> itemResult	= receivingItemService.saves(receivingOrder.getReceivingItem());
 			log.info("[ReceivingOrder]-[saveOrderAndItem]-User Response(ReceivingItem) : "+ itemResult);
+			
 			//Save Inventory
 			List<Inventory> inventoryList = inventoryService.saves(receivingItemGetInventory(itemResult));
 			log.info("[ReceivingOrder]-[saveInventory]-User Response(Inventory) : "+ inventoryList);

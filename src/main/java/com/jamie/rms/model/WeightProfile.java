@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,22 +22,31 @@ public class WeightProfile {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "weightId",nullable = false, updatable=false)
 	private Long weightId;
 	
-	@Column(name = "partyId")
+	@Column(name = "partyId",nullable = false)
     private String partyId;
 	
 	@Column(name = "weightUnit")
     private String weightUnit;
 
-	@Column(name = "createDate")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "createDate",nullable = false, updatable=false)
     private Date createDate;
-
-//	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.EAGER,orphanRemoval = true)
-//	@JoinColumn(name="productId", insertable=false, updatable =false)
-//	private Set<Product> product;
 	
+	@Column(name = "createBy",nullable = false, updatable=false)
+	private String createBy;
+	
+	@Column(name = "lastModifiedDate")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastModifiedDate;
+	
+	@Column(name = "lastModifiedBy")
+	private String lastModifiedBy;
+
+	@Column(name = "status",nullable = false)
+	@Enumerated(EnumType.STRING)
+    private Status status;
 	
 	public Long getWeightId() {
 		return weightId;
@@ -69,11 +80,54 @@ public class WeightProfile {
 		this.createDate = createDate;
 	}
 
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "WeightProfile [weightId=" + weightId + ", partyId=" + partyId + ", weightUnit=" + weightUnit
-				+ ", createDate=" + createDate + "]";
+				+ ", createDate=" + createDate + ", createBy=" + createBy + ", lastModifiedDate=" + lastModifiedDate
+				+ ", lastModifiedBy=" + lastModifiedBy + ", status=" + status + ", getWeightId()=" + getWeightId()
+				+ ", getPartyId()=" + getPartyId() + ", getWeightUnit()=" + getWeightUnit() + ", getCreateDate()="
+				+ getCreateDate() + ", getCreateBy()=" + getCreateBy() + ", getLastModifiedDate()="
+				+ getLastModifiedDate() + ", getLastModifiedBy()=" + getLastModifiedBy() + ", getStatus()="
+				+ getStatus() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
+
+	
+	
+	
 
 	
 	

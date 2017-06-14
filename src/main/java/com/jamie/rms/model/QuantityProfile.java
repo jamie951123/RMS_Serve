@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,34 +26,42 @@ import javax.persistence.TemporalType;
  * @author jamie
  *
  */
+/**
+ * @author Jamie
+ *
+ */
 @Entity(name = "QuantityProfile")
 @Table(name ="QuantityProfile")
 public class QuantityProfile {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "quantityId",nullable = false, updatable=false)
 	private Long quantityId;
 	
-	@Column(name = "partyId")
+	@Column(name = "partyId",nullable = false)
     private String partyId;
 	
 	@Column(name = "quantityUnit")
     private String quantityUnit;
 
-	@Column(name = "createDate")
+	@Column(name = "createDate",nullable = false, updatable=false)
 	@Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 	
-	@Column(name = "modifyTime")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date modifyTime;
+	@Column(name = "createBy",nullable = false)
+	private String createBy;
 	
-	@Column(name = "modifyBy")
-	private String modifyBy;
+	@Column(name = "lastModifiedDate")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastModifiedDate;
+	
+	@Column(name = "lastModifiedBy")
+	private String lastModifiedBy;
 
-//	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.EAGER,orphanRemoval = true)
-//	@JoinColumn(name="productId", insertable=false, updatable =false)
-//	private Set<QuantityProfile> quantityProfile;
+	@Column(name = "status",nullable = false)
+	@Enumerated(EnumType.STRING)
+    private Status status;
 	
 	public Long getQuantityId() {
 		return quantityId;
@@ -85,27 +95,51 @@ public class QuantityProfile {
 		this.createDate = createDate;
 	}
 
-	public Date getModifyTime() {
-		return modifyTime;
+	public String getCreateBy() {
+		return createBy;
 	}
 
-	public void setModifyTime(Date modifyTime) {
-		this.modifyTime = modifyTime;
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
 	}
 
-	public String getModifyBy() {
-		return modifyBy;
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
 	}
 
-	public void setModifyBy(String modifyBy) {
-		this.modifyBy = modifyBy;
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	@Override
 	public String toString() {
 		return "QuantityProfile [quantityId=" + quantityId + ", partyId=" + partyId + ", quantityUnit=" + quantityUnit
-				+ ", createDate=" + createDate + ", modifyTime=" + modifyTime + ", modifyBy=" + modifyBy + "]";
+				+ ", createDate=" + createDate + ", createBy=" + createBy + ", lastModifiedDate=" + lastModifiedDate
+				+ ", lastModifiedBy=" + lastModifiedBy + ", status=" + status + "]";
 	}
+
+	
+
+	
+	
+	
 
 	
 

@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.ForeignKey;
@@ -23,27 +25,37 @@ import org.hibernate.annotations.ForeignKey;
 public class ReceivingItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "receivingID")
+	@Column(name = "receivingID",nullable = false, updatable=false)
 	private Long receivingID;
 	
 	@Column(name = "productId")
     private Long productId;
 	
-	@Column(name = "itemStatus")
+	@Column(name = "itemStatus",nullable = false)
 	@Enumerated(EnumType.STRING)
     private Status itemStatus;
 	
 	@Column(name = "orderId")
     private Long orderId;
 	
-	@Column(name = "partyId")
+	@Column(name = "partyId",nullable = false)
     private String partyId;
 	
-	@Column(name = "itemCreateDate")
+	@Column(name = "itemCreateDate",nullable = false, updatable=false)
     private Date itemCreateDate;
 	
-	@Column(name = "itemReceivingDate")
+	@Column(name = "itemCreateBy",nullable = false, updatable=false)
+	private String itemCreateBy;
+	
+	@Column(name = "itemReceivingDate",nullable = false)
     private Date itemReceivingDate;
+	
+	@Column(name = "lastModifiedDate")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date itemLastModifiedDate;
+	
+	@Column(name = "lastModifiedBy")
+	private String itemLastModifiedBy;
 	
 	@Column(name = "itemGrossWeight")
     private BigDecimal itemGrossWeight;
@@ -58,16 +70,19 @@ public class ReceivingItem {
 	@JoinColumn(name="productId", insertable=false, updatable =false)
 	@ForeignKey(name = "product_fk")
 	@Filter(name="status",condition="status = :PROGRESS' ") 
-	private Product Product;
+	private Product product;
 
 	public Inventory getInventory(){
 		Inventory inv = new Inventory();
+		inv.setCreateDate(this.getItemCreateDate());
+		inv.setCreateBy(this.getItemCreateBy());
 		inv.setPartyId(this.getPartyId());
+//		inv.setStatus(this.getItemStatus());
+		
 		inv.setProductId(this.getProductId());
 		inv.setProduct(this.getProduct());
 		inv.setCreateDate(this.getItemCreateDate());
 		inv.setStockInDate(this.getItemReceivingDate());
-		inv.setStatus(this.getItemStatus());
 		inv.setGrossWeight(this.getItemGrossWeight());
 		inv.setQty(this.getItemQty());
 		return inv;
@@ -122,12 +137,38 @@ public class ReceivingItem {
 		this.itemCreateDate = itemCreateDate;
 	}
 
+	public String getItemCreateBy() {
+		return itemCreateBy;
+	}
+
+	public void setItemCreateBy(String itemCreateBy) {
+		this.itemCreateBy = itemCreateBy;
+	}
+
 	public Date getItemReceivingDate() {
 		return itemReceivingDate;
 	}
 
 	public void setItemReceivingDate(Date itemReceivingDate) {
 		this.itemReceivingDate = itemReceivingDate;
+	}
+
+	
+
+	public Date getItemLastModifiedDate() {
+		return itemLastModifiedDate;
+	}
+
+	public void setItemLastModifiedDate(Date itemLastModifiedDate) {
+		this.itemLastModifiedDate = itemLastModifiedDate;
+	}
+
+	public String getItemLastModifiedBy() {
+		return itemLastModifiedBy;
+	}
+
+	public void setItemLastModifiedBy(String itemLastModifiedBy) {
+		this.itemLastModifiedBy = itemLastModifiedBy;
 	}
 
 	public BigDecimal getItemGrossWeight() {
@@ -154,21 +195,35 @@ public class ReceivingItem {
 		this.itemRemark = itemRemark;
 	}
 
+
 	public Product getProduct() {
-		return Product;
+		return product;
 	}
 
 	public void setProduct(Product product) {
-		Product = product;
+		this.product = product;
 	}
 
 	@Override
 	public String toString() {
 		return "ReceivingItem [receivingID=" + receivingID + ", productId=" + productId + ", itemStatus=" + itemStatus
 				+ ", orderId=" + orderId + ", partyId=" + partyId + ", itemCreateDate=" + itemCreateDate
-				+ ", itemReceivingDate=" + itemReceivingDate + ", itemGrossWeight=" + itemGrossWeight + ", itemQty="
-				+ itemQty + ", itemRemark=" + itemRemark + ", Product=" + Product + "]";
+				+ ", itemCreateBy=" + itemCreateBy + ", itemReceivingDate=" + itemReceivingDate
+				+ ", itemLastModifiedDate=" + itemLastModifiedDate + ", itemLastModifiedBy=" + itemLastModifiedBy
+				+ ", itemGrossWeight=" + itemGrossWeight + ", itemQty=" + itemQty + ", itemRemark=" + itemRemark
+				+ ", product=" + product + ", getInventory()=" + getInventory() + ", getReceivingID()="
+				+ getReceivingID() + ", getProductId()=" + getProductId() + ", getItemStatus()=" + getItemStatus()
+				+ ", getOrderId()=" + getOrderId() + ", getPartyId()=" + getPartyId() + ", getItemCreateDate()="
+				+ getItemCreateDate() + ", getItemCreateBy()=" + getItemCreateBy() + ", getItemReceivingDate()="
+				+ getItemReceivingDate() + ", getItemLastModifiedDate()=" + getItemLastModifiedDate()
+				+ ", getItemLastModifiedBy()=" + getItemLastModifiedBy() + ", getItemGrossWeight()="
+				+ getItemGrossWeight() + ", getItemQty()=" + getItemQty() + ", getItemRemark()=" + getItemRemark()
+				+ ", getProduct()=" + getProduct() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
+
+	
+	
 	
 	
 	

@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * @author jamie
@@ -29,28 +31,42 @@ public class Inventory {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "inventoryId")
+	@Column(name = "inventoryId",nullable = false, updatable=false)
 	private Long inventoryId;
 	
 	@Column(name = "productId")
 	private Long productId;
 	
-	@Column(name = "partyId")
+	@Column(name = "partyId",nullable = false)
 	private String partyId;
 		
-	@Column(name = "createDate" )
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "createDate",nullable = false, updatable=false)
 	private Date createDate;
 	
+	@Column(name = "createBy",nullable = false, updatable=false)
+	private String createBy;
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "closeDate")
 	private Date closeDate;
 	
+	@Column(name = "lastModifiedDate")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastModifiedDate;
+	
+	@Column(name = "lastModifiedBy")
+	private String lastModifiedBy;
+	
 	@Column(name = "stockOutDate")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date stockOutDate;
 	
 	@Column(name = "stockInDate")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date stockInDate;
 	
-	@Column(name = "status")
+	@Column(name = "status",nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
@@ -72,6 +88,14 @@ public class Inventory {
 		this.inventoryId = inventoryId;
 	}
 
+	public Long getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
+
 	public String getPartyId() {
 		return partyId;
 	}
@@ -88,12 +112,36 @@ public class Inventory {
 		this.createDate = createDate;
 	}
 
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
 	public Date getCloseDate() {
 		return closeDate;
 	}
 
 	public void setCloseDate(Date closeDate) {
 		this.closeDate = closeDate;
+	}
+
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
 	}
 
 	public Date getStockOutDate() {
@@ -128,7 +176,6 @@ public class Inventory {
 		this.grossWeight = grossWeight;
 	}
 
-
 	public Integer getQty() {
 		return qty;
 	}
@@ -145,21 +192,16 @@ public class Inventory {
 		this.product = product;
 	}
 
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
-	}
-
 	@Override
 	public String toString() {
 		return "Inventory [inventoryId=" + inventoryId + ", productId=" + productId + ", partyId=" + partyId
-				+ ", createDate=" + createDate + ", closeDate=" + closeDate + ", stockOutDate=" + stockOutDate
-				+ ", stockInDate=" + stockInDate + ", status=" + status + ", grossWeight=" + grossWeight + ", qty="
-				+ qty + ", product=" + product + "]";
+				+ ", createDate=" + createDate + ", createBy=" + createBy + ", closeDate=" + closeDate
+				+ ", lastModifiedDate=" + lastModifiedDate + ", lastModifiedBy=" + lastModifiedBy + ", stockOutDate="
+				+ stockOutDate + ", stockInDate=" + stockInDate + ", status=" + status + ", grossWeight=" + grossWeight
+				+ ", qty=" + qty + ", product=" + product + "]";
 	}
+
+	
 
 	
 
