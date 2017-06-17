@@ -19,7 +19,7 @@ import com.jamie.rms.model.Product;
 import com.jamie.rms.model.ReceivingItem;
 import com.jamie.rms.model.ReceivingOrder;
 import com.jamie.rms.model.ResponseMessage;
-import com.jamie.rms.searchcriteria.object.ReceivingSearchObject;
+import com.jamie.rms.searchcriteria.object.ReceivingItemSearchObject;
 import com.jamie.rms.service.ReceivingItemService;
 import com.jamie.rms.util.GsonUtil;
 import com.jamie.rms.util.ObjectUtil;
@@ -43,19 +43,19 @@ public class ReceivingItemController {
 	}
 	
 	@RequestMapping(value = "/findByPartyId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
-	public @ResponseBody List<ReceivingItem> findByPartyId(@RequestBody String json){
-		log.info("[ReceivingItem]-[findByPartyId]-User Request(JSON) : "+ json);
-		ReceivingSearchObject receivingSearchObject = new ReceivingSearchObject();
+	public @ResponseBody List<ReceivingItem> findByPartyId(@RequestBody String receivingItemSearchObject_json){
+		log.info("[ReceivingItem]-[findByPartyId]-User Request(JSON) : "+ receivingItemSearchObject_json);
+		ReceivingItemSearchObject receivingItemSearchObject = new ReceivingItemSearchObject();
 		
 		try{
 			Gson gson = GsonUtil.getGson();
-			receivingSearchObject = gson.fromJson(json, ReceivingSearchObject.class);
+			receivingItemSearchObject = gson.fromJson(receivingItemSearchObject_json, ReceivingItemSearchObject.class);
 		}catch (Exception e){
 			
 		}
-		log.info("[ReceivingItem]-[findByPartyId]-User Request(GSON) : "+ receivingSearchObject);
-		if(receivingSearchObject != null && ObjectUtil.isNotNullEmpty(receivingSearchObject.getPartyId())){
-			List<ReceivingItem> receivingItem = receivingItemService.findByPartyId(receivingSearchObject.getPartyId());	
+		log.info("[ReceivingItem]-[findByPartyId]-User Request(GSON) : "+ receivingItemSearchObject);
+		if(receivingItemSearchObject != null && ObjectUtil.isNotNullEmpty(receivingItemSearchObject.getPartyId())){
+			List<ReceivingItem> receivingItem = receivingItemService.findByPartyId(receivingItemSearchObject.getPartyId());	
 			log.info("[ReceivingItem]-[Response]-findByPartyId :" + receivingItem);
 			return receivingItem;
 		}
@@ -64,19 +64,19 @@ public class ReceivingItemController {
 	}
 	
 	@RequestMapping(value = "/findByReceivingID",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
-	public @ResponseBody ReceivingItem findByReceivingID(@RequestBody String json){
-		log.info("[ReceivingItem]-[findByReceivingID]-User Request(JSON) : "+ json);
-		ReceivingSearchObject receivingSearchObject = new ReceivingSearchObject();
+	public @ResponseBody ReceivingItem findByReceivingID(@RequestBody String receivingItemSearchObject_json){
+		log.info("[ReceivingItem]-[findByReceivingID]-User Request(JSON) : "+ receivingItemSearchObject_json);
+		ReceivingItemSearchObject receivingItemSearchObject = new ReceivingItemSearchObject();
 		
 		try{
 			Gson gson = GsonUtil.getGson();
-			receivingSearchObject = gson.fromJson(json, ReceivingSearchObject.class);
+			receivingItemSearchObject = gson.fromJson(receivingItemSearchObject_json, ReceivingItemSearchObject.class);
 		}catch (Exception e){
 			
 		}
-		log.info("[ReceivingItem]-[findByReceivingID]-User Request(GSON) : "+ receivingSearchObject);
-		if(receivingSearchObject != null && receivingSearchObject.getId() != null){
-			ReceivingItem receivingItem = receivingItemService.findByReceivingID(receivingSearchObject.getId());
+		log.info("[ReceivingItem]-[findByReceivingID]-User Request(GSON) : "+ receivingItemSearchObject);
+		if(receivingItemSearchObject != null && receivingItemSearchObject.getId() != null){
+			ReceivingItem receivingItem = receivingItemService.findByReceivingID(receivingItemSearchObject.getId());
 			log.info("[ReceivingItem]-[Response]-findByPartyId :" + receivingItem);
 			return receivingItem;
 		}

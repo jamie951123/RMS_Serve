@@ -54,12 +54,9 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public ResponseMessage deleteByProductId(Long productId){
 		// TODO Auto-generated method stub
-		if(productId == null){
-			return null;
-		}
 		ResponseMessage r = new ResponseMessage();
-		r.setMessage_request(String.valueOf(productId));
 		try{
+		r.setMessage_request(String.valueOf(productId));
 			productDao.delete(productId);
 			r.setMessage_status(ResponseStatus.getSuccessful());
 			r.setMessage_count(1);

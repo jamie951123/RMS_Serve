@@ -18,7 +18,7 @@ import com.jamie.rms.model.Inventory;
 import com.jamie.rms.model.ReceivingItem;
 import com.jamie.rms.model.ReceivingOrder;
 import com.jamie.rms.model.ResponseMessage;
-import com.jamie.rms.searchcriteria.object.ReceivingSearchObject;
+import com.jamie.rms.searchcriteria.object.ReceivingOrderSearchObject;
 import com.jamie.rms.service.InventoryService;
 import com.jamie.rms.service.ReceivingItemService;
 import com.jamie.rms.service.ReceivingOrderService;
@@ -55,11 +55,11 @@ public class ReceivingOrderController {
 	@RequestMapping(value = "/findByOrderId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
 	public @ResponseBody ReceivingOrder findByOrderId(@RequestBody String receivingSearchObject_json){
 		log.info("[ReceivingOrder]-[findByOrderId]-User Request(JSON) : "+ receivingSearchObject_json);
-		ReceivingSearchObject receivingSearchObject = new ReceivingSearchObject();
+		ReceivingOrderSearchObject receivingSearchObject = new ReceivingOrderSearchObject();
 		
 		try{
 			Gson gson = GsonUtil.getGson();
-			receivingSearchObject = gson.fromJson(receivingSearchObject_json, ReceivingSearchObject.class);
+			receivingSearchObject = gson.fromJson(receivingSearchObject_json, ReceivingOrderSearchObject.class);
 		}catch (Exception e){
 			log.error("[ReceivingOrder]-[findByOrderId]-[Error] : Create GSON Error");
 		}finally{
@@ -79,11 +79,11 @@ public class ReceivingOrderController {
 	@RequestMapping(value = "/findByPartyId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
 	public @ResponseBody List<ReceivingOrder> findByPartyId(@RequestBody String receivingSearchObject_json){
 		log.info("[ReceivingOrder]-[findByPartyId]-User Request(JSON) : "+ receivingSearchObject_json);
-		ReceivingSearchObject receivingSearchObject = new ReceivingSearchObject();
+		ReceivingOrderSearchObject receivingSearchObject = new ReceivingOrderSearchObject();
 		
 		try{
 			Gson gson = GsonUtil.getGson();
-			receivingSearchObject = gson.fromJson(receivingSearchObject_json, ReceivingSearchObject.class);
+			receivingSearchObject = gson.fromJson(receivingSearchObject_json, ReceivingOrderSearchObject.class);
 		}catch (Exception e){
 			
 		}
