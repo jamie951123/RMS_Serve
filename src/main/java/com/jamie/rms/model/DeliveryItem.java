@@ -1,9 +1,7 @@
 package com.jamie.rms.model;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -74,14 +71,14 @@ public class DeliveryItem {
 	@Column(name = "itemQty")
     private Integer itemQty;
 	
-	@Column(name = "receivingID",nullable=false)
-    private Long receivingID;
+	@Column(name = "receivingId",nullable=false)
+    private Long receivingId;
 
 	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
-	@JoinColumn(name="receivingID", insertable=false, updatable =false,nullable=true)
+	@JoinColumn(name="receivingId", insertable=false, updatable =false,nullable=true)
 	@ForeignKey(name = "DeliveryItem_fk")
 	private ReceivingItem receivingItem;
-	
+
 	public Long getDeliveryItemId() {
 		return deliveryItemId;
 	}
@@ -194,13 +191,12 @@ public class DeliveryItem {
 		this.itemQty = itemQty;
 	}
 
-	
-	public Long getReceivingID() {
-		return receivingID;
+	public Long getReceivingId() {
+		return receivingId;
 	}
 
-	public void setReceivingID(Long receivingID) {
-		this.receivingID = receivingID;
+	public void setReceivingId(Long receivingId) {
+		this.receivingId = receivingId;
 	}
 
 	public ReceivingItem getReceivingItem() {
@@ -210,17 +206,8 @@ public class DeliveryItem {
 	public void setReceivingItem(ReceivingItem receivingItem) {
 		this.receivingItem = receivingItem;
 	}
-
-	@Override
-	public String toString() {
-		return "DeliveryItem [deliveryItemId=" + deliveryItemId + ", productId=" + productId + ", itemStatus="
-				+ itemStatus + ", orderId=" + orderId + ", partyId=" + partyId + ", itemStockOutDate="
-				+ itemStockOutDate + ", itemCreateDate=" + itemCreateDate + ", itemCreateBy=" + itemCreateBy
-				+ ", itemLastModifiedDate=" + itemLastModifiedDate + ", itemLastModifiedBy=" + itemLastModifiedBy
-				+ ", itemCloseDate=" + itemCloseDate + ", itemRemark=" + itemRemark + ", itemGrossWeight="
-				+ itemGrossWeight + ", itemQty=" + itemQty + ", receivingID=" + receivingID + ", receivingItem="
-				+ receivingItem + "]";
-	}
+	
+	
 	
 	
 	

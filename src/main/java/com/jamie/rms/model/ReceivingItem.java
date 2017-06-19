@@ -25,8 +25,8 @@ import org.hibernate.annotations.ForeignKey;
 public class ReceivingItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "receivingID",nullable = false, updatable=false)
-	private Long receivingID;
+	@Column(name = "receivingId",nullable = false, updatable=false)
+	private Long receivingId;
 	
 	@Column(name = "productId")
     private Long productId;
@@ -78,7 +78,6 @@ public class ReceivingItem {
 		inv.setCreateBy(this.getItemCreateBy());
 		inv.setPartyId(this.getPartyId());
 		inv.setStatus(this.getItemStatus());
-		
 		inv.setProductId(this.getProductId());
 		inv.setProduct(this.getProduct());
 		inv.setCreateDate(this.getItemCreateDate());
@@ -89,12 +88,12 @@ public class ReceivingItem {
 		
 	}
 
-	public Long getReceivingID() {
-		return receivingID;
+	public Long getReceivingId() {
+		return receivingId;
 	}
 
-	public void setReceivingID(Long receivingID) {
-		this.receivingID = receivingID;
+	public void setReceivingId(Long receivingId) {
+		this.receivingId = receivingId;
 	}
 
 	public Long getProductId() {
@@ -153,8 +152,6 @@ public class ReceivingItem {
 		this.itemReceivingDate = itemReceivingDate;
 	}
 
-	
-
 	public Date getItemLastModifiedDate() {
 		return itemLastModifiedDate;
 	}
@@ -195,7 +192,6 @@ public class ReceivingItem {
 		this.itemRemark = itemRemark;
 	}
 
-
 	public Product getProduct() {
 		return product;
 	}
@@ -206,22 +202,15 @@ public class ReceivingItem {
 
 	@Override
 	public String toString() {
-		return "ReceivingItem [receivingID=" + receivingID + ", productId=" + productId + ", itemStatus=" + itemStatus
+		return "ReceivingItem [receivingId=" + receivingId + ", productId=" + productId + ", itemStatus=" + itemStatus
 				+ ", orderId=" + orderId + ", partyId=" + partyId + ", itemCreateDate=" + itemCreateDate
 				+ ", itemCreateBy=" + itemCreateBy + ", itemReceivingDate=" + itemReceivingDate
 				+ ", itemLastModifiedDate=" + itemLastModifiedDate + ", itemLastModifiedBy=" + itemLastModifiedBy
 				+ ", itemGrossWeight=" + itemGrossWeight + ", itemQty=" + itemQty + ", itemRemark=" + itemRemark
-				+ ", product=" + product + ", getInventory()=" + getInventory() + ", getReceivingID()="
-				+ getReceivingID() + ", getProductId()=" + getProductId() + ", getItemStatus()=" + getItemStatus()
-				+ ", getOrderId()=" + getOrderId() + ", getPartyId()=" + getPartyId() + ", getItemCreateDate()="
-				+ getItemCreateDate() + ", getItemCreateBy()=" + getItemCreateBy() + ", getItemReceivingDate()="
-				+ getItemReceivingDate() + ", getItemLastModifiedDate()=" + getItemLastModifiedDate()
-				+ ", getItemLastModifiedBy()=" + getItemLastModifiedBy() + ", getItemGrossWeight()="
-				+ getItemGrossWeight() + ", getItemQty()=" + getItemQty() + ", getItemRemark()=" + getItemRemark()
-				+ ", getProduct()=" + getProduct() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+				+ ", product=" + product + "]";
 	}
 
+	
 	
 	
 	

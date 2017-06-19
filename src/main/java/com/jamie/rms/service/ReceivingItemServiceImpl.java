@@ -34,7 +34,7 @@ public class ReceivingItemServiceImpl implements ReceivingItemService{
 	@Override
 	public ReceivingItem findByReceivingID(Long receivingID) {
 		// TODO Auto-generated method stub
-		return receivingItemDao.findByReceivingID(receivingID);
+		return receivingItemDao.findByReceivingId(receivingID);
 	}
 	@Override
 	public ResponseMessage deleteByProductId(Long productId) {

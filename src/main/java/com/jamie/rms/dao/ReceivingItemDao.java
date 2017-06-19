@@ -15,7 +15,7 @@ import com.jamie.rms.model.ReceivingItem;
 public interface ReceivingItemDao extends JpaRepository<ReceivingItem,Long>{
 
 	List<ReceivingItem> findByPartyId(String partyId);
-	ReceivingItem findByReceivingID(Long receivingID);
+	ReceivingItem findByReceivingId(Long receivingID);
 	
 	//Update
 	@Modifying(clearAutomatically = true)

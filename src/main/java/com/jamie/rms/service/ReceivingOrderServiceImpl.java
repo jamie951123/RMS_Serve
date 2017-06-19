@@ -11,6 +11,7 @@ import com.jamie.rms.common.ResponseStatus;
 import com.jamie.rms.dao.ReceivingOrderDao;
 import com.jamie.rms.model.ReceivingOrder;
 import com.jamie.rms.model.ResponseMessage;
+import com.jamie.rms.model.Status;
 
 @Service
 public class ReceivingOrderServiceImpl implements ReceivingOrderService{
@@ -31,6 +32,12 @@ public class ReceivingOrderServiceImpl implements ReceivingOrderService{
 		return receivingOrderDao.findByPartyId(partyId);
 	}
 
+	@Override
+	public List<ReceivingOrder> findByPartyIdAndStatus(String partyId,Status status) {
+		// TODO Auto-generated method stub
+		return receivingOrderDao.findByPartyIdAndStatus(partyId,status);
+	}
+	
 	@Override
 	public ReceivingOrder save(ReceivingOrder receivingOrder) {
 		// TODO Auto-generated method stub
@@ -60,5 +67,6 @@ public class ReceivingOrderServiceImpl implements ReceivingOrderService{
 		}
 		return r;
 	}
+
 
 }

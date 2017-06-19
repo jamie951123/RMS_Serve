@@ -197,7 +197,7 @@ public class ReceivingItemController {
 		}finally{
 			log.info("[ReceivingItem]-[delete]-User Request(GSON) : "+ receivingItem);
 		}
-		if(receivingItem != null && receivingItem.getReceivingID() != null){
+		if(receivingItem != null && receivingItem.getReceivingId() != null){
 			ResponseMessage responseMessage =  receivingItemService.delete(receivingItem);
 			log.info("[ReceivingItem]-[delete]-[Response] :" + responseMessage);
 			return responseMessage;

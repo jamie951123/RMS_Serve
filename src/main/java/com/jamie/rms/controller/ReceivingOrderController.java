@@ -85,7 +85,7 @@ public class ReceivingOrderController {
 			Gson gson = GsonUtil.getGson();
 			receivingSearchObject = gson.fromJson(receivingSearchObject_json, ReceivingOrderSearchObject.class);
 		}catch (Exception e){
-			
+			e.printStackTrace();
 		}
 		log.info("[ReceivingOrder]-[findByPartyId]-User Request(GSON) : "+ receivingSearchObject);
 		if(receivingSearchObject != null && ObjectUtil.isNotNullEmpty(receivingSearchObject.getPartyId())){
@@ -94,6 +94,27 @@ public class ReceivingOrderController {
 			return receivingOrder;
 		}
 		log.warn("[ReceivingOrder]-[findByPartyId]-[Error] : productSearchObject is empty");
+		return null;
+	}
+	
+	@RequestMapping(value = "/findByPartyIdAndStatus",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody List<ReceivingOrder> findByPartyIdAndStatus(@RequestBody String receivingSearchObject_json){
+		log.info("[ReceivingOrder]-[findByPartyIdAndStatus]-User Request(JSON) : "+ receivingSearchObject_json);
+		ReceivingOrderSearchObject receivingSearchObject = new ReceivingOrderSearchObject();
+		
+		try{
+			Gson gson = GsonUtil.getGson();
+			receivingSearchObject = gson.fromJson(receivingSearchObject_json, ReceivingOrderSearchObject.class);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		log.info("[ReceivingOrder]-[findByPartyIdAndStatus]-User Request(GSON) : "+ receivingSearchObject);
+		if(receivingSearchObject != null && ObjectUtil.isNotNullEmpty(receivingSearchObject.getPartyId()) && receivingSearchObject.getStatus() != null){
+			List<ReceivingOrder> receivingOrder = receivingOrderService.findByPartyIdAndStatus(receivingSearchObject.getPartyId(),receivingSearchObject.getStatus());	
+			log.info("[ReceivingOrder]-[findByPartyIdAndStatus]-[Response] :" + receivingOrder);
+			return receivingOrder;
+		}
+		log.warn("[ReceivingOrder]-[findByPartyIdAndStatus]-[Error] : productSearchObject is empty");
 		return null;
 	}
 	
