@@ -66,8 +66,11 @@ public class DeliveryOrder {
 	@Column(name = "lastModifiedBy")
 	private String lastModifiedBy;
 
+	@Column(name = "deliveryItemId",nullable = false)
+	private Long deliveryItemId;
+	
 	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.EAGER,orphanRemoval = true)
-	@JoinColumn(name="orderId", insertable=false, updatable =false)
+	@JoinColumn(name="deliveryItemId", insertable=false, updatable =false)
 	@ForeignKey(name = "DeliveryOrder_fk")
 	private List<DeliveryItem> deliveryItem = new ArrayList<DeliveryItem>();
 

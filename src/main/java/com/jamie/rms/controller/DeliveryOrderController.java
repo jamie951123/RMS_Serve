@@ -50,7 +50,7 @@ public class DeliveryOrderController {
 		log.info("[DeliveryOrder]-[findByPartyIdAndStauts]-User Request(GSON) : "+ deliveryOrderSearchObject);
 		if(deliveryOrderSearchObject != null && ObjectUtil.isNotNullEmpty(deliveryOrderSearchObject.getPartyId()) && deliveryOrderSearchObject.getStatus() != null){
 			List<DeliveryOrder> deliveryOrder = deliveryOrderService.findByPartyIdAndStatus(deliveryOrderSearchObject.getPartyId(),deliveryOrderSearchObject.getStatus());	
-			log.info("[DeliveryOrder]-[Response]-findByPartyIdAndStauts :" + deliveryOrderSearchObject);
+			log.info("[DeliveryOrder]-[Response]-findByPartyIdAndStauts :" + deliveryOrder);
 			return deliveryOrder;
 		}
 		return null;

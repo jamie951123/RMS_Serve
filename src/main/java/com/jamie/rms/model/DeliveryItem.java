@@ -5,16 +5,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.ForeignKey;
 
 
 @Entity(name="DeliveryItem")
@@ -67,9 +74,14 @@ public class DeliveryItem {
 	@Column(name = "itemQty")
     private Integer itemQty;
 	
-	@Column(name = "receivingId")
-    private Integer receivingId;
+	@Column(name = "receivingID",nullable=false)
+    private Long receivingID;
 
+	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
+	@JoinColumn(name="receivingID", insertable=false, updatable =false,nullable=true)
+	@ForeignKey(name = "DeliveryItem_fk")
+	private ReceivingItem receivingItem;
+	
 	public Long getDeliveryItemId() {
 		return deliveryItemId;
 	}
@@ -182,12 +194,21 @@ public class DeliveryItem {
 		this.itemQty = itemQty;
 	}
 
-	public Integer getReceivingId() {
-		return receivingId;
+	
+	public Long getReceivingID() {
+		return receivingID;
 	}
 
-	public void setReceivingId(Integer receivingId) {
-		this.receivingId = receivingId;
+	public void setReceivingID(Long receivingID) {
+		this.receivingID = receivingID;
+	}
+
+	public ReceivingItem getReceivingItem() {
+		return receivingItem;
+	}
+
+	public void setReceivingItem(ReceivingItem receivingItem) {
+		this.receivingItem = receivingItem;
 	}
 
 	@Override
@@ -197,7 +218,8 @@ public class DeliveryItem {
 				+ itemStockOutDate + ", itemCreateDate=" + itemCreateDate + ", itemCreateBy=" + itemCreateBy
 				+ ", itemLastModifiedDate=" + itemLastModifiedDate + ", itemLastModifiedBy=" + itemLastModifiedBy
 				+ ", itemCloseDate=" + itemCloseDate + ", itemRemark=" + itemRemark + ", itemGrossWeight="
-				+ itemGrossWeight + ", itemQty=" + itemQty + ", receivingId=" + receivingId + "]";
+				+ itemGrossWeight + ", itemQty=" + itemQty + ", receivingID=" + receivingID + ", receivingItem="
+				+ receivingItem + "]";
 	}
 	
 	

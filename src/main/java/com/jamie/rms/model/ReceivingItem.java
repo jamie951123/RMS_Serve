@@ -77,7 +77,7 @@ public class ReceivingItem {
 		inv.setCreateDate(this.getItemCreateDate());
 		inv.setCreateBy(this.getItemCreateBy());
 		inv.setPartyId(this.getPartyId());
-//		inv.setStatus(this.getItemStatus());
+		inv.setStatus(this.getItemStatus());
 		
 		inv.setProductId(this.getProductId());
 		inv.setProduct(this.getProduct());
