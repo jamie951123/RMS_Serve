@@ -201,7 +201,7 @@ public class ReceivingOrderController {
 			//Save ReceivingItem
 			Long orderId = orderResult.getOrderId();
 			for(ReceivingItem item :orderResult.getReceivingItem()){
-				item.setOrderId(orderId);
+//				item.setOrderId(orderId);
 			}
 			List<ReceivingItem> itemResult	= receivingItemService.saves(receivingOrder.getReceivingItem());
 			log.info("[ReceivingOrder]-[saveOrderAndItem]-User Response(ReceivingItem) : "+ itemResult);
