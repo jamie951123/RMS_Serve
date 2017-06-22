@@ -4,7 +4,9 @@ package com.jamie.rms.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -89,7 +91,7 @@ public class ReceivingOrder implements Serializable {
 //	private List<ReceivingItem> receivingItem;
 	
 
-	private List<ReceivingItem> receivingItem = new ArrayList<>();
+	private Set<ReceivingItem> receivingItem = new HashSet<>();
 
 
 	public Long getOrderId() {
@@ -223,12 +225,12 @@ public class ReceivingOrder implements Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "receivingOrder", cascade = { CascadeType.ALL})
 	@ForeignKey(name = "receivingOrder_receivingItem_fk")
-	public List<ReceivingItem> getReceivingItem() {
+	public Set<ReceivingItem> getReceivingItem() {
 		return receivingItem;
 	}
 
 
-	public void setReceivingItem(List<ReceivingItem> receivingItem) {
+	public void setReceivingItem(Set<ReceivingItem> receivingItem) {
 		this.receivingItem = receivingItem;
 	}
 
