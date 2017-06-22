@@ -1,6 +1,5 @@
 package com.jamie.rms.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -24,13 +23,11 @@ import org.hibernate.annotations.ForeignKey;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "ReceivingItem")
 @Table(name ="ReceivingItem")
-public class ReceivingItem implements Serializable {
-	private static final long serialVersionUID = 2649940112751498093L;
+public class ReceivingItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "receivingId",nullable = false, updatable=false)
@@ -43,8 +40,8 @@ public class ReceivingItem implements Serializable {
 	@Enumerated(EnumType.STRING)
     private Status itemStatus;
 	
-//	@Column(name = "orderId")
-//    private Long orderId;
+	@Column(name = "orderId")
+    private Long orderId;
 	
 	@Column(name = "partyId",nullable = false)
     private String partyId;
@@ -80,10 +77,9 @@ public class ReceivingItem implements Serializable {
 	private Product product;
 
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.ALL})
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH, CascadeType.DETACH })
 	@JoinColumn(name = "orderId", referencedColumnName = "orderId")
-	@JsonIgnore
-	private ReceivingOrder receivingOrder = new ReceivingOrder();
+	private ReceivingOrder receivingOrder;
 	
 //	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
 //	@JoinColumn(name="orderId",referencedColumnName="orderId", insertable=false, updatable =false)
@@ -130,6 +126,14 @@ public class ReceivingItem implements Serializable {
 
 	public void setItemStatus(Status itemStatus) {
 		this.itemStatus = itemStatus;
+	}
+
+	public Long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
 	}
 
 	public String getPartyId() {
@@ -212,6 +216,8 @@ public class ReceivingItem implements Serializable {
 		this.product = product;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH, CascadeType.DETACH })
+	@JoinColumn(name = "orderId", referencedColumnName = "orderId")
 	public ReceivingOrder getReceivingOrder() {
 		return receivingOrder;
 	}
@@ -220,10 +226,7 @@ public class ReceivingItem implements Serializable {
 		this.receivingOrder = receivingOrder;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+	
 	
 
 	
