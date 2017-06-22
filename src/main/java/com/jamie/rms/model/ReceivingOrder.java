@@ -1,6 +1,7 @@
 package com.jamie.rms.model;
 
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -22,9 +23,12 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 
 import org.hibernate.annotations.ForeignKey;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "ReceivingOrder")
 @Table(name ="ReceivingOrder")
-public class ReceivingOrder {
+public class ReceivingOrder implements Serializable {
+	private static final long serialVersionUID = 2649940112751498093L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -81,9 +85,9 @@ public class ReceivingOrder {
 ////	@JsonIgnore
 //	 @JsonManagedReference
 //	private List<ReceivingItem> receivingItem;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "receivingOrder", cascade = { CascadeType.MERGE, CascadeType.PERSIST,
-			CascadeType.REFRESH, CascadeType.DETACH })
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "receivingOrder", cascade = { CascadeType.ALL})
 	@ForeignKey(name = "receivingOrder_receivingItem_fk")
+	@JsonIgnore
 	private List<ReceivingItem> receivingItem;
 
 

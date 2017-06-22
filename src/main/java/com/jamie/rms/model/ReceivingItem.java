@@ -1,5 +1,6 @@
 package com.jamie.rms.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -27,7 +28,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "ReceivingItem")
 @Table(name ="ReceivingItem")
-public class ReceivingItem {
+public class ReceivingItem implements Serializable {
+	private static final long serialVersionUID = 2649940112751498093L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "receivingId",nullable = false, updatable=false)
@@ -77,7 +79,7 @@ public class ReceivingItem {
 	private Product product;
 
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH, CascadeType.DETACH })
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.ALL})
 	@JoinColumn(name = "orderId", referencedColumnName = "orderId")
 	private ReceivingOrder receivingOrder;
 	
