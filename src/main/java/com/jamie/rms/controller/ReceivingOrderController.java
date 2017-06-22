@@ -198,19 +198,19 @@ public class ReceivingOrderController {
 			ReceivingOrder orderResult 		= receivingOrderService.save(receivingOrder);
 			log.info("[ReceivingOrder]-[saveOrderAndItem]-User Response(ReceivingOrder) : "+ orderResult);
 			
-			//Save ReceivingItem
-			Long orderId = orderResult.getOrderId();
-			for(ReceivingItem item :orderResult.getReceivingItem()){
+//			//Save ReceivingItem
+//			Long orderId = orderResult.getOrderId();
+//			for(ReceivingItem item :orderResult.getReceivingItem()){
 //				item.setOrderId(orderId);
-			}
-			List<ReceivingItem> itemResult	= receivingItemService.saves(receivingOrder.getReceivingItem());
-			log.info("[ReceivingOrder]-[saveOrderAndItem]-User Response(ReceivingItem) : "+ itemResult);
-			
-			//Save Inventory
-			List<Inventory> inventoryList = inventoryService.saves(receivingItemGetInventory(itemResult));
-			log.info("[ReceivingOrder]-[saveInventory]-User Response(Inventory) : "+ inventoryList);
-
-			log.info("[ReceivingOrder]-[saveOrderAndItem]-User Response(insert Successful) !! ");
+//			}
+//			List<ReceivingItem> itemResult	= receivingItemService.saves(receivingOrder.getReceivingItem());
+//			log.info("[ReceivingOrder]-[saveOrderAndItem]-User Response(ReceivingItem) : "+ itemResult);
+//			
+//			//Save Inventory
+//			List<Inventory> inventoryList = inventoryService.saves(receivingItemGetInventory(itemResult));
+//			log.info("[ReceivingOrder]-[saveInventory]-User Response(Inventory) : "+ inventoryList);
+//
+//			log.info("[ReceivingOrder]-[saveOrderAndItem]-User Response(insert Successful) !! ");
 			return receivingOrder;
 		}catch (Exception e){
 			e.printStackTrace();
