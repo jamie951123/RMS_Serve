@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import org.hibernate.annotations.ForeignKey;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity(name = "ReceivingOrder")
 @Table(name ="ReceivingOrder")
@@ -222,6 +223,7 @@ public class ReceivingOrder implements Serializable {
 
 	@XmlElement(name = "receivingOrder")
 	@XmlElementWrapper(name = "receivingItem")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	public List<ReceivingItem> getReceivingItem() {
 		return receivingItem;
 	}
