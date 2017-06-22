@@ -82,7 +82,7 @@ public class ReceivingItem implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.ALL})
 	@JoinColumn(name = "orderId", referencedColumnName = "orderId")
-	private ReceivingOrder receivingOrder;
+	private ReceivingOrder receivingOrder = new ReceivingOrder();
 	
 //	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
 //	@JoinColumn(name="orderId",referencedColumnName="orderId", insertable=false, updatable =false)
