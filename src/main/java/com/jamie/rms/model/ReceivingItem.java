@@ -132,14 +132,6 @@ public class ReceivingItem implements Serializable {
 		this.itemStatus = itemStatus;
 	}
 
-//	public Long getOrderId() {
-//		return orderId;
-//	}
-//
-//	public void setOrderId(Long orderId) {
-//		this.orderId = orderId;
-//	}
-
 	public String getPartyId() {
 		return partyId;
 	}
@@ -220,7 +212,6 @@ public class ReceivingItem implements Serializable {
 		this.product = product;
 	}
 
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	public ReceivingOrder getReceivingOrder() {
 		return receivingOrder;
 	}
@@ -229,7 +220,10 @@ public class ReceivingItem implements Serializable {
 		this.receivingOrder = receivingOrder;
 	}
 
-	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	
 
 	

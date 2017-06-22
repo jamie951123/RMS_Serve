@@ -87,9 +87,9 @@ public class ReceivingOrder implements Serializable {
 ////	@JsonIgnore
 //	 @JsonManagedReference
 //	private List<ReceivingItem> receivingItem;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "receivingOrder", cascade = { CascadeType.ALL})
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "receivingOrder", cascade = { CascadeType.ALL})
 	@ForeignKey(name = "receivingOrder_receivingItem_fk")
-//	@JsonIgnore
 	private List<ReceivingItem> receivingItem = new ArrayList<>();
 
 
@@ -222,9 +222,7 @@ public class ReceivingOrder implements Serializable {
 		this.itemQty = itemQty;
 	}
 
-	@XmlElement(name = "receivingOrder")
-	@XmlElementWrapper(name = "receivingItem")
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 	public List<ReceivingItem> getReceivingItem() {
 		return receivingItem;
 	}
@@ -233,10 +231,13 @@ public class ReceivingOrder implements Serializable {
 	public void setReceivingItem(List<ReceivingItem> receivingItem) {
 		this.receivingItem = receivingItem;
 	}
-	
-	
-	
-	
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
 	
 	
 }
