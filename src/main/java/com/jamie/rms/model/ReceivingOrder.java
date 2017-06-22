@@ -83,7 +83,7 @@ public class ReceivingOrder implements Serializable {
 //	 @JsonManagedReference
 //	private List<ReceivingItem> receivingItem;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "receivingOrder", cascade = { CascadeType.ALL})
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "orderId", cascade = { CascadeType.ALL})
 	@ForeignKey(name = "receivingOrder_receivingItem_fk")
 	private List<ReceivingItem> receivingItem = new ArrayList<>();
 
@@ -217,6 +217,7 @@ public class ReceivingOrder implements Serializable {
 		this.itemQty = itemQty;
 	}
 
+
 	public List<ReceivingItem> getReceivingItem() {
 		return receivingItem;
 	}
@@ -231,6 +232,18 @@ public class ReceivingOrder implements Serializable {
 		return serialVersionUID;
 	}
 
+
+	@Override
+	public String toString() {
+		return "ReceivingOrder [orderId=" + orderId + ", partyId=" + partyId + ", remark=" + remark + ", status="
+				+ status + ", receivingDate=" + receivingDate + ", createDate=" + createDate + ", createBy=" + createBy
+				+ ", closeDate=" + closeDate + ", lastModifiedDate=" + lastModifiedDate + ", lastModifiedBy="
+				+ lastModifiedBy + ", actualQty=" + actualQty + ", estimateQty=" + estimateQty + ", itemQty=" + itemQty
+				+ ", receivingItem=" + receivingItem + "]";
+	}
+
+
+	
 
 	
 	

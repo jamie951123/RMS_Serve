@@ -40,8 +40,8 @@ public class ReceivingItem {
 	@Enumerated(EnumType.STRING)
     private Status itemStatus;
 	
-//	@Column(name = "orderId")
-//    private Long orderId;
+	@Column(name = "orderId")
+    private Long orderId;
 	
 	@Column(name = "partyId",nullable = false)
     private String partyId;
@@ -77,9 +77,9 @@ public class ReceivingItem {
 	private Product product;
 
 	
-	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.ALL},optional=false)
-	@JoinColumn(name = "orderId", referencedColumnName = "orderId")
-	private ReceivingOrder receivingOrder;
+//	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.ALL},optional=false)
+//	@JoinColumn(name = "orderId", referencedColumnName = "orderId")
+//	private ReceivingOrder receivingOrder;
 	
 //	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
 //	@JoinColumn(name="orderId",referencedColumnName="orderId", insertable=false, updatable =false)
@@ -104,124 +104,155 @@ public class ReceivingItem {
 		
 	}
 
+
 	public Long getReceivingId() {
 		return receivingId;
 	}
+
 
 	public void setReceivingId(Long receivingId) {
 		this.receivingId = receivingId;
 	}
 
+
 	public Long getProductId() {
 		return productId;
 	}
+
 
 	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
 
+
 	public Status getItemStatus() {
 		return itemStatus;
 	}
+
 
 	public void setItemStatus(Status itemStatus) {
 		this.itemStatus = itemStatus;
 	}
 
-//	public Long getOrderId() {
-//		return orderId;
-//	}
-//
-//	public void setOrderId(Long orderId) {
-//		this.orderId = orderId;
-//	}
+
+	public Long getOrderId() {
+		return orderId;
+	}
+
+
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
+	}
+
 
 	public String getPartyId() {
 		return partyId;
 	}
 
+
 	public void setPartyId(String partyId) {
 		this.partyId = partyId;
 	}
+
 
 	public Date getItemCreateDate() {
 		return itemCreateDate;
 	}
 
+
 	public void setItemCreateDate(Date itemCreateDate) {
 		this.itemCreateDate = itemCreateDate;
 	}
+
 
 	public String getItemCreateBy() {
 		return itemCreateBy;
 	}
 
+
 	public void setItemCreateBy(String itemCreateBy) {
 		this.itemCreateBy = itemCreateBy;
 	}
+
 
 	public Date getItemReceivingDate() {
 		return itemReceivingDate;
 	}
 
+
 	public void setItemReceivingDate(Date itemReceivingDate) {
 		this.itemReceivingDate = itemReceivingDate;
 	}
+
 
 	public Date getItemLastModifiedDate() {
 		return itemLastModifiedDate;
 	}
 
+
 	public void setItemLastModifiedDate(Date itemLastModifiedDate) {
 		this.itemLastModifiedDate = itemLastModifiedDate;
 	}
+
 
 	public String getItemLastModifiedBy() {
 		return itemLastModifiedBy;
 	}
 
+
 	public void setItemLastModifiedBy(String itemLastModifiedBy) {
 		this.itemLastModifiedBy = itemLastModifiedBy;
 	}
+
 
 	public BigDecimal getItemGrossWeight() {
 		return itemGrossWeight;
 	}
 
+
 	public void setItemGrossWeight(BigDecimal itemGrossWeight) {
 		this.itemGrossWeight = itemGrossWeight;
 	}
+
 
 	public Integer getItemQty() {
 		return itemQty;
 	}
 
+
 	public void setItemQty(Integer itemQty) {
 		this.itemQty = itemQty;
 	}
+
 
 	public String getItemRemark() {
 		return itemRemark;
 	}
 
+
 	public void setItemRemark(String itemRemark) {
 		this.itemRemark = itemRemark;
 	}
+
 
 	public Product getProduct() {
 		return product;
 	}
 
+
 	public void setProduct(Product product) {
 		this.product = product;
 	}
 
-	public ReceivingOrder getReceivingOrder() {
-		return receivingOrder;
-	}
 
-	public void setReceivingOrder(ReceivingOrder receivingOrder) {
-		this.receivingOrder = receivingOrder;
+	@Override
+	public String toString() {
+		return "ReceivingItem [receivingId=" + receivingId + ", productId=" + productId + ", itemStatus=" + itemStatus
+				+ ", orderId=" + orderId + ", partyId=" + partyId + ", itemCreateDate=" + itemCreateDate
+				+ ", itemCreateBy=" + itemCreateBy + ", itemReceivingDate=" + itemReceivingDate
+				+ ", itemLastModifiedDate=" + itemLastModifiedDate + ", itemLastModifiedBy=" + itemLastModifiedBy
+				+ ", itemGrossWeight=" + itemGrossWeight + ", itemQty=" + itemQty + ", itemRemark=" + itemRemark
+				+ ", product=" + product + "]";
 	}
 
 	

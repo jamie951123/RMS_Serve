@@ -69,9 +69,9 @@ public class DeliveryOrder {
 	@Column(name = "deliveryItemId",nullable = false)
 	private Long deliveryItemId;
 	
-	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.EAGER,orphanRemoval = true)
+	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.EAGER,orphanRemoval = true,mappedBy = "orderId")
 //	@JoinColumn(name="orderId", insertable=false, updatable =false)
-//	@ForeignKey(name = "DeliveryOrder_fk")
+	@ForeignKey(name = "deliveryOrder_deliveryitem_fk")
 	private List<DeliveryItem> deliveryItem;
 
 	public Long getOrderId() {

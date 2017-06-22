@@ -206,6 +206,17 @@ public class DeliveryItem {
 	public void setReceivingItem(ReceivingItem receivingItem) {
 		this.receivingItem = receivingItem;
 	}
+
+	@Override
+	public String toString() {
+		return "DeliveryItem [deliveryItemId=" + deliveryItemId + ", productId=" + productId + ", itemStatus="
+				+ itemStatus + ", orderId=" + orderId + ", partyId=" + partyId + ", itemStockOutDate="
+				+ itemStockOutDate + ", itemCreateDate=" + itemCreateDate + ", itemCreateBy=" + itemCreateBy
+				+ ", itemLastModifiedDate=" + itemLastModifiedDate + ", itemLastModifiedBy=" + itemLastModifiedBy
+				+ ", itemCloseDate=" + itemCloseDate + ", itemRemark=" + itemRemark + ", itemGrossWeight="
+				+ itemGrossWeight + ", itemQty=" + itemQty + ", receivingId=" + receivingId + ", receivingItem="
+				+ receivingItem + "]";
+	}
 	
 	
 	
