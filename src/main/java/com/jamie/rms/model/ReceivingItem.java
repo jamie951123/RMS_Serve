@@ -40,8 +40,8 @@ public class ReceivingItem {
 	@Enumerated(EnumType.STRING)
     private Status itemStatus;
 	
-	@Column(name = "orderId")
-    private Long orderId;
+//	@Column(name = "orderId")
+//    private Long orderId;
 	
 	@Column(name = "partyId",nullable = false)
     private String partyId;
@@ -128,13 +128,13 @@ public class ReceivingItem {
 		this.itemStatus = itemStatus;
 	}
 
-	public Long getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(Long orderId) {
-		this.orderId = orderId;
-	}
+//	public Long getOrderId() {
+//		return orderId;
+//	}
+//
+//	public void setOrderId(Long orderId) {
+//		this.orderId = orderId;
+//	}
 
 	public String getPartyId() {
 		return partyId;
@@ -216,8 +216,6 @@ public class ReceivingItem {
 		this.product = product;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH, CascadeType.DETACH })
-	@JoinColumn(name = "orderId", referencedColumnName = "orderId")
 	public ReceivingOrder getReceivingOrder() {
 		return receivingOrder;
 	}
