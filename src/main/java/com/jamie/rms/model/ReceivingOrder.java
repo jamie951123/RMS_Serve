@@ -4,9 +4,7 @@ package com.jamie.rms.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,13 +19,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 
 import org.hibernate.annotations.ForeignKey;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity(name = "ReceivingOrder")
 @Table(name ="ReceivingOrder")
@@ -90,8 +83,9 @@ public class ReceivingOrder implements Serializable {
 //	 @JsonManagedReference
 //	private List<ReceivingItem> receivingItem;
 	
-
-	private Set<ReceivingItem> receivingItem = new HashSet<>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "receivingOrder", cascade = { CascadeType.ALL})
+	@ForeignKey(name = "receivingOrder_receivingItem_fk")
+	private List<ReceivingItem> receivingItem = new ArrayList<>();
 
 
 	public Long getOrderId() {
@@ -223,14 +217,12 @@ public class ReceivingOrder implements Serializable {
 		this.itemQty = itemQty;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "receivingOrder", cascade = { CascadeType.ALL})
-	@ForeignKey(name = "receivingOrder_receivingItem_fk")
-	public Set<ReceivingItem> getReceivingItem() {
+	public List<ReceivingItem> getReceivingItem() {
 		return receivingItem;
 	}
 
 
-	public void setReceivingItem(Set<ReceivingItem> receivingItem) {
+	public void setReceivingItem(List<ReceivingItem> receivingItem) {
 		this.receivingItem = receivingItem;
 	}
 

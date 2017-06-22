@@ -77,7 +77,7 @@ public class ReceivingItem {
 	private Product product;
 
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH, CascadeType.DETACH })
+	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.ALL},optional=false)
 	@JoinColumn(name = "orderId", referencedColumnName = "orderId")
 	private ReceivingOrder receivingOrder;
 	
