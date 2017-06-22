@@ -2,6 +2,7 @@ package com.jamie.rms.model;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -88,8 +89,8 @@ public class ReceivingOrder implements Serializable {
 //	private List<ReceivingItem> receivingItem;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "receivingOrder", cascade = { CascadeType.ALL})
 	@ForeignKey(name = "receivingOrder_receivingItem_fk")
-	@JsonIgnore
-	private List<ReceivingItem> receivingItem;
+//	@JsonIgnore
+	private List<ReceivingItem> receivingItem = new ArrayList<>();
 
 
 	public Long getOrderId() {
