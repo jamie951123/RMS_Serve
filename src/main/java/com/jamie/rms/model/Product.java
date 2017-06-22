@@ -75,13 +75,13 @@ public class Product {
 	private Long quantityId;
 	
 	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
-	@ForeignKey(name = "weightprofile_fk")
+	@ForeignKey(name = "product_weightprofile_fk")
 	@JoinColumn(name="weightId", insertable=false, updatable =false,nullable=true)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private WeightProfile weightprofile;
 	
 	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
-	@ForeignKey(name = "quantityProfile_fk")
+	@ForeignKey(name = "product_quantityProfile_fk")
 	@JoinColumn(name="quantityId", insertable=false, updatable =false,nullable=true)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private QuantityProfile quantityProfile;

@@ -3,6 +3,7 @@ package com.jamie.rms.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,6 +20,10 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.ForeignKey;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "ReceivingItem")
 @Table(name ="ReceivingItem")
@@ -66,12 +71,18 @@ public class ReceivingItem {
 	@Column(name = "itemRemark")
     private String itemRemark;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER,cascade= {CascadeType.ALL},optional=false)
 	@JoinColumn(name="productId", insertable=false, updatable =false)
-	@ForeignKey(name = "product_fk")
-	@Filter(name="status",condition="status = :PROGRESS' ") 
+	@ForeignKey(name = "receivingItem_product_fk")
 	private Product product;
 
+//	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
+//	@JoinColumn(name="orderId",referencedColumnName="orderId", insertable=false, updatable =false)
+////	@ForeignKey(name = "receivingItem_receivingOrder_fk")
+////	@JsonIgnore
+//	 @JsonManagedReference
+//	private ReceivingOrder receivingOrder = new ReceivingOrder();
+//	
 	public Inventory getInventory(){
 		Inventory inv = new Inventory();
 		inv.setCreateDate(this.getItemCreateDate());
@@ -209,13 +220,9 @@ public class ReceivingItem {
 				+ ", itemGrossWeight=" + itemGrossWeight + ", itemQty=" + itemQty + ", itemRemark=" + itemRemark
 				+ ", product=" + product + "]";
 	}
+	
+	
 
-	
-	
-	
-	
-	
-	
 	
 	
 }

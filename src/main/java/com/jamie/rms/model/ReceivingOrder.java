@@ -21,6 +21,9 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ForeignKey;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity(name = "ReceivingOrder")
 @Table(name ="ReceivingOrder")
 public class ReceivingOrder {
@@ -70,10 +73,16 @@ public class ReceivingOrder {
 	@Column(name = "itemQty")
     private Integer itemQty;
 	
-	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.EAGER,orphanRemoval = true)
-	@JoinColumn(name="orderId", insertable=false, updatable =false)
-	@ForeignKey(name = "ReceivingOrder_fk")
+	
+	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
 	private List<ReceivingItem> receivingItem;
+	
+//	@OneToMany(targetEntity=ReceivingItem.class,cascade= {CascadeType.ALL},fetch = FetchType.EAGER,mappedBy="receivingOrder")
+////	@JoinColumn(name="orderId", insertable=false, updatable =false)
+//	@ForeignKey(name = "receivingOrder_receivingItem_fk")
+////	@JsonIgnore
+//	 @JsonManagedReference
+//	private List<ReceivingItem> receivingItem;
 
 	public Long getOrderId() {
 		return orderId;

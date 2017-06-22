@@ -70,9 +70,9 @@ public class DeliveryOrder {
 	private Long deliveryItemId;
 	
 	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.EAGER,orphanRemoval = true)
-	@JoinColumn(name="deliveryItemId", insertable=false, updatable =false)
-	@ForeignKey(name = "DeliveryOrder_fk")
-	private List<DeliveryItem> deliveryItem = new ArrayList<DeliveryItem>();
+//	@JoinColumn(name="orderId", insertable=false, updatable =false)
+//	@ForeignKey(name = "DeliveryOrder_fk")
+	private List<DeliveryItem> deliveryItem;
 
 	public Long getOrderId() {
 		return orderId;
