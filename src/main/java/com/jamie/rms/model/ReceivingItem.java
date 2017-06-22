@@ -76,6 +76,11 @@ public class ReceivingItem {
 	@ForeignKey(name = "receivingItem_product_fk")
 	private Product product;
 
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH, CascadeType.DETACH })
+	@JoinColumn(name = "orderId", referencedColumnName = "orderId")
+	private ReceivingOrder receivingOrder;
+	
 //	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
 //	@JoinColumn(name="orderId",referencedColumnName="orderId", insertable=false, updatable =false)
 ////	@ForeignKey(name = "receivingItem_receivingOrder_fk")
@@ -211,15 +216,14 @@ public class ReceivingItem {
 		this.product = product;
 	}
 
-	@Override
-	public String toString() {
-		return "ReceivingItem [receivingId=" + receivingId + ", productId=" + productId + ", itemStatus=" + itemStatus
-				+ ", orderId=" + orderId + ", partyId=" + partyId + ", itemCreateDate=" + itemCreateDate
-				+ ", itemCreateBy=" + itemCreateBy + ", itemReceivingDate=" + itemReceivingDate
-				+ ", itemLastModifiedDate=" + itemLastModifiedDate + ", itemLastModifiedBy=" + itemLastModifiedBy
-				+ ", itemGrossWeight=" + itemGrossWeight + ", itemQty=" + itemQty + ", itemRemark=" + itemRemark
-				+ ", product=" + product + "]";
+	public ReceivingOrder getReceivingOrder() {
+		return receivingOrder;
 	}
+
+	public void setReceivingOrder(ReceivingOrder receivingOrder) {
+		this.receivingOrder = receivingOrder;
+	}
+
 	
 	
 

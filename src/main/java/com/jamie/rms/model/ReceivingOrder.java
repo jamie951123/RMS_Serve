@@ -13,16 +13,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 
 import org.hibernate.annotations.ForeignKey;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "ReceivingOrder")
 @Table(name ="ReceivingOrder")
@@ -74,8 +72,8 @@ public class ReceivingOrder {
     private Integer itemQty;
 	
 	
-	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
-	private List<ReceivingItem> receivingItem;
+//	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
+//	private List<ReceivingItem> receivingItem;
 	
 //	@OneToMany(targetEntity=ReceivingItem.class,cascade= {CascadeType.ALL},fetch = FetchType.EAGER,mappedBy="receivingOrder")
 ////	@JoinColumn(name="orderId", insertable=false, updatable =false)
@@ -83,127 +81,153 @@ public class ReceivingOrder {
 ////	@JsonIgnore
 //	 @JsonManagedReference
 //	private List<ReceivingItem> receivingItem;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "receivingOrder", cascade = { CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH, CascadeType.DETACH })
+	@ForeignKey(name = "receivingOrder_receivingItem_fk")
+	private List<ReceivingItem> receivingItem;
+
 
 	public Long getOrderId() {
 		return orderId;
 	}
 
+
 	public void setOrderId(Long orderId) {
 		this.orderId = orderId;
 	}
+
 
 	public String getPartyId() {
 		return partyId;
 	}
 
+
 	public void setPartyId(String partyId) {
 		this.partyId = partyId;
 	}
+
 
 	public String getRemark() {
 		return remark;
 	}
 
+
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+
 
 	public Status getStatus() {
 		return status;
 	}
 
+
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+
 
 	public Date getReceivingDate() {
 		return receivingDate;
 	}
 
+
 	public void setReceivingDate(Date receivingDate) {
 		this.receivingDate = receivingDate;
 	}
+
 
 	public Date getCreateDate() {
 		return createDate;
 	}
 
+
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+
 
 	public String getCreateBy() {
 		return createBy;
 	}
 
+
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
 	}
+
 
 	public Date getCloseDate() {
 		return closeDate;
 	}
 
+
 	public void setCloseDate(Date closeDate) {
 		this.closeDate = closeDate;
 	}
+
 
 	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
+
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
+
 
 	public String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
 
+
 	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
+
 
 	public Integer getActualQty() {
 		return actualQty;
 	}
 
+
 	public void setActualQty(Integer actualQty) {
 		this.actualQty = actualQty;
 	}
+
 
 	public Integer getEstimateQty() {
 		return estimateQty;
 	}
 
+
 	public void setEstimateQty(Integer estimateQty) {
 		this.estimateQty = estimateQty;
 	}
+
 
 	public Integer getItemQty() {
 		return itemQty;
 	}
 
+
 	public void setItemQty(Integer itemQty) {
 		this.itemQty = itemQty;
 	}
 
+	@XmlElement(name = "receivingOrder")
+	@XmlElementWrapper(name = "receivingItem")
 	public List<ReceivingItem> getReceivingItem() {
 		return receivingItem;
 	}
 
+
 	public void setReceivingItem(List<ReceivingItem> receivingItem) {
 		this.receivingItem = receivingItem;
 	}
-
-	@Override
-	public String toString() {
-		return "ReceivingOrder [orderId=" + orderId + ", partyId=" + partyId + ", remark=" + remark + ", status="
-				+ status + ", receivingDate=" + receivingDate + ", createDate=" + createDate + ", createBy=" + createBy
-				+ ", closeDate=" + closeDate + ", lastModifiedDate=" + lastModifiedDate + ", lastModifiedBy="
-				+ lastModifiedBy + ", actualQty=" + actualQty + ", estimateQty=" + estimateQty + ", itemQty=" + itemQty
-				+ ", receivingItem=" + receivingItem + "]";
-	}
+	
+	
 	
 	
 	
