@@ -66,14 +66,6 @@ public class DeliveryOrder {
 	@Column(name = "lastModifiedBy")
 	private String lastModifiedBy;
 
-	@Column(name = "deliveryItemId",nullable = false)
-	private Long deliveryItemId;
-	
-	@OneToMany(cascade= {CascadeType.ALL},fetch = FetchType.EAGER,orphanRemoval = true,mappedBy = "orderId")
-//	@JoinColumn(name="orderId", insertable=false, updatable =false)
-	@ForeignKey(name = "deliveryOrder_deliveryitem_fk")
-	private List<DeliveryItem> deliveryItem;
-
 	public Long getOrderId() {
 		return orderId;
 	}
@@ -170,21 +162,14 @@ public class DeliveryOrder {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	public List<DeliveryItem> getDeliveryItem() {
-		return deliveryItem;
-	}
-
-	public void setDeliveryItem(List<DeliveryItem> deliveryItem) {
-		this.deliveryItem = deliveryItem;
-	}
-
 	@Override
 	public String toString() {
 		return "DeliveryOrder [orderId=" + orderId + ", partyId=" + partyId + ", remark=" + remark + ", status="
 				+ status + ", stockOutDate=" + stockOutDate + ", createDate=" + createDate + ", createBy=" + createBy
 				+ ", closeDate=" + closeDate + ", itemQty=" + itemQty + ", doNo=" + doNo + ", lastModifiedDate="
-				+ lastModifiedDate + ", lastModifiedBy=" + lastModifiedBy + ", deliveryItem=" + deliveryItem + "]";
+				+ lastModifiedDate + ", lastModifiedBy=" + lastModifiedBy + "]";
 	}
+	
 	
 	
 	

@@ -30,20 +30,17 @@ public class DeliveryItem {
 	@Column(name = "deliveryItemId",nullable = false, updatable=false)
 	private Long deliveryItemId;
 	
-	@Column(name = "productId")
-    private Long productId;
-	
 	@Column(name = "itemStatus",nullable = false)
 	@Enumerated(EnumType.STRING)
     private Status itemStatus;
 	
-	@Column(name = "orderId")
+	@Column(name = "orderId",nullable = false)
     private Long orderId;
 	
 	@Column(name = "partyId",nullable = false)
     private String partyId;
 	
-	@Column(name = "itemStockOutDate")
+	@Column(name = "itemStockOutDate",nullable = false)
 	private Date itemStockOutDate;
 	
 	@Column(name = "itemCreateDate",nullable = false, updatable=false)
@@ -74,7 +71,7 @@ public class DeliveryItem {
 	@Column(name = "receivingId",nullable=false)
     private Long receivingId;
 
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
+	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
 	@JoinColumn(name="receivingId", insertable=false, updatable =false,nullable=true)
 	@ForeignKey(name = "DeliveryItem_fk")
 	private ReceivingItem receivingItem;
@@ -85,14 +82,6 @@ public class DeliveryItem {
 
 	public void setDeliveryItemId(Long deliveryItemId) {
 		this.deliveryItemId = deliveryItemId;
-	}
-
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
 	}
 
 	public Status getItemStatus() {
@@ -209,16 +198,15 @@ public class DeliveryItem {
 
 	@Override
 	public String toString() {
-		return "DeliveryItem [deliveryItemId=" + deliveryItemId + ", productId=" + productId + ", itemStatus="
-				+ itemStatus + ", orderId=" + orderId + ", partyId=" + partyId + ", itemStockOutDate="
-				+ itemStockOutDate + ", itemCreateDate=" + itemCreateDate + ", itemCreateBy=" + itemCreateBy
-				+ ", itemLastModifiedDate=" + itemLastModifiedDate + ", itemLastModifiedBy=" + itemLastModifiedBy
-				+ ", itemCloseDate=" + itemCloseDate + ", itemRemark=" + itemRemark + ", itemGrossWeight="
-				+ itemGrossWeight + ", itemQty=" + itemQty + ", receivingId=" + receivingId + ", receivingItem="
-				+ receivingItem + "]";
+		return "DeliveryItem [deliveryItemId=" + deliveryItemId + ", itemStatus=" + itemStatus + ", orderId=" + orderId
+				+ ", partyId=" + partyId + ", itemStockOutDate=" + itemStockOutDate + ", itemCreateDate="
+				+ itemCreateDate + ", itemCreateBy=" + itemCreateBy + ", itemLastModifiedDate=" + itemLastModifiedDate
+				+ ", itemLastModifiedBy=" + itemLastModifiedBy + ", itemCloseDate=" + itemCloseDate + ", itemRemark="
+				+ itemRemark + ", itemGrossWeight=" + itemGrossWeight + ", itemQty=" + itemQty + ", receivingId="
+				+ receivingId + ", receivingItem=" + receivingItem + "]";
 	}
-	
-	
+
+
 	
 	
 	

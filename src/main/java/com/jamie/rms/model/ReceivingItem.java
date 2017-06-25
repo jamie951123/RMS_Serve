@@ -71,16 +71,17 @@ public class ReceivingItem {
 	@Column(name = "itemRemark")
     private String itemRemark;
 	
-	@ManyToOne(fetch = FetchType.EAGER,cascade= {CascadeType.ALL},optional=false)
+	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.ALL},optional=false)
 	@JoinColumn(name="productId", insertable=false, updatable =false)
 	@ForeignKey(name = "receivingItem_product_fk")
 	private Product product;
 
 	
 //	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.ALL},optional=false)
-//	@JoinColumn(name = "orderId", referencedColumnName = "orderId")
+//	@JoinColumn(name = "orderId", referencedColumnName = "orderId", insertable=false, updatable =false)
+//	@JsonBackReference
 //	private ReceivingOrder receivingOrder;
-	
+//	
 //	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.EAGER)
 //	@JoinColumn(name="orderId",referencedColumnName="orderId", insertable=false, updatable =false)
 ////	@ForeignKey(name = "receivingItem_receivingOrder_fk")
@@ -103,6 +104,19 @@ public class ReceivingItem {
 		return inv;
 		
 	}
+
+
+	
+//	public ReceivingOrder getReceivingOrder() {
+//		return receivingOrder;
+//	}
+//
+//
+//
+//	public void setReceivingOrder(ReceivingOrder receivingOrder) {
+//		this.receivingOrder = receivingOrder;
+//	}
+//
 
 
 	public Long getReceivingId() {

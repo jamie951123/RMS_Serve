@@ -15,12 +15,17 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.ForeignKey;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "ReceivingOrder")
 @Table(name ="ReceivingOrder")
@@ -83,9 +88,11 @@ public class ReceivingOrder implements Serializable {
 //	 @JsonManagedReference
 //	private List<ReceivingItem> receivingItem;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL},mappedBy = "orderId")
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(targetEntity=ReceivingItem.class , cascade = { CascadeType.ALL},mappedBy = "orderId",fetch = FetchType.LAZY)
+	@JsonManagedReference 
 	@ForeignKey(name = "receivingOrder_receivingItem_fk")
-	private List<ReceivingItem> receivingItem = new ArrayList<>();
+	private List<ReceivingItem> receivingItem;
 
 
 	public Long getOrderId() {
@@ -241,6 +248,8 @@ public class ReceivingOrder implements Serializable {
 				+ lastModifiedBy + ", actualQty=" + actualQty + ", estimateQty=" + estimateQty + ", itemQty=" + itemQty
 				+ ", receivingItem=" + receivingItem + "]";
 	}
+	
+	
 
 
 	

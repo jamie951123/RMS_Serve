@@ -76,7 +76,7 @@ public class Inventory {
 	@Column(name = "qty")
     private Integer qty;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="productId", insertable=false, updatable =false)
 	private Product product;
 
