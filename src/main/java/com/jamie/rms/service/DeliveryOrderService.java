@@ -10,7 +10,8 @@ public interface DeliveryOrderService {
 	//Find
 	List<DeliveryOrder> findAll();
 	List<DeliveryOrder> findByPartyIdAndStatus(String partyId,Status status);
-	
+	//Save
+	DeliveryOrder save(DeliveryOrder deliveryOrder);
 	//Delete
 	ResponseMessage delete(DeliveryOrder deliveryOrder);
 }

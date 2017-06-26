@@ -23,4 +23,10 @@ public class DeliveryItemServiceImpl implements DeliveryItemService{
 		return deliveryItemDao.findAll();
 	}
 
+	@Override
+	public List<DeliveryItem> saves(List<DeliveryItem> deliveryItem) {
+		// TODO Auto-generated method stub
+		return deliveryItemDao.save(deliveryItem);
+	}
+
 }

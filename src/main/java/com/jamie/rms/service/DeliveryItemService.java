@@ -8,5 +8,9 @@ import com.jamie.rms.model.DeliveryItem;
 
 
 public interface DeliveryItemService {
+	//Find
 	List<DeliveryItem> findAll();
+	
+	//Save 
+	List<DeliveryItem> saves(List<DeliveryItem> deliveryItem);
 }

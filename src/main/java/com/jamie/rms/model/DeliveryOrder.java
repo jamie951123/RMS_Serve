@@ -19,7 +19,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.ForeignKey;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity(name="DeliveryOrder")
@@ -65,6 +69,12 @@ public class DeliveryOrder {
 	
 	@Column(name = "lastModifiedBy")
 	private String lastModifiedBy;
+
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(targetEntity=DeliveryItem.class , cascade = { CascadeType.ALL},mappedBy = "deliveryItemId",fetch = FetchType.LAZY)
+	@JsonManagedReference 
+	@ForeignKey(name = "deliveryOrder_deliveryItem_fk")
+	private List<DeliveryItem> deliveryItem;
 
 	public Long getOrderId() {
 		return orderId;
@@ -162,14 +172,21 @@ public class DeliveryOrder {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
+	public List<DeliveryItem> getDeliveryItem() {
+		return deliveryItem;
+	}
+
+	public void setDeliveryItem(List<DeliveryItem> deliveryItem) {
+		this.deliveryItem = deliveryItem;
+	}
+
 	@Override
 	public String toString() {
 		return "DeliveryOrder [orderId=" + orderId + ", partyId=" + partyId + ", remark=" + remark + ", status="
 				+ status + ", stockOutDate=" + stockOutDate + ", createDate=" + createDate + ", createBy=" + createBy
 				+ ", closeDate=" + closeDate + ", itemQty=" + itemQty + ", doNo=" + doNo + ", lastModifiedDate="
-				+ lastModifiedDate + ", lastModifiedBy=" + lastModifiedBy + "]";
+				+ lastModifiedDate + ", lastModifiedBy=" + lastModifiedBy + ", deliveryItem=" + deliveryItem + "]";
 	}
-	
 	
 	
 	
