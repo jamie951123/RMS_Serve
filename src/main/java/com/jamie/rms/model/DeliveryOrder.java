@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name="DeliveryOrder")
 public class DeliveryOrder {
 
-	@Id
+	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "orderId",nullable = false, updatable=false)
 	private Long orderId;

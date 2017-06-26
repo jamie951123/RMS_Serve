@@ -26,7 +26,7 @@ public class DeliveryItemServiceImpl implements DeliveryItemService{
 	@Override
 	public List<DeliveryItem> saves(List<DeliveryItem> deliveryItem) {
 		// TODO Auto-generated method stub
-		return deliveryItemDao.save(deliveryItem);
+		return deliveryItemDao.save(deliveryItem); 
 	}
 
 }
