@@ -1,6 +1,6 @@
 package com.jamie.rms.model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +13,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,7 +27,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name="DeliveryOrder")
 @Table(name="DeliveryOrder")
-public class DeliveryOrder {
+public class DeliveryOrder implements Serializable {
+	private static final long serialVersionUID = 2649940112751498093L;
 
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
