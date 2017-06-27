@@ -138,6 +138,46 @@ public class ReceivingOrderController {
 		return result;
 	}
 	
+	@Transactional(rollbackFor = Exception.class)
+	@RequestMapping(value = "/saveOrderAndItem",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody ReceivingOrder saveOrderAndItem(@RequestBody String receivingOrder_json){
+		log.info("[ReceivingOrder]-[saveOrderAndItem]-User Request(JSON) : "+ receivingOrder_json);
+		ReceivingOrder receivingOrder = new ReceivingOrder();
+		try{
+			Gson gson = GsonUtil.getGson();
+			receivingOrder = gson.fromJson(receivingOrder_json, ReceivingOrder.class);
+		}catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
+		log.info("[ReceivingOrder]-[saveOrderAndItem]-User Request(GSON) : "+ receivingOrder);
+		
+		try{		
+			ReceivingOrder orderResult 		= receivingOrderService.save(receivingOrder);
+			log.info("[ReceivingOrder]-[saveOrderAndItem]-User Response(ReceivingOrder) : "+ orderResult);
+			
+			//Save ReceivingItem
+			Long orderId = orderResult.getOrderId();
+			for(ReceivingItem item :orderResult.getReceivingItem()){
+				item.setOrderId(orderId);
+			}
+			List<ReceivingItem> itemResult	= receivingItemService.saves(receivingOrder.getReceivingItem());
+			log.info("[ReceivingOrder]-[saveOrderAndItem]-User Response(ReceivingItem) : "+ itemResult);
+			
+			//Save Inventory
+			List<Inventory> inventoryList = inventoryService.saves(receivingItemGetInventory(itemResult));
+			log.info("[ReceivingOrder]-[saveInventory]-User Response(Inventory) : "+ inventoryList);
+
+			log.info("[ReceivingOrder]-[saveOrderAndItem]-User Response(insert Successful) !! ");
+			return receivingOrder;
+		}catch (Exception e){
+			e.printStackTrace();
+			log.error("[ReceivingOrder]-[saveOrderAndItem]-User Response(Error) : Insert Fail !!");
+			throw e;
+		}
+		
+	}
+	
 	//Updata
 	
 //	Delete
@@ -179,46 +219,6 @@ public class ReceivingOrderController {
 			}
 		}
 		return null;
-	}
-	
-	@Transactional(rollbackFor = Exception.class)
-	@RequestMapping(value = "/saveOrderAndItem",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
-	public @ResponseBody ReceivingOrder saveOrderAndItem(@RequestBody String receivingOrder_json){
-		log.info("[ReceivingOrder]-[saveOrderAndItem]-User Request(JSON) : "+ receivingOrder_json);
-		ReceivingOrder receivingOrder = new ReceivingOrder();
-		try{
-			Gson gson = GsonUtil.getGson();
-			receivingOrder = gson.fromJson(receivingOrder_json, ReceivingOrder.class);
-		}catch(Exception e){
-			e.printStackTrace();
-			throw e;
-		}
-		log.info("[ReceivingOrder]-[saveOrderAndItem]-User Request(GSON) : "+ receivingOrder);
-		
-		try{		
-			ReceivingOrder orderResult 		= receivingOrderService.save(receivingOrder);
-			log.info("[ReceivingOrder]-[saveOrderAndItem]-User Response(ReceivingOrder) : "+ orderResult);
-			
-			//Save ReceivingItem
-			Long orderId = orderResult.getOrderId();
-			for(ReceivingItem item :orderResult.getReceivingItem()){
-				item.setOrderId(orderId);
-			}
-			List<ReceivingItem> itemResult	= receivingItemService.saves(receivingOrder.getReceivingItem());
-			log.info("[ReceivingOrder]-[saveOrderAndItem]-User Response(ReceivingItem) : "+ itemResult);
-			
-			//Save Inventory
-			List<Inventory> inventoryList = inventoryService.saves(receivingItemGetInventory(itemResult));
-			log.info("[ReceivingOrder]-[saveInventory]-User Response(Inventory) : "+ inventoryList);
-
-			log.info("[ReceivingOrder]-[saveOrderAndItem]-User Response(insert Successful) !! ");
-			return receivingOrder;
-		}catch (Exception e){
-			e.printStackTrace();
-			log.error("[ReceivingOrder]-[saveOrderAndItem]-User Response(Error) : Insert Fail !!");
-			throw e;
-		}
-		
 	}
 	
 	public List<Inventory> receivingItemGetInventory(List<ReceivingItem> receivingItem){
