@@ -15,11 +15,15 @@ import com.jamie.rms.model.Product;
 @Transactional
 public interface ProductDao extends JpaRepository<Product,Long>,JpaSpecificationExecutor<Product>{
 
+//    Find
 	List<Product> findByPartyId(String partyId);
+	
+	Product findByProductId (Long productId);
 	
 //	@Query("from product where weightId = ?1 and partyId =?2")
 //	@Query("update ASNLineItem set productGroupId = null where productGroupId = ?1")
 	
+//	Update
 	@Modifying(clearAutomatically = true)
 	@Query("update Product set weightId = null where weightId = ?1 and partyId = ?2")
 	int updateWeightIdNullByWeightIdAndPartyId(Long weightId,String partyId);
@@ -28,7 +32,6 @@ public interface ProductDao extends JpaRepository<Product,Long>,JpaSpecification
 	@Query("update Product set quantityId = null where quantityId = ?1 and partyId = ?2")
 	int updateQuantityIdNullByQuantityIdAndPartyId(Long quantityId,String partyId);
 
-	Product findByProductId (Long productId);
 	
 	@Modifying(clearAutomatically = true)
 	@Query("update Product set quantityId = null, weightId = null where productId = ?1")

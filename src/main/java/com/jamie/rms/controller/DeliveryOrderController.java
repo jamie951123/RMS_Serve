@@ -123,15 +123,17 @@ public class DeliveryOrderController {
 			//remove (FK) DeliveryItem
 			try{
 				ResponseMessage responseMessage = deliveryItemController.deleteByOrderId(deliveryOrder_json);
-				log.info("[DeliveryOrder]-[delete]-[Remove (FK) ReceivingItem]-User Request(result) : "+ responseMessage);
+				log.info("[DeliveryOrder]-[delete]-[Remove (FK) DeliveryItem]-User Request(result) : "+ responseMessage);
 			}catch (Exception e){
 				e.printStackTrace();
-				log.error("[DeliveryOrder]-[delete]-[ERROR]-[Remove (FK) ReceivingItem]-User Request(result) : ");
+				log.error("[DeliveryOrder]-[delete]-[ERROR]-[Remove (FK) DeliveryItem]-User Request(result) : ");
 				throw e;
 			}
 			
 			//Delete DeliveryOrder
 //			ResponseMessage responseMessage = new ResponseMessage();
+			log.error("[DeliveryOrder]-[delete]-[ERROR]-[Start To Delete DeliveryOrder]-User Request(result) : ");
+
 			try{
 				responseMessageOrder = deliveryOrderService.delete(deliveryOrder);
 				log.info("[DeliveryOrder]-[delete]-User Request(result) : "+ responseMessageOrder);
