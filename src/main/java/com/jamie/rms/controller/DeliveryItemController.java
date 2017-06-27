@@ -1,17 +1,25 @@
 package com.jamie.rms.controller;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jamie.rms.model.DeliveryItem;
 import com.jamie.rms.model.DeliveryOrder;
+import com.jamie.rms.model.ResponseMessage;
 import com.jamie.rms.service.DeliveryItemService;
+import com.jamie.rms.util.GsonUtil;
 
 @RequestMapping(value = "rms/delivery/item")
 @Controller
@@ -31,6 +39,64 @@ public class DeliveryItemController {
 		return deliveryItem;
 	} 
 	
-	//
+	//Delete
+	@RequestMapping(value ="/delete",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST) 
+	public @ResponseBody ResponseMessage delete(@RequestBody String deliveryItem_json) {	
+		log.info("[DeliveryItem]-[delete]-User Request(JSON) : "+ deliveryItem_json);
+		DeliveryItem deliveryItem = new DeliveryItem();
+		try{
+			Gson gson = GsonUtil.getGson();
+			deliveryItem = gson.fromJson(deliveryItem_json, DeliveryItem.class);		
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		log.info("[DeliveryItem]-[delete]-User Request(GSON) : "+ deliveryItem);
+		
+		ResponseMessage responseMessage = new ResponseMessage();
+		if(deliveryItem != null){
+			responseMessage = deliveryItemService.delete(deliveryItem);	
+			log.info("[DeliveryItem]-[Response]-delete :" + responseMessage);
+		}
+		return responseMessage;
+	}
 	
+		@RequestMapping(value ="/deletes",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST) 
+		public @ResponseBody ResponseMessage deletes(@RequestBody String deliveryItems_json) {	
+			log.info("[DeliveryItem]-[delete]-User Request(JSON) : "+ deliveryItems_json);
+			List<DeliveryItem> deliveryItems = new ArrayList();
+			try{
+				Gson gson = GsonUtil.getGson();
+	            Type listType = new TypeToken<List<DeliveryItem>>() {}.getType();
+	            deliveryItems = gson.fromJson(deliveryItems_json, listType);		
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+			log.info("[DeliveryItem]-[delete]-User Request(GSON) : "+ deliveryItems);
+			
+			ResponseMessage responseMessage = new ResponseMessage();
+			if(deliveryItems != null){
+				responseMessage = deliveryItemService.deletes(deliveryItems);	
+				log.info("[DeliveryItem]-[Response]-delete :" + responseMessage);
+			}
+			return responseMessage;
+		}
+	
+		@RequestMapping(value ="/deleteByOrderId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST) 
+		public @ResponseBody ResponseMessage deleteByOrderId(@RequestBody String deliveryOrder_json) {
+			log.info("[DeliveryItem]-[deleteByOrderId]-User Request(JSON) : "+ deliveryOrder_json);
+			DeliveryOrder deliveryOrder = new DeliveryOrder();
+			try{
+				Gson gson = GsonUtil.getGson();
+				deliveryOrder = gson.fromJson(deliveryOrder_json, DeliveryOrder.class);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+			log.info("[DeliveryItem]-[deleteByOrderId]-User Request(GSON) : "+ deliveryOrder);
+			if(deliveryOrder != null && deliveryOrder.getOrderId() != null){
+				ResponseMessage responseMessage =  deliveryItemService.deleteByOrderId(deliveryOrder.getOrderId());
+				log.info("[DeliveryItem]-[deleteByOrderId]-[Response] :" + responseMessage);
+				return responseMessage;
+			}
+			return null;
+		}
 }

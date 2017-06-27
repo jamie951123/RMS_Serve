@@ -61,9 +61,9 @@ public class ReceivingItemServiceImpl implements ReceivingItemService{
 		ResponseMessage r = new ResponseMessage();
 		try{
 			r.setMessage_request(orderId.toString());
-			receivingItemDao.updateOrderIdNullByOrderId(orderId);
+			int count = receivingItemDao.updateOrderIdNullByOrderId(orderId);
 			r.setMessage_status(ResponseStatus.getSuccessful());
-			r.setMessage_count(1);
+			r.setMessage_count(count);
 			r.setMessage_content("The record have been deleted");
 		}catch (Exception e){
 			r.setMessage_status(ResponseStatus.getFail());
@@ -79,9 +79,9 @@ public class ReceivingItemServiceImpl implements ReceivingItemService{
 		ResponseMessage r = new ResponseMessage();
 		try{
 			r.setMessage_request(orderId.toString());
-			receivingItemDao.deleteByOrderId(orderId);
+			int count = receivingItemDao.deleteByOrderId(orderId);
 			r.setMessage_status(ResponseStatus.getSuccessful());
-			r.setMessage_count(1);
+			r.setMessage_count(count);
 			r.setMessage_content("The record have been deleted");
 		}catch (IllegalArgumentException e){
 			r.setMessage_status(ResponseStatus.getFail());

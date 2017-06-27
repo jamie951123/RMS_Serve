@@ -140,6 +140,7 @@ public class ReceivingOrderController {
 	
 	//Updata
 	
+//	Delete
 	@Transactional(rollbackFor = Exception.class)
 	@RequestMapping(value = "/delete",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
 	public @ResponseBody ResponseMessage delete(@RequestBody String receivingOrder_json){

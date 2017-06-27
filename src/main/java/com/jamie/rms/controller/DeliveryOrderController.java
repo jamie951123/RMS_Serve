@@ -33,6 +33,9 @@ public class DeliveryOrderController {
 	@Autowired
 	private DeliveryItemService deliveryItemService;
 	
+	@Autowired 
+	private DeliveryItemController deliveryItemController;
+	
 	//Find
 	@RequestMapping(value ="/findAll")
 	public @ResponseBody List<DeliveryOrder> findAll(){
@@ -100,6 +103,7 @@ public class DeliveryOrderController {
 		}
 	}
 	//Delete
+	@Transactional(rollbackFor = Exception.class)
 	@RequestMapping(value ="/delete",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST) 
 	public @ResponseBody ResponseMessage delete(@RequestBody String deliveryOrder_json) {	
 		log.info("[DeliveryOrder]-[delete]-User Request(JSON) : "+ deliveryOrder_json);
@@ -109,14 +113,38 @@ public class DeliveryOrderController {
 			deliveryOrder = gson.fromJson(deliveryOrder_json, DeliveryOrder.class);		
 		}catch (Exception e){
 			e.printStackTrace();
+			throw e;
 		}
 		log.info("[DeliveryOrder]-[delete]-User Request(GSON) : "+ deliveryOrder);
-		if(deliveryOrder != null){
-			ResponseMessage responseMessage = deliveryOrderService.delete(deliveryOrder);	
-			log.info("[DeliveryOrder]-[Response]-delete :" + responseMessage);
-			return responseMessage;
+		
+		ResponseMessage responseMessageOrder = new ResponseMessage();
+		
+		if(deliveryOrder != null && deliveryOrder.getOrderId() != null){
+			//remove (FK) DeliveryItem
+			try{
+				ResponseMessage responseMessage = deliveryItemController.deleteByOrderId(deliveryOrder_json);
+				log.info("[DeliveryOrder]-[delete]-[Remove (FK) ReceivingItem]-User Request(result) : "+ responseMessage);
+			}catch (Exception e){
+				e.printStackTrace();
+				log.error("[DeliveryOrder]-[delete]-[ERROR]-[Remove (FK) ReceivingItem]-User Request(result) : ");
+				throw e;
+			}
+			
+			//Delete DeliveryOrder
+//			ResponseMessage responseMessage = new ResponseMessage();
+			try{
+				responseMessageOrder = deliveryOrderService.delete(deliveryOrder);
+				log.info("[DeliveryOrder]-[delete]-User Request(result) : "+ responseMessageOrder);
+				return responseMessageOrder;
+			}catch (Exception e){
+				e.printStackTrace();
+				log.error("[DeliveryOrder]-[delete]-[ERROR]-[Remove DeliveryOrder]-User Request(result) : ");
+
+				throw e;
+			}
 		}
-		return null;
+		return responseMessageOrder;
+
 	}
 	
 	
