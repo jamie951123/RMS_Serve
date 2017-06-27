@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity(name="DeliveryOrder")
 @Table(name="DeliveryOrder")
 public class DeliveryOrder implements Serializable {
-	private static final long serialVersionUID = 2649940112751498093L;
+	private static final long serialVersionUID = 1L;
 
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)

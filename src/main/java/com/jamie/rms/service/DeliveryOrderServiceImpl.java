@@ -53,7 +53,7 @@ public class DeliveryOrderServiceImpl implements DeliveryOrderService{
 	@Override
 	public DeliveryOrder save(DeliveryOrder deliveryOrder) {
 		// TODO Auto-generated method stub
-		return deliveryOrderDao.saveAndFlush(deliveryOrder); 
+		return deliveryOrderDao.save(deliveryOrder); 
 	}
 
 	

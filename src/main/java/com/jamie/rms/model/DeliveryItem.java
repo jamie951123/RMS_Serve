@@ -34,7 +34,7 @@ public class DeliveryItem {
 	@Enumerated(EnumType.STRING)
     private Status itemStatus;
 	
-	@Column(name = "orderId",nullable = false)
+	@Column(name = "orderId")
     private Long orderId;
 	
 	@Column(name = "partyId",nullable = false)
