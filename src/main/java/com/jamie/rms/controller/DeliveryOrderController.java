@@ -116,37 +116,33 @@ public class DeliveryOrderController {
 			throw e;
 		}
 		log.info("[DeliveryOrder]-[delete]-User Request(GSON) : "+ deliveryOrder);
-		
-		ResponseMessage responseMessageOrder = new ResponseMessage();
-		
+				
 		if(deliveryOrder != null && deliveryOrder.getOrderId() != null){
 			//remove (FK) DeliveryItem
-			try{
-				ResponseMessage responseMessage = deliveryItemController.deleteByOrderId(deliveryOrder_json);
-				log.info("[DeliveryOrder]-[delete]-[Remove (FK) DeliveryItem]-User Request(result) : "+ responseMessage);
-			}catch (Exception e){
-				e.printStackTrace();
-				log.error("[DeliveryOrder]-[delete]-[ERROR]-[Remove (FK) DeliveryItem]-User Request(result) : ");
-				throw e;
-			}
+//			try{
+//				ResponseMessage responseMessage = deliveryItemController.deleteByOrderId(deliveryOrder_json);
+//				log.info("[DeliveryOrder]-[delete]-[Remove (FK) DeliveryItem]-User Request(result) : "+ responseMessage);
+//			}catch (Exception e){
+//				e.printStackTrace();
+//				log.error("[DeliveryOrder]-[delete]-[ERROR]-[Remove (FK) DeliveryItem]-User Request(result) : ");
+//				throw e;
+//			}
 			
 			//Delete DeliveryOrder
 //			ResponseMessage responseMessage = new ResponseMessage();
 			log.error("[DeliveryOrder]-[delete]-[ERROR]-[Start To Delete DeliveryOrder]-User Request(result) : ");
-
 			try{
-				responseMessageOrder = deliveryOrderService.delete(deliveryOrder);
-				log.info("[DeliveryOrder]-[delete]-User Request(result) : "+ responseMessageOrder);
-				return responseMessageOrder;
+				ResponseMessage responseMessage = deliveryOrderService.delete(deliveryOrder);
+				log.info("[DeliveryOrder]-[delete]-User Request(result) : "+ responseMessage);
+				return responseMessage;
 			}catch (Exception e){
 				e.printStackTrace();
 				log.error("[DeliveryOrder]-[delete]-[ERROR]-[Remove DeliveryOrder]-User Request(result) : ");
-
 				throw e;
 			}
+			
 		}
-		return responseMessageOrder;
-
+		return null;
 	}
 	
 	

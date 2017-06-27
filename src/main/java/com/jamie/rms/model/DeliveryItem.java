@@ -71,7 +71,8 @@ public class DeliveryItem {
 	@Column(name = "receivingId",nullable=false)
     private Long receivingId;
 
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
+	@ManyToOne(cascade= {CascadeType.REFRESH,CascadeType.MERGE},fetch = FetchType.LAZY)
+//	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
 	@JoinColumn(name="receivingId", insertable=false, updatable =false,nullable=true)
 	@ForeignKey(name = "DeliveryItem_fk")
 	private ReceivingItem receivingItem;

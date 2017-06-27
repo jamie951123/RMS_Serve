@@ -3,6 +3,7 @@ package com.jamie.rms.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -76,7 +77,7 @@ public class Inventory {
 	@Column(name = "qty")
     private Integer qty;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.MERGE},fetch = FetchType.LAZY)
 	@JoinColumn(name="productId", insertable=false, updatable =false)
 	private Product product;
 

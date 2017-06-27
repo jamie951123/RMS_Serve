@@ -137,12 +137,12 @@ public class ProductController {
 	
 //	Save
 	@RequestMapping(value="/updateWeightIdNullByWeightIdAndPartyId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
-	public @ResponseBody Integer updateWeightIdNullByPartyIdAndWeightId(@RequestBody String json){
-		log.info("[Product]-[updateWeightIdNullByWeightIdAndPartyId]-User Request(JSON) : "+ json);
+	public @ResponseBody Integer updateWeightIdNullByPartyIdAndWeightId(@RequestBody String weightProfile_json){
+		log.info("[Product]-[updateWeightIdNullByWeightIdAndPartyId]-User Request(JSON) : "+ weightProfile_json);
 		WeightProfile weightProfile = new WeightProfile();
 		try{
 			Gson gson = GsonUtil.getGson();
-			weightProfile = gson.fromJson(json,WeightProfile.class);
+			weightProfile = gson.fromJson(weightProfile_json,WeightProfile.class);
 		}catch(Exception e){
 			e.printStackTrace();
 			log.error("[Product]-[updateWeightIdNullByWeightIdAndPartyId]-[Error] : Create GSON Error");
@@ -160,25 +160,25 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/updateQuantityIdNullByQuantityIdAndPartyId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
-	public @ResponseBody Integer updateQuantityIdNullByWeightIdAndPartyId(@RequestBody String quantityProfile_json){
-		log.info("[Product]-[updateQuantityIdNullByWeightIdAndPartyId]-User Request(JSON) : "+ quantityProfile_json);
+	public @ResponseBody Integer updateQuantityIdNullByQuantityIdAndPartyId(@RequestBody String quantityProfile_json){
+		log.info("[Product]-[updateQuantityIdNullByQuantityIdAndPartyId]-User Request(JSON) : "+ quantityProfile_json);
 		QuantityProfile quantityProfile = new QuantityProfile();
 		try{
 			Gson gson = GsonUtil.getGson();
 			quantityProfile = gson.fromJson(quantityProfile_json,QuantityProfile.class);
 		}catch(Exception e){
 			e.printStackTrace();
-			log.error("[Product]-[updateQuantityIdNullByWeightIdAndPartyId]-[Error] : Create GSON Error");
+			log.error("[Product]-[updateQuantityIdNullByQuantityIdAndPartyId]-[Error] : Create GSON Error");
 		}finally{
-			log.info("[Product]-[updateQuantityIdNullByWeightIdAndPartyId]-User Request(GSON) : " + quantityProfile);
+			log.info("[Product]-[updateQuantityIdNullByQuantityIdAndPartyId]-User Request(GSON) : " + quantityProfile);
 		}
 		
 		if(quantityProfile != null && quantityProfile.getPartyId() != null && quantityProfile.getQuantityId() != null){
 			int response = productService.updateQuantityIdNullByQuantityIdAndPartyId(quantityProfile.getQuantityId(), quantityProfile.getPartyId());
-			log.info("[Product]-[updateQuantityIdNullByWeightIdAndPartyId]-[Response] :" + response);
+			log.info("[Product]-[updateQuantityIdNullByQuantityIdAndPartyId]-[Response] :" + response);
 			return response;
 		}
-		log.warn("[Product]-[Error]-updateQuantityIdNullByWeightIdAndPartyId : UpdateProduct Wrong!!");
+		log.warn("[Product]-[Error]-updateQuantityIdNullByQuantityIdAndPartyId : UpdateProduct Wrong!!");
 		return null;
 	}
 	
@@ -223,7 +223,7 @@ public class ProductController {
 		
 		//clear quanlityId and weightId  
 		try{
-			this.updateQuantityIdAndWeightIdNullByProductId(product_json);
+//			this.updateQuantityIdAndWeightIdNullByProductId(product_json);
 			receivingItemController.deleteByProductId(product_json);
 			inventoryController.deleteByProductId(product_json);
 			log.info("[Product]-[deleteByProductId]-Successful Clear All FK ");
@@ -261,7 +261,7 @@ public class ProductController {
 		
 		//clear quanlityId and weightId  
 		try{
-			this.updateQuantityIdAndWeightIdNullByProductId(product_json);
+//			this.updateQuantityIdAndWeightIdNullByProductId(product_json);
 			receivingItemController.deleteByProductId(product_json);
 			inventoryController.deleteByProductId(product_json);
 			log.info("[Product]-[delete]-Successful Clear All FK ");

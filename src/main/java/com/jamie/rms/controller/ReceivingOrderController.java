@@ -197,16 +197,16 @@ public class ReceivingOrderController {
 		log.info("[ReceivingOrder]-[delete]-User Request(GSON) : "+ receivingOrder);
 		if(receivingOrder != null && receivingOrder.getOrderId() != null){
 		//remove (FK) ReceivingItem
-			try{
-				ResponseMessage responseMessage = receivingItemController.deleteByOrderId(receivingOrder_json);
-				log.info("[ReceivingOrder]-[delete]-[Remove (FK) ReceivingItem]-User Request(result) : "+ responseMessage);
-			}catch (Exception e){
-				e.printStackTrace();
-				log.error("[ReceivingOrder]-[delete]-[ERROR]-[Remove (FK) ReceivingItem]-User Request(result) : ");
-				throw e;
-			}
-		
-		//Delete ReceivingOrder
+//			try{
+//				ResponseMessage responseMessage = receivingItemController.deleteByOrderId(receivingOrder_json);
+//				log.info("[ReceivingOrder]-[delete]-[Remove (FK) ReceivingItem]-User Request(result) : "+ responseMessage);
+//			}catch (Exception e){
+//				e.printStackTrace();
+//				log.error("[ReceivingOrder]-[delete]-[ERROR]-[Remove (FK) ReceivingItem]-User Request(result) : ");
+//				throw e;
+//			}
+		//Spring 
+		//Delete ReceivingOrder CascadeType.ALL Deleted Auto FK
 			try{
 				ResponseMessage responseMessage = receivingOrderService.deleteByOrderId(receivingOrder.getOrderId());
 				log.info("[ReceivingOrder]-[delete]-User Request(result) : "+ responseMessage);

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +29,9 @@ public class WeightController {
 	
 	@Autowired
 	private WeightProfileService weightProfileService;
+	
+	@Autowired 
+	private ProductController productController;
 	
 	@RequestMapping(value ="/findAll")
 	public @ResponseBody List<WeightProfile> findAll(){
@@ -57,25 +61,38 @@ public class WeightController {
 		return null;
 	}
 	
+	@Transactional(rollbackFor = Exception.class)
 	@RequestMapping(value = "/delete",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
-	public @ResponseBody ResponseMessage delete(@RequestBody String json){
-		log.info("[WeightProfile]-[delete]-User Request(JSON) : "+ json);
+	public @ResponseBody ResponseMessage delete(@RequestBody String weightProfile_json){
+		log.info("[WeightProfile]-[delete]-User Request(JSON) : "+ weightProfile_json);
 		WeightProfile weightProfile = new WeightProfile();
 		try{
 			Gson gson = GsonUtil.getGson();
-			weightProfile = gson.fromJson(json, WeightProfile.class);
+			weightProfile = gson.fromJson(weightProfile_json, WeightProfile.class);
 		}catch (Exception e){
 			e.printStackTrace();
 		}
 		log.info("[WeightProfile]-[delete]-User Request(GSON) : "+ weightProfile);
-		if(weightProfile != null ){
+		
+		try{
+		//remove (FK) Product
+			productController.updateWeightIdNullByPartyIdAndWeightId(weightProfile_json);
+		}catch (Exception e){
+			e.printStackTrace();
+			log.warn("[WeightProfile]-[Error]-delete : weightProfile is empty");
+			throw e;
+		}
+		//remove Weight
+		try{
 			ResponseMessage responseMessage = weightProfileService.delete(weightProfile);
 			log.info("[ResponseMessage]-[Response]-delete :" + responseMessage);
 			return responseMessage;
+		}catch (Exception e){
+			e.printStackTrace();
+			log.warn("[WeightProfile]-[Error]-delete : weightProfile is empty");
+			throw e;
 		}
 		
-		log.warn("[WeightProfile]-[Error]-delete : weightProfile is empty");
-		return null;
 	}
 
 	@RequestMapping(value = "/save",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)

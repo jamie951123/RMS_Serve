@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +28,9 @@ public class QuantityController {
 
 	@Autowired 
 	private QuantityProfileService quantityProfileService;
+	
+	@Autowired 
+	private ProductController productController;
 	
 	@RequestMapping(value ="/findAll")
 	public @ResponseBody List<QuantityProfile> getQuantityProfile(){
@@ -56,25 +60,38 @@ public class QuantityController {
 		return null;
 	}
 	
+	@Transactional(rollbackFor = Exception.class)
 	@RequestMapping(value = "/delete",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
-	public @ResponseBody ResponseMessage delete(@RequestBody String json){
-		log.info("[QuantityProfile]-[delete]-User Request(JSON) : "+ json);
+	public @ResponseBody ResponseMessage delete(@RequestBody String quantityProfile_json){
+		log.info("[QuantityProfile]-[delete]-User Request(JSON) : "+ quantityProfile_json);
 		QuantityProfile quantityProfile = new QuantityProfile();
 		try{
 			Gson gson = GsonUtil.getGson();
-			quantityProfile = gson.fromJson(json, QuantityProfile.class);
+			quantityProfile = gson.fromJson(quantityProfile_json, QuantityProfile.class);
 		}catch (Exception e){
 			e.printStackTrace();
 		}
 		log.info("[QuantityProfile]-[delete]-User Request(GSON) : "+ quantityProfile);
-		if(quantityProfile != null ){
-			ResponseMessage responseMessage = quantityProfileService.delete(quantityProfile);
-			log.info("[ResponseMessage]-[Response]-delete :" + responseMessage);
-			return responseMessage;
+		//remove (FK) Product
+		try{
+			productController.updateQuantityIdNullByQuantityIdAndPartyId(quantityProfile_json);
+		}catch (Exception e){
+			e.printStackTrace();
+			log.warn("[QuantityProfile]-[Error]-delete : QuantityProfile is empty");
+			throw e;
 		}
-		
-		log.warn("[QuantityProfile]-[Error]-delete : QuantityProfile is empty");
-		return null;
+
+		//remove (FK) QuantityProfile
+		try{
+			ResponseMessage responseMessage = quantityProfileService.delete(quantityProfile);
+			log.info("[QuantityProfile]-[ResponseMessage]-[Response]-delete :" + responseMessage);
+			return responseMessage;
+		}catch (Exception e){
+			e.printStackTrace();
+			log.warn("[QuantityProfile]-[Error]-delete : QuantityProfile is empty");
+			throw e;
+		}
+
 	}
 	
 	@RequestMapping(value = "/save",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)

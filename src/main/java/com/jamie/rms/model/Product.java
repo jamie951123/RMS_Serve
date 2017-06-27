@@ -74,16 +74,14 @@ public class Product {
 	@Column(name = "quantityId")
 	private Long quantityId;
 	
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
+	@ManyToOne(cascade= {CascadeType.REFRESH,CascadeType.MERGE},fetch = FetchType.LAZY)
 	@ForeignKey(name = "product_weightprofile_fk")
 	@JoinColumn(name="weightId", insertable=false, updatable =false,nullable=true)
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	private WeightProfile weightprofile;
 	
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
+	@ManyToOne(cascade= {CascadeType.REFRESH,CascadeType.MERGE},fetch = FetchType.LAZY)
 	@ForeignKey(name = "product_quantityProfile_fk")
 	@JoinColumn(name="quantityId", insertable=false, updatable =false,nullable=true)
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	private QuantityProfile quantityProfile;
 
 	public Long getProductId() {
