@@ -71,7 +71,7 @@ public class DeliveryOrder implements Serializable {
 	private String lastModifiedBy;
 
 	@Fetch(FetchMode.SELECT)
-	@OneToMany(targetEntity=DeliveryItem.class , cascade = { CascadeType.ALL},mappedBy = "orderId",fetch = FetchType.LAZY)
+	@OneToMany(targetEntity=DeliveryItem.class , cascade = { CascadeType.REMOVE,CascadeType.REFRESH},mappedBy = "orderId",fetch = FetchType.LAZY)
 	@JsonManagedReference 
 	@ForeignKey(name = "deliveryOrder_deliveryItem_fk")
 	private List<DeliveryItem> deliveryItem;
