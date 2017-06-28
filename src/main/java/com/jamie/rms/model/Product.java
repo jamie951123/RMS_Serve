@@ -18,11 +18,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.ForeignKey;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name="Product")
 @Table(name ="Product")
@@ -77,15 +75,21 @@ public class Product {
 	private Long quantityId;
 	
 //	@Fetch(FetchMode.SELECT)
-	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.REFRESH},optional=true)
+	@ManyToOne(fetch = FetchType.LAZY,
+			cascade= {CascadeType.REFRESH},
+			optional=true)
 	@ForeignKey(name = "product_weightprofile_fk")
 	@JoinColumn(name="weightId", insertable=false, updatable =false,nullable=true)
+	@JsonManagedReference
 	private WeightProfile weightprofile;
 	
 //	@Fetch(FetchMode.SELECT)
-	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.REFRESH},optional=true)
+	@ManyToOne(fetch = FetchType.LAZY,
+			cascade= {CascadeType.REFRESH},
+			optional=true)
 	@ForeignKey(name = "product_quantityProfile_fk")
 	@JoinColumn(name="quantityId", insertable=false, updatable =false,nullable=true)
+	@JsonManagedReference
 	private QuantityProfile quantityProfile;
 
 	public Long getProductId() {

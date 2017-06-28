@@ -2,7 +2,6 @@ package com.jamie.rms.model;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,13 +12,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ForeignKey;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * @author jamie
@@ -66,10 +66,13 @@ public class QuantityProfile {
 	@Enumerated(EnumType.STRING)
     private Status status;
 	
-	@OneToMany(mappedBy = "quantityProfile", 
-			fetch = FetchType.EAGER, 
-			cascade= {CascadeType.REMOVE,CascadeType.REFRESH},
-			orphanRemoval = true)
+	
+	@OneToMany(targetEntity=Product.class,
+			mappedBy = "quantityProfile", 
+			fetch = FetchType.LAZY, 
+			cascade= {CascadeType.ALL},
+			orphanRemoval = false)
+	@JsonBackReference
 	@ForeignKey(name = "quantityProfile_product_fk")
 	private List<Product> product;
 	

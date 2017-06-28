@@ -61,7 +61,7 @@ public class ProductController {
 	
 //	Find
 	@RequestMapping(value="/findAll")
-	public @ResponseBody List<Product> getAllProduct(){
+	public @ResponseBody List<Product> findAll(){
 		List<Product> getAllProduct = productService.findAll();
 		log.info("[Product]-[findAll]-[Response] :" + getAllProduct);
 		return getAllProduct;
@@ -114,24 +114,24 @@ public class ProductController {
 //	Save
 	@RequestMapping(value="/save",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
 	public @ResponseBody Product save(@RequestBody String json){
-		log.info("[Product]-[insertProduct]-User Request(JSON) : "+ json);
+		log.info("[Product]-[save]-User Request(JSON) : "+ json);
 		Product product = new Product();
 		try{
 			Gson gson = GsonUtil.getGson();
 			product = gson.fromJson(json,Product.class);
 		}catch(Exception e){
 			e.printStackTrace();
-			log.error("[Product]-[insertProduct]-[Error] : Create GSON Error");
+			log.error("[Product]-[save]-[Error] : Create GSON Error");
 		}finally{
-			log.info("[Product]-[insertProduct]-User Request(GSON) : " + product);
+			log.info("[Product]-[save]-User Request(GSON) : " + product);
 		}
 		
 		if(product != null){
 			Product response = productService.save(product);
-			log.info("[Product]-[insertProduct]-insertProduct-[Response] :" + response);
+			log.info("[Product]-[save]-[Response] :" + response);
 			return response;
 		}
-		log.warn("[Product]-[Error]-insertProduct : insertProduct Wrong!!");
+		log.warn("[Product]-[Error]-[save] : insertProduct Wrong!!");
 		return null;
 	}
 	
@@ -262,7 +262,9 @@ public class ProductController {
 		//clear quanlityId and weightId  
 		try{
 //			this.updateQuantityIdAndWeightIdNullByProductId(product_json);
+			//clear product in receiving
 			receivingItemController.deleteByProductId(product_json);
+			//clear product in INV
 			inventoryController.deleteByProductId(product_json);
 			log.info("[Product]-[delete]-Successful Clear All FK ");
 			
@@ -270,18 +272,18 @@ public class ProductController {
 			throw e;
 		}
 		
-		try{
-			Long productId = product.getProductId();
-			ProductSearchObject productSearchObject = new ProductSearchObject();
-			productSearchObject.setId(productId);
-			String result = "";
-			Gson gson = GsonUtil.getGson();
-			result = gson.toJson(productSearchObject);
-			product = findByProductId(result);
-		}catch (Exception e){
-			e.printStackTrace();
-			throw e;
-		}
+//		try{
+//			Long productId = product.getProductId();
+//			ProductSearchObject productSearchObject = new ProductSearchObject();
+//			productSearchObject.setId(productId);
+//			String result = "";
+//			Gson gson = GsonUtil.getGson();
+//			result = gson.toJson(productSearchObject);
+//			product = findByProductId(result);
+//		}catch (Exception e){
+//			e.printStackTrace();
+//			throw e;
+//		}
 		
 		
 		log.info("[Product]-[delete]-[newProduct] :" + product);

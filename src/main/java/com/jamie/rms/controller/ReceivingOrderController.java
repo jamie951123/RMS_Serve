@@ -206,9 +206,9 @@ public class ReceivingOrderController {
 //				throw e;
 //			}
 		//Spring 
-		//Delete ReceivingOrder CascadeType.ALL Deleted Auto FK
+		//Delete ReceivingOrder CascadeType.remove Deleted Auto FK
 			try{
-				ResponseMessage responseMessage = receivingOrderService.deleteByOrderId(receivingOrder.getOrderId());
+				ResponseMessage responseMessage = receivingOrderService.delete(receivingOrder);
 				log.info("[ReceivingOrder]-[delete]-User Request(result) : "+ responseMessage);
 				return responseMessage;
 			}catch (Exception e){

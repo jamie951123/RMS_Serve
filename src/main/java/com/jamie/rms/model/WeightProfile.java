@@ -2,7 +2,6 @@ package com.jamie.rms.model;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,12 +12,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ForeignKey;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity(name = "weight_profile")
 public class WeightProfile {
@@ -50,11 +50,14 @@ public class WeightProfile {
 	@Column(name = "status",nullable = false)
 	@Enumerated(EnumType.STRING)
     private Status status;
+		 
 	
-	@OneToMany(mappedBy = "weightprofile", 
-			fetch = FetchType.EAGER, 
-			cascade= {CascadeType.REMOVE,CascadeType.REFRESH},
-			orphanRemoval = true)
+	@OneToMany(targetEntity=Product.class,
+			mappedBy = "weightprofile", 
+			fetch = FetchType.LAZY, 
+			cascade= {CascadeType.ALL},
+			orphanRemoval = false)
+	@JsonBackReference
 	@ForeignKey(name = "weightprofile_product_fk")
 	private List<Product> product;
 	
@@ -128,12 +131,7 @@ public class WeightProfile {
 	public String toString() {
 		return "WeightProfile [weightId=" + weightId + ", partyId=" + partyId + ", weightUnit=" + weightUnit
 				+ ", createDate=" + createDate + ", createBy=" + createBy + ", lastModifiedDate=" + lastModifiedDate
-				+ ", lastModifiedBy=" + lastModifiedBy + ", status=" + status + ", getWeightId()=" + getWeightId()
-				+ ", getPartyId()=" + getPartyId() + ", getWeightUnit()=" + getWeightUnit() + ", getCreateDate()="
-				+ getCreateDate() + ", getCreateBy()=" + getCreateBy() + ", getLastModifiedDate()="
-				+ getLastModifiedDate() + ", getLastModifiedBy()=" + getLastModifiedBy() + ", getStatus()="
-				+ getStatus() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+				+ ", lastModifiedBy=" + lastModifiedBy + ", status=" + status + "]";
 	}
 
 	

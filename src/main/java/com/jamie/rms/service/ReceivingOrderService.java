@@ -20,5 +20,7 @@ public interface ReceivingOrderService {
 	ReceivingOrder save(ReceivingOrder receivingOrder);
 	
 	//Delete
+	ResponseMessage delete(ReceivingOrder receivingOrder);
+	
 	ResponseMessage deleteByOrderId(Long orderId);
 }

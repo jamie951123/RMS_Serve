@@ -68,5 +68,23 @@ public class ReceivingOrderServiceImpl implements ReceivingOrderService{
 		return r;
 	}
 
+	@Override
+	public ResponseMessage delete(ReceivingOrder receivingOrder) {
+		// TODO Auto-generated method stub
+		ResponseMessage r = new ResponseMessage();
+		r.setMessage_request(receivingOrder.toString());
+		try{
+			receivingOrderDao.delete(receivingOrder);
+			r.setMessage_status(ResponseStatus.getSuccessful());
+			r.setMessage_count(1);
+			r.setMessage_content("The record have been deleted");
+		}catch (IllegalArgumentException e){
+			r.setMessage_status(ResponseStatus.getFail());
+			r.setMessage_content("The record do not appear into table"); 
+			r.setMessage_count(0);
+		}
+		return r;
+	}
+
 
 }

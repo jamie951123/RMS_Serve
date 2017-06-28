@@ -82,7 +82,9 @@ public class ReceivingItem {
 	@OneToMany(mappedBy = "receivingItem",
 			fetch = FetchType.LAZY,
 					cascade= {CascadeType.REFRESH,CascadeType.REMOVE},
-			orphanRemoval = true)
+//			orphanRemoval = false
+					orphanRemoval = true
+			)
 	List<DeliveryItem> deliveryItem;
 	 
 	@ManyToOne(fetch = FetchType.LAZY,

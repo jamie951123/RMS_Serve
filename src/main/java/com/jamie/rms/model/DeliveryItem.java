@@ -68,18 +68,22 @@ public class DeliveryItem {
 	@Column(name = "itemQty")
     private Integer itemQty;
 	
-	@Column(name = "receivingId",nullable=false)
+	@Column(name = "receivingId")
     private Long receivingId;
 
 	
 	@ManyToOne(fetch = FetchType.LAZY,
-			cascade= {CascadeType.REFRESH})
+			cascade= {CascadeType.REFRESH}
+//	,optional=true
+			)
 	@JoinColumn(name="orderId", insertable=false, updatable =false,nullable=true)
-	@ForeignKey(name = "deliveryItem_receivingItem_fk")
+	@ForeignKey(name = "deliveryItem_deliveryOrder_fk")
 	private DeliveryOrder deliveryOrder;
 	
 	@ManyToOne(fetch = FetchType.LAZY,
-			cascade= {CascadeType.REFRESH})
+			cascade= {CascadeType.REFRESH}
+//	,optional=true
+			)
 	@JoinColumn(name="receivingId", insertable=false, updatable =false,nullable=true)
 	@ForeignKey(name = "deliveryItem_receivingItem_fk")
 	private ReceivingItem receivingItem;
