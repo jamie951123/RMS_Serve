@@ -73,14 +73,26 @@ public class ReceivingItem {
 	@Column(name = "itemRemark")
     private String itemRemark;
 	
-	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.DETACH},optional=false)
+	@ManyToOne(fetch = FetchType.LAZY,
+			cascade= {CascadeType.REFRESH})
 	@JoinColumn(name="productId", insertable=false, updatable =false)
 	@ForeignKey(name = "receivingItem_product_fk")
 	private Product product;
 
-	@OneToMany(mappedBy = "receivingId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "receivingItem",
+			fetch = FetchType.LAZY,
+					cascade= {CascadeType.REFRESH,CascadeType.REMOVE},
+			orphanRemoval = true)
 	List<DeliveryItem> deliveryItem;
 	 
+	@ManyToOne(fetch = FetchType.LAZY,
+			cascade= {CascadeType.REFRESH},
+			optional=true)
+	@JoinColumn(name = "orderId", referencedColumnName = "orderId", insertable=false, updatable =false, nullable=true)
+	@JsonBackReference
+	private ReceivingOrder receivingOrder;
+	
+	
 //	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.ALL},optional=false)
 //	@JoinColumn(name = "orderId", referencedColumnName = "orderId", insertable=false, updatable =false)
 //	@JsonBackReference

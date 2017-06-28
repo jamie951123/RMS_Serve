@@ -86,8 +86,11 @@ public class ReceivingOrder implements Serializable {
 //	 @JsonManagedReference
 //	private List<ReceivingItem> receivingItem;
 	
-	@Fetch(FetchMode.SELECT)
-	@OneToMany(targetEntity=ReceivingItem.class , cascade = { CascadeType.ALL},mappedBy = "orderId",fetch = FetchType.LAZY)
+//	@Fetch(FetchMode.SELECT)
+	@OneToMany(targetEntity=ReceivingItem.class , 
+			cascade = { CascadeType.ALL},
+			mappedBy = "receivingOrder",
+			fetch = FetchType.LAZY)
 	@JsonManagedReference 
 	@ForeignKey(name = "receivingOrder_receivingItem_fk")
 	private List<ReceivingItem> receivingItem;
