@@ -72,14 +72,14 @@ public class QuantityController {
 			e.printStackTrace();
 		}
 		log.info("[QuantityProfile]-[delete]-User Request(GSON) : "+ quantityProfile);
-		//remove (FK) Product
-		try{
-			productController.updateQuantityIdNullByQuantityIdAndPartyId(quantityProfile_json);
-		}catch (Exception e){
-			e.printStackTrace();
-			log.warn("[QuantityProfile]-[Error]-delete : QuantityProfile is empty");
-			throw e;
-		}
+//		//remove (FK) Product
+//		try{
+//			productController.updateQuantityIdNullByQuantityIdAndPartyId(quantityProfile_json);
+//		}catch (Exception e){
+//			e.printStackTrace();
+//			log.warn("[QuantityProfile]-[Error]-delete : QuantityProfile is empty");
+//			throw e;
+//		}
 		//hibernate remove (FK) OnetoMany Product
 		//remove (FK) QuantityProfile
 		try{
