@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -74,11 +76,13 @@ public class Product {
 	@Column(name = "quantityId")
 	private Long quantityId;
 	
+	@Fetch(FetchMode.SELECT)
 	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.REFRESH,CascadeType.MERGE},optional=false)
 	@ForeignKey(name = "product_weightprofile_fk")
 	@JoinColumn(name="weightId", insertable=false, updatable =false)
 	private WeightProfile weightprofile;
 	
+	@Fetch(FetchMode.SELECT)
 	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.REFRESH,CascadeType.MERGE},optional=false)
 	@ForeignKey(name = "product_quantityProfile_fk")
 	@JoinColumn(name="quantityId", insertable=false, updatable =false)
