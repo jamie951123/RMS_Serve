@@ -73,7 +73,7 @@ public class ReceivingItem {
 	@Column(name = "itemRemark")
     private String itemRemark;
 	
-	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.REFRESH,CascadeType.MERGE},optional=false)
+	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.DETACH},optional=false)
 	@JoinColumn(name="productId", insertable=false, updatable =false)
 	@ForeignKey(name = "receivingItem_product_fk")
 	private Product product;
