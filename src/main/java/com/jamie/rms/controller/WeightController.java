@@ -74,14 +74,14 @@ public class WeightController {
 		}
 		log.info("[WeightProfile]-[delete]-User Request(GSON) : "+ weightProfile);
 		
-//		try{
-//		//remove (FK) Product
-//			productController.updateWeightIdNullByPartyIdAndWeightId(weightProfile_json);
-//		}catch (Exception e){
-//			e.printStackTrace();
-//			log.warn("[WeightProfile]-[Error]-delete : weightProfile is empty");
-//			throw e;
-//		}
+		try{
+		//remove (FK) Product
+			productController.updateWeightIdNullByPartyIdAndWeightId(weightProfile_json);
+		}catch (Exception e){
+			e.printStackTrace();
+			log.warn("[WeightProfile]-[Error]-delete : weightProfile is empty");
+			throw e;
+		}
 		//hibernate remove (FK) OnetoMany Product
 		//remove Weight
 		try{
