@@ -51,9 +51,9 @@ public class WeightProfile {
 	@Enumerated(EnumType.STRING)
     private Status status;
 	
-	@OneToMany(mappedBy = "productId", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@ForeignKey(name = "weightprofile_product_fk")
-	private List<Product> product;
+//	@OneToMany(mappedBy = "productId", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+//	@ForeignKey(name = "weightprofile_product_fk")
+//	private List<Product> product;
 	
 	
 	public Long getWeightId() {

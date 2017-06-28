@@ -66,9 +66,9 @@ public class QuantityProfile {
 	@Enumerated(EnumType.STRING)
     private Status status;
 	
-	@OneToMany(mappedBy = "productId", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@ForeignKey(name = "quantityProfile_product_fk")
-	private List<Product> product;
+//	@OneToMany(mappedBy = "productId", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+//	@ForeignKey(name = "quantityProfile_product_fk")
+//	private List<Product> product;
 	
 	public Long getQuantityId() {
 		return quantityId;
