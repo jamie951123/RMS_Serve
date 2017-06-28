@@ -51,7 +51,7 @@ public class WeightProfile {
 	@Enumerated(EnumType.STRING)
     private Status status;
 	
-	@OneToMany(mappedBy = "productId", 
+	@OneToMany(mappedBy = "weightprofile", 
 			fetch = FetchType.EAGER, 
 			cascade= {CascadeType.REMOVE,CascadeType.REFRESH},
 			orphanRemoval = true)

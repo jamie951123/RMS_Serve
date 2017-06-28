@@ -66,7 +66,7 @@ public class QuantityProfile {
 	@Enumerated(EnumType.STRING)
     private Status status;
 	
-	@OneToMany(mappedBy = "productId", 
+	@OneToMany(mappedBy = "quantityProfile", 
 			fetch = FetchType.EAGER, 
 			cascade= {CascadeType.REMOVE,CascadeType.REFRESH},
 			orphanRemoval = true)
