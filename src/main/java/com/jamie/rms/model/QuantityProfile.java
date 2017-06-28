@@ -1,6 +1,7 @@
 package com.jamie.rms.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -62,6 +63,9 @@ public class QuantityProfile {
 	@Column(name = "status",nullable = false)
 	@Enumerated(EnumType.STRING)
     private Status status;
+	
+	@OneToMany(mappedBy = "productId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	List<Product> product;
 	
 	public Long getQuantityId() {
 		return quantityId;
