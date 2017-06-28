@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.ForeignKey;
+
 @Entity(name = "weight_profile")
 public class WeightProfile {
 	
@@ -49,8 +51,9 @@ public class WeightProfile {
 	@Enumerated(EnumType.STRING)
     private Status status;
 	
-	@OneToMany(mappedBy = "productId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	List<Product> product;
+	@OneToMany(mappedBy = "productId", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@ForeignKey(name = "weightprofile_product_fk")
+	private List<Product> product;
 	
 	
 	public Long getWeightId() {

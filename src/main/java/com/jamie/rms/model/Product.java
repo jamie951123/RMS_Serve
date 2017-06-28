@@ -78,13 +78,13 @@ public class Product {
 	
 	@Fetch(FetchMode.SELECT)
 	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.REFRESH,CascadeType.MERGE},optional=false)
-	@ForeignKey(name = "product_weightprofile_fk")
+//	@ForeignKey(name = "product_weightprofile_fk")
 	@JoinColumn(name="weightId", insertable=false, updatable =false)
 	private WeightProfile weightprofile;
 	
 	@Fetch(FetchMode.SELECT)
 	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.REFRESH,CascadeType.MERGE},optional=false)
-	@ForeignKey(name = "product_quantityProfile_fk")
+//	@ForeignKey(name = "product_quantityProfile_fk")
 	@JoinColumn(name="quantityId", insertable=false, updatable =false)
 	private QuantityProfile quantityProfile;
 

@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.ForeignKey;
+
 /**
  * @author jamie
  *
@@ -64,8 +66,9 @@ public class QuantityProfile {
 	@Enumerated(EnumType.STRING)
     private Status status;
 	
-	@OneToMany(mappedBy = "productId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	List<Product> product;
+	@OneToMany(mappedBy = "productId", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@ForeignKey(name = "quantityProfile_product_fk")
+	private List<Product> product;
 	
 	public Long getQuantityId() {
 		return quantityId;
