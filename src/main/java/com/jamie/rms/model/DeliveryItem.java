@@ -73,16 +73,16 @@ public class DeliveryItem {
 
 	
 	@ManyToOne(fetch = FetchType.LAZY,
-			cascade= {CascadeType.REFRESH}
-//	,optional=true
+			cascade= {CascadeType.REFRESH},
+			optional=true
 			)
 	@JoinColumn(name="orderId", insertable=false, updatable =false,nullable=true)
 	@ForeignKey(name = "deliveryItem_deliveryOrder_fk")
 	private DeliveryOrder deliveryOrder;
 	
 	@ManyToOne(fetch = FetchType.LAZY,
-			cascade= {CascadeType.REFRESH}
-//	,optional=true
+			cascade= {CascadeType.REFRESH},
+			optional=true
 			)
 	@JoinColumn(name="receivingId", insertable=false, updatable =false,nullable=true)
 	@ForeignKey(name = "deliveryItem_receivingItem_fk")
