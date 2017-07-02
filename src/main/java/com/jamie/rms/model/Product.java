@@ -1,7 +1,9 @@
 package com.jamie.rms.model;
 
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,17 +16,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ForeignKey;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name="Product")
 @Table(name ="Product")
-public class Product {
+public class Product implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "productId",nullable = false, updatable=false)
@@ -100,14 +105,14 @@ public class Product {
 //	@ForeignKey(name = "product_inventory_fk")
 //	private List<Inventory> inventory;
 	
-//	@OneToMany(targetEntity=ReceivingItem.class , 
-//			fetch = FetchType.EAGER,
-//			cascade = { CascadeType.ALL},
-//			mappedBy = "product",
-//			orphanRemoval = true)
-//	@JsonBackReference 
-//	@ForeignKey(name = "product_receivingItem_fk")
-//	private List<ReceivingItem> receivingItem;
+	@OneToMany(targetEntity=ReceivingItem.class , 
+			fetch = FetchType.LAZY,
+			cascade = { CascadeType.ALL},
+			mappedBy = "product",
+			orphanRemoval = false)
+	@JsonBackReference 
+	@ForeignKey(name = "product_receivingItem_fk")
+	private List<ReceivingItem> receivingItem;
 	
 	public Long getProductId() {
 		return productId;

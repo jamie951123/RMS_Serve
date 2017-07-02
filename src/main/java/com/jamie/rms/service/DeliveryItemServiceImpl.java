@@ -86,4 +86,42 @@ public class DeliveryItemServiceImpl implements DeliveryItemService{
 		return r;
 	}
 
+	@Override
+	public ResponseMessage deleteByReceivingId(Long receivingId) {
+		// TODO Auto-generated method stub
+		ResponseMessage r = new ResponseMessage();
+		try{
+			r.setMessage_request(receivingId.toString());
+			int count = deliveryItemDao.deleteByReceivingId(receivingId);
+			r.setMessage_status(ResponseStatus.getSuccessful());
+			r.setMessage_count(count);
+			r.setMessage_content("The record have been deleted");
+		}catch (IllegalArgumentException e){
+			r.setMessage_status(ResponseStatus.getFail());
+			r.setMessage_content("The record do not appear into table"); 
+			r.setMessage_count(0);
+			e.printStackTrace();
+		}
+		return r;
+	}
+
+	@Override
+	public ResponseMessage deleteByReceivingIds(List<Long> receivingIds) {
+		// TODO Auto-generated method stub
+		ResponseMessage r = new ResponseMessage();
+		try{
+			r.setMessage_request(receivingIds.toString());
+			int count = deliveryItemDao.deleteByReceivingId(receivingIds);
+			r.setMessage_status(ResponseStatus.getSuccessful());
+			r.setMessage_count(count);
+			r.setMessage_content("The record have been deleted");
+		}catch (IllegalArgumentException e){
+			r.setMessage_status(ResponseStatus.getFail());
+			r.setMessage_content("The record do not appear into table"); 
+			r.setMessage_count(0);
+			e.printStackTrace();
+		}
+		return r;
+	}
+
 }

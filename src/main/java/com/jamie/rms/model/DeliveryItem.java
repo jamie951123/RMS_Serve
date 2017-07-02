@@ -1,5 +1,6 @@
 package com.jamie.rms.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -20,10 +21,14 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ForeignKey;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity(name="DeliveryItem")
 @Table(name="DeliveryItem")
-public class DeliveryItem {
+public class DeliveryItem implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -78,6 +83,7 @@ public class DeliveryItem {
 			)
 	@JoinColumn(name="orderId", insertable=false, updatable =false,nullable=true)
 	@ForeignKey(name = "deliveryItem_deliveryOrder_fk")
+	@JsonBackReference
 	private DeliveryOrder deliveryOrder;
 	
 	@ManyToOne(fetch = FetchType.LAZY,
@@ -86,6 +92,7 @@ public class DeliveryItem {
 			)
 	@JoinColumn(name="receivingId",referencedColumnName = "receivingId", insertable=false, updatable =false,nullable=true)
 	@ForeignKey(name = "deliveryItem_receivingItem_fk")
+	 @JsonManagedReference
 	private ReceivingItem receivingItem;
 
 	public Long getDeliveryItemId() {
@@ -208,6 +215,15 @@ public class DeliveryItem {
 		this.receivingItem = receivingItem;
 	}
 
+	public DeliveryOrder getDeliveryOrder() {
+		return deliveryOrder;
+	}
+
+	public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
+		this.deliveryOrder = deliveryOrder;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "DeliveryItem [deliveryItemId=" + deliveryItemId + ", itemStatus=" + itemStatus + ", orderId=" + orderId
@@ -218,6 +234,8 @@ public class DeliveryItem {
 				+ receivingId + ", receivingItem=" + receivingItem + "]";
 	}
 
+	
+	
 
 	
 	

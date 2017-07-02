@@ -13,6 +13,8 @@ public interface ReceivingItemService {
 
 	List<ReceivingItem> findByPartyId(String partyId);
 	
+	List<ReceivingItem> findByProductId(Long productId);
+
 	ReceivingItem findByReceivingID(Long receivingID);
 	
 	//update
@@ -27,10 +29,11 @@ public interface ReceivingItemService {
 	//delete
 	ResponseMessage delete(ReceivingItem receivingItem);
 
+	ResponseMessage deletes(List<ReceivingItem> receivingItems);
+	
 	ResponseMessage deleteByProductId(Long productId);
 	
 	ResponseMessage deleteByOrderId(Long orderId);
-	
 
 	
 }

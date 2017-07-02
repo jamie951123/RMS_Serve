@@ -21,4 +21,8 @@ public interface DeliveryItemService {
 	ResponseMessage deletes(List<DeliveryItem> deliveryItems);
 	
 	ResponseMessage deleteByOrderId(Long deliveryOrderId);
+	
+	ResponseMessage deleteByReceivingId(Long receivingId);
+	
+	ResponseMessage deleteByReceivingIds (List<Long> receivingIds);
 }

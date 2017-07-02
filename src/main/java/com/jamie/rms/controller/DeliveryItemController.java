@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jamie.rms.model.DeliveryItem;
 import com.jamie.rms.model.DeliveryOrder;
+import com.jamie.rms.model.ReceivingItem;
 import com.jamie.rms.model.ResponseMessage;
 import com.jamie.rms.service.DeliveryItemService;
 import com.jamie.rms.util.GsonUtil;
@@ -99,4 +100,52 @@ public class DeliveryItemController {
 			}
 			return null;
 		}
+		
+		@RequestMapping(value ="/deleteByReceivingId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST) 
+		public @ResponseBody ResponseMessage deleteByReceivingId(@RequestBody String receivingItem_json) {
+			log.info("[DeliveryItem]-[deleteByReceivingId]-User Request(JSON) : "+ receivingItem_json);
+			ReceivingItem receivingItem = new ReceivingItem();
+			try{
+				Gson gson = GsonUtil.getGson();
+				receivingItem = gson.fromJson(receivingItem_json, ReceivingItem.class);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+			log.info("[DeliveryItem]-[deleteByReceivingId]-User Request(GSON) : "+ receivingItem_json);
+			if(receivingItem != null && receivingItem.getReceivingId() != null){
+				ResponseMessage responseMessage =  deliveryItemService.deleteByReceivingId(receivingItem.getReceivingId());
+				log.info("[DeliveryItem]-[deleteByReceivingId]-[Response] :" + responseMessage);
+				return responseMessage;
+			}
+			return null;
+		}
+		
+		@RequestMapping(value ="/deleteByReceivingIds",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST) 
+		public @ResponseBody ResponseMessage deleteByReceivingIds(@RequestBody String receivingItems_json) {
+			log.info("[DeliveryItem]-[deleteByReceivingIds]-User Request(JSON) : "+ receivingItems_json);
+			List<ReceivingItem> receivingItems = new ArrayList<>();
+			try{
+				Gson gson = GsonUtil.getGson();
+	            Type listType = new TypeToken<List<ReceivingItem>>() {}.getType();
+				receivingItems = gson.fromJson(receivingItems_json, listType);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+			log.info("[DeliveryItem]-[deleteByReceivingIds]-User Request(GSON) : "+ receivingItems_json);
+			if(receivingItems != null && !receivingItems.isEmpty()){
+				List<Long> receivingIds = new ArrayList<>();
+				for(ReceivingItem r : receivingItems){
+					Long receivingId = r.getReceivingId();
+					if(receivingId != null){
+						receivingIds.add(r.getReceivingId());
+					}
+				}
+				ResponseMessage responseMessage =  deliveryItemService.deleteByReceivingIds(receivingIds);
+				log.info("[DeliveryItem]-[deleteByReceivingIds]-[Response] :" + responseMessage);
+				return responseMessage;
+			}
+			return null;
+		}
+		
+		
 }

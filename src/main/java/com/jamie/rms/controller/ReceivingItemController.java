@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +34,8 @@ public class ReceivingItemController {
 	@Autowired 
 	private ReceivingItemService receivingItemService;
 	
+	@Autowired
+	private DeliveryItemController deliveryItemController;
 	
 	//Find
 	@RequestMapping(value = "/findAll")
@@ -165,6 +168,7 @@ public class ReceivingItemController {
 	}
 	
 	//Delete
+	@Transactional(rollbackFor = Exception.class)
 	@RequestMapping(value = "/deleteByProductId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
 	public @ResponseBody ResponseMessage deleteByProductId(@RequestBody String product_json){
 		log.info("[ReceivingItem]-[deleteByProductId]-User Request(JSON) : "+ product_json);
@@ -176,12 +180,81 @@ public class ReceivingItemController {
 			e.printStackTrace();
 		}
 		log.info("[ReceivingItem]-[deleteByProductId]-User Request(GSON) : "+ product);
-		if(product != null && product.getProductId() != null){
+		try{
+		
+			//Delete Delivery Item(FK)
+			ResponseMessage deliveryItemResponseMessage =  deliveryItemController.deleteByReceivingId(product_json);
+			log.info("[ReceivingItem]-[deleteByProductId]-[Response] :" + deliveryItemResponseMessage);
+			//
 			ResponseMessage responseMessage =  receivingItemService.deleteByProductId(product.getProductId());
 			log.info("[ReceivingItem]-[deleteByProductId]-[Response] :" + responseMessage);
 			return responseMessage;
+		}catch(Exception e){
+			log.info("[ReceivingItem]-[deleteByProductId]-[Response]-[ERROR] : The receivingItem is empty");
+			e.printStackTrace();
+			throw e;
 		}
-		return null;
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	@RequestMapping(value = "/delete",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody ResponseMessage delete(@RequestBody String receivingItem_json){
+		log.info("[ReceivingItem]-[delete]-User Request(JSON) : "+ receivingItem_json);
+		ReceivingItem receivingItem = new ReceivingItem();
+		try{
+			Gson gson = GsonUtil.getGson();
+			receivingItem = gson.fromJson(receivingItem_json, ReceivingItem.class);
+		}catch (Exception e){
+			e.printStackTrace();
+		}finally{
+			log.info("[ReceivingItem]-[delete]-User Request(GSON) : "+ receivingItem);
+		}
+		
+		try{
+			//Delete Delivery Item(FK)
+			ResponseMessage deliveryItemResponseMessage =  deliveryItemController.deleteByReceivingId(receivingItem_json);
+			log.info("[ReceivingItem]-[delete]-[Response] :" + deliveryItemResponseMessage);
+			
+			//Delete Receiving Item  
+			ResponseMessage responseMessage =  receivingItemService.delete(receivingItem);
+			log.info("[ReceivingItem]-[delete]-[Response] :" + responseMessage);
+			return responseMessage;
+		}catch(Exception e){
+			log.info("[ReceivingItem]-[delete]-[Response]-[ERROR] : The receivingItem is empty");
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	@RequestMapping(value = "/deletes",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody ResponseMessage deletes(@RequestBody String receivingItems_json){
+		log.info("[ReceivingItem]-[deletes]-User Request(JSON) : "+ receivingItems_json);
+		List<ReceivingItem> receivingItems = new ArrayList<>();
+		try{
+			Gson gson = GsonUtil.getGson();
+            Type listType = new TypeToken<List<ReceivingItem>>() {}.getType();
+			receivingItems = gson.fromJson(receivingItems_json, listType);
+		}catch (Exception e){
+			e.printStackTrace();
+		}finally{
+			log.info("[ReceivingItem]-[deletes]-User Request(GSON) : "+ receivingItems);
+		}
+		
+		try{
+			//Delete Delivery Item(FK)
+			ResponseMessage deliveryItemResponseMessage =  deliveryItemController.deleteByReceivingIds(receivingItems_json);
+			log.info("[ReceivingItem]-[deletes]-[Response] :" + deliveryItemResponseMessage);
+			
+			//Delete Receiving Item  
+			ResponseMessage responseMessage =  receivingItemService.deletes(receivingItems);
+			log.info("[ReceivingItem]-[deletes]-[Response] :" + responseMessage);
+			return responseMessage;
+		}catch(Exception e){
+			log.info("[ReceivingItem]-[deletes]-[Response]-[ERROR] : The receivingItem is empty");
+			e.printStackTrace();
+			throw e;
+		}
 	}
 	
 	@RequestMapping(value = "/deleteByOrderId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
@@ -201,29 +274,6 @@ public class ReceivingItemController {
 			return responseMessage;
 		}
 		return null;
-	}
-	
-	
-	@RequestMapping(value = "/delete",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
-	public @ResponseBody ResponseMessage delete(@RequestBody String receivingItem_json){
-		log.info("[ReceivingItem]-[delete]-User Request(JSON) : "+ receivingItem_json);
-		ReceivingItem receivingItem = new ReceivingItem();
-		try{
-			Gson gson = GsonUtil.getGson();
-			receivingItem = gson.fromJson(receivingItem_json, ReceivingItem.class);
-		}catch (Exception e){
-			e.printStackTrace();
-		}finally{
-			log.info("[ReceivingItem]-[delete]-User Request(GSON) : "+ receivingItem);
-		}
-		if(receivingItem != null && receivingItem.getReceivingId() != null){
-			ResponseMessage responseMessage =  receivingItemService.delete(receivingItem);
-			log.info("[ReceivingItem]-[delete]-[Response] :" + responseMessage);
-			return responseMessage;
-		}
-		log.info("[ReceivingItem]-[delete]-[Response]-[ERROR] : The receivingItem is empty");
-		return null;
-
 	}
 	
 	

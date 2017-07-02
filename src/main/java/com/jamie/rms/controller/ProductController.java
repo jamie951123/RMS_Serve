@@ -1,6 +1,8 @@
 package com.jamie.rms.controller;
 
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,34 +16,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.jamie.rms.model.Product;
 import com.jamie.rms.model.QuantityProfile;
+import com.jamie.rms.model.ReceivingItem;
 import com.jamie.rms.model.ResponseMessage;
 import com.jamie.rms.model.WeightProfile;
 import com.jamie.rms.searchcriteria.object.ProductSearchObject;
 import com.jamie.rms.service.ProductService;
-import com.jamie.rms.util.GsonUtil;
-import com.jamie.rms.util.ObjectUtil;
-
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.google.gson.Gson;
-import com.jamie.rms.model.Product;
-import com.jamie.rms.model.QuantityProfile;
-import com.jamie.rms.model.ResponseMessage;
-import com.jamie.rms.model.WeightProfile;
-import com.jamie.rms.searchcriteria.object.ProductSearchObject;
-import com.jamie.rms.service.ProductService;
+import com.jamie.rms.service.ReceivingItemService;
 import com.jamie.rms.util.GsonUtil;
 import com.jamie.rms.util.ObjectUtil;
 
@@ -58,6 +42,10 @@ public class ProductController {
 	
 	@Autowired
 	private InventoryController inventoryController;
+	
+	@Autowired 
+	private ReceivingItemService receivingItemService;
+	
 	
 //	Find
 	@RequestMapping(value="/findAll")
@@ -259,39 +247,32 @@ public class ProductController {
 			log.info("[Product]-[delete]-User Request(GSON) : " + product);
 		}
 		
-		//clear quanlityId and weightId  
 		try{
-//			this.updateQuantityIdAndWeightIdNullByProductId(product_json);
-			//clear product in receiving
-//			receivingItemController.updateProductIdNullByProductId(product_json);
-			//clear product in INV
-//			inventoryController.deleteByProductId(product_json);
-//			log.info("[Product]-[delete]-Successful Clear All FK ");
-			
+			//[ReceivingItem]-findByProductId 
+			List<ReceivingItem> receivingItems = receivingItemService.findByProductId(product.getProductId());
+			for(ReceivingItem r : receivingItems){
+				r.setDeliveryItem(null);
+				r.setReceivingOrder(null);
+				r.setProduct(null);
+			}
+			System.out.println("receivingItems :" + receivingItems.toString());
+			//Remove ReceivingItem (FK)
+
+			Gson gson = GsonUtil.getGson();
+			String receivingItem_json = gson.toJson(receivingItems);
+			ResponseMessage responseMessage = receivingItemController.deletes(receivingItem_json);
+			log.info("[Product]-[delete]-[ReceivingItem]-[FK]-User Response : " + responseMessage);
 		}catch(Exception e){
+			e.printStackTrace();
 			throw e;
 		}
 		
-//		try{
-//			Long productId = product.getProductId();
-//			ProductSearchObject productSearchObject = new ProductSearchObject();
-//			productSearchObject.setId(productId);
-//			String result = "";
-//			Gson gson = GsonUtil.getGson();
-//			result = gson.toJson(productSearchObject);
-//			product = findByProductId(result);
-//		}catch (Exception e){
-//			e.printStackTrace();
-//			throw e;
-//		}
-		
-		
-		log.info("[Product]-[delete]-[newProduct] :" + product);
-		
-		if(product != null){
+		try{
 			ResponseMessage response = productService.delete(product);
 			log.info("[Product]-[delete]-[Response] :" + response);
 			return response;
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		log.warn("[Product]-[delete]-[Error] : Product is empty");
 		return null;

@@ -90,7 +90,7 @@ public class ReceivingOrder implements Serializable {
 	@OneToMany(targetEntity=ReceivingItem.class , 
 			cascade = { CascadeType.REMOVE,CascadeType.REFRESH},
 			mappedBy = "receivingOrder",
-			fetch = FetchType.LAZY,
+			fetch = FetchType.EAGER,
 			orphanRemoval = true
 			)
 	@JsonManagedReference 
@@ -251,6 +251,8 @@ public class ReceivingOrder implements Serializable {
 				+ lastModifiedBy + ", actualQty=" + actualQty + ", estimateQty=" + estimateQty + ", itemQty=" + itemQty
 				+ ", receivingItem=" + receivingItem + "]";
 	}
+
+
 	
 	
 

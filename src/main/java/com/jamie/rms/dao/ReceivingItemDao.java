@@ -17,6 +17,7 @@ public interface ReceivingItemDao extends JpaRepository<ReceivingItem,Long>,
 JpaSpecificationExecutor<ReceivingItem>{
 
 	List<ReceivingItem> findByPartyId(String partyId);
+	List<ReceivingItem> findByProductId (Long productId);
 	ReceivingItem findByReceivingId(Long receivingID);
 	
 	//Update

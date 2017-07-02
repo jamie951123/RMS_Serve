@@ -1,5 +1,6 @@
 package com.jamie.rms.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -24,7 +25,8 @@ import javax.persistence.TemporalType;
  */
 @Entity(name = "Inventory")
 @Table(name ="Inventory")
-public class Inventory {
+public class Inventory implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

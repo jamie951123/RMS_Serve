@@ -1,5 +1,6 @@
 package com.jamie.rms.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,8 @@ import org.hibernate.annotations.ForeignKey;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity(name = "weight_profile")
-public class WeightProfile {
+public class WeightProfile implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
