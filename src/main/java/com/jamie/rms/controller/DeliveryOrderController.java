@@ -91,7 +91,7 @@ public class DeliveryOrderController {
 			
 			//Save DeliveryItem
 			Long orderId = orderResult.getOrderId();
-			for(DeliveryItem item :orderResult.getDeliveryItem()){
+			for(DeliveryItem item :deliveryOrder.getDeliveryItem()){
 				item.setOrderId(orderId);
 			}
 			List<DeliveryItem> itemResult	= deliveryItemService.saves(deliveryOrder.getDeliveryItem());

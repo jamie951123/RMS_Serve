@@ -263,10 +263,10 @@ public class ProductController {
 		try{
 //			this.updateQuantityIdAndWeightIdNullByProductId(product_json);
 			//clear product in receiving
-			receivingItemController.deleteByProductId(product_json);
+//			receivingItemController.updateProductIdNullByProductId(product_json);
 			//clear product in INV
-			inventoryController.deleteByProductId(product_json);
-			log.info("[Product]-[delete]-Successful Clear All FK ");
+//			inventoryController.deleteByProductId(product_json);
+//			log.info("[Product]-[delete]-Successful Clear All FK ");
 			
 		}catch(Exception e){
 			throw e;

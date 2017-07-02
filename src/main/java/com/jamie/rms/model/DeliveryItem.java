@@ -84,7 +84,7 @@ public class DeliveryItem {
 			cascade= {CascadeType.REFRESH},
 			optional=true
 			)
-	@JoinColumn(name="receivingId", insertable=false, updatable =false,nullable=true)
+	@JoinColumn(name="receivingId",referencedColumnName = "receivingId", insertable=false, updatable =false,nullable=true)
 	@ForeignKey(name = "deliveryItem_receivingItem_fk")
 	private ReceivingItem receivingItem;
 

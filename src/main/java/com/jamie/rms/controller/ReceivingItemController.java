@@ -104,6 +104,25 @@ public class ReceivingItemController {
 		return null;
 	}
 	
+	@RequestMapping(value = "/updateProductIdNullByProductId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+	public @ResponseBody ResponseMessage updateProductIdNullByProductId(@RequestBody String product_json){
+		log.info("[ReceivingItem]-[updateProductIdNullByProductId]-User Request(JSON) : "+ product_json);
+		Product product = new Product();
+		try{
+			Gson gson = GsonUtil.getGson();
+			product = gson.fromJson(product_json, Product.class);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		log.info("[ReceivingItem]-[updateProductIdNullByProductId]-User Request(GSON) : "+ product);
+		if(product != null && product.getProductId() != null){
+			ResponseMessage responseMessage =  receivingItemService.updateProductIdNullByProductId(product.getProductId());
+			log.info("[ReceivingItem]-[updateProductIdNullByProductId]-[Response] :" + responseMessage);
+			return responseMessage;
+		}
+		return null;
+	}
+	
 	//Save
 	@RequestMapping(value = "/saves",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
 	public @ResponseBody List<ReceivingItem> saves(@RequestBody String receivingItems_json){

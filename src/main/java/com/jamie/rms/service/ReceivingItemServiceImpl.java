@@ -74,6 +74,24 @@ public class ReceivingItemServiceImpl implements ReceivingItemService{
 		return r;
 	}
 	@Override
+	public ResponseMessage updateProductIdNullByProductId(Long productId) {
+		// TODO Auto-generated method stub
+		ResponseMessage r = new ResponseMessage();
+		try{
+			r.setMessage_request(productId.toString());
+			int count = receivingItemDao.updateProductIdNullByProductId(productId);
+			r.setMessage_status(ResponseStatus.getSuccessful());
+			r.setMessage_count(count);
+			r.setMessage_content("The record have been deleted");
+		}catch (Exception e){
+			r.setMessage_status(ResponseStatus.getFail());
+			r.setMessage_content("The record do not appear into table"); 
+			r.setMessage_count(0);
+			e.printStackTrace();
+		}
+		return r;
+	}
+	@Override
 	public ResponseMessage deleteByOrderId(Long orderId) {
 		// TODO Auto-generated method stub
 		ResponseMessage r = new ResponseMessage();

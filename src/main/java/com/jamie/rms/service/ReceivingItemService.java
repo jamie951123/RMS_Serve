@@ -17,7 +17,8 @@ public interface ReceivingItemService {
 	
 	//update
 	ResponseMessage updateOrderIdNullByOrderId(Long orderId);
-		
+	
+	ResponseMessage updateProductIdNullByProductId(Long productId);
 	//save
 	List<ReceivingItem> saves(List<ReceivingItem> receivingItems);
 	

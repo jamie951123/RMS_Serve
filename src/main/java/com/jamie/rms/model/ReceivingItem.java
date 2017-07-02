@@ -20,11 +20,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.ForeignKey;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "ReceivingItem")
@@ -77,13 +75,14 @@ public class ReceivingItem {
 			cascade= {CascadeType.REFRESH})
 	@JoinColumn(name="productId", insertable=false, updatable =false)
 	@ForeignKey(name = "receivingItem_product_fk")
+	@JsonManagedReference
 	private Product product;
 
 	@OneToMany(mappedBy = "receivingItem",
 			fetch = FetchType.LAZY,
 					cascade= {CascadeType.REFRESH,CascadeType.REMOVE},
-//			orphanRemoval = false
-					orphanRemoval = true
+			orphanRemoval = false
+//					orphanRemoval = true
 			)
 	List<DeliveryItem> deliveryItem;
 	 
@@ -93,6 +92,14 @@ public class ReceivingItem {
 	@JoinColumn(name = "orderId", referencedColumnName = "orderId", insertable=false, updatable =false, nullable=true)
 	@JsonBackReference
 	private ReceivingOrder receivingOrder;
+	
+//	@OneToOne(fetch = FetchType.EAGER,
+//			mappedBy = "inventoryId",
+//			cascade= {CascadeType.REFRESH,CascadeType.REMOVE},
+//			orphanRemoval = false
+//			)
+//	@JoinColumn(name="receivingId", insertable=false, updatable =false)
+//	private Inventory inventory;
 	
 	
 //	@ManyToOne(fetch = FetchType.LAZY,cascade= {CascadeType.ALL},optional=false)
@@ -114,7 +121,6 @@ public class ReceivingItem {
 		inv.setPartyId(this.getPartyId());
 		inv.setStatus(this.getItemStatus());
 		inv.setProductId(this.getProductId());
-		inv.setProduct(this.getProduct());
 		inv.setCreateDate(this.getItemCreateDate());
 		inv.setStockInDate(this.getItemReceivingDate());
 		inv.setGrossWeight(this.getItemGrossWeight());

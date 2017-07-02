@@ -88,9 +88,11 @@ public class ReceivingOrder implements Serializable {
 	
 //	@Fetch(FetchMode.SELECT)
 	@OneToMany(targetEntity=ReceivingItem.class , 
-			cascade = { CascadeType.ALL},
+			cascade = { CascadeType.REMOVE,CascadeType.REFRESH},
 			mappedBy = "receivingOrder",
-			fetch = FetchType.LAZY)
+			fetch = FetchType.LAZY,
+			orphanRemoval = true
+			)
 	@JsonManagedReference 
 	@ForeignKey(name = "receivingOrder_receivingItem_fk")
 	private List<ReceivingItem> receivingItem;

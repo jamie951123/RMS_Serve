@@ -92,6 +92,23 @@ public class Product {
 	@JsonManagedReference
 	private QuantityProfile quantityProfile;
 
+//	@OneToMany(targetEntity=Inventory.class , 
+//			fetch = FetchType.EAGER,
+//			cascade = { CascadeType.REMOVE,CascadeType.REFRESH},
+//			mappedBy = "receivingOrder")
+//	@JsonManagedReference 
+//	@ForeignKey(name = "product_inventory_fk")
+//	private List<Inventory> inventory;
+	
+//	@OneToMany(targetEntity=ReceivingItem.class , 
+//			fetch = FetchType.EAGER,
+//			cascade = { CascadeType.ALL},
+//			mappedBy = "product",
+//			orphanRemoval = true)
+//	@JsonBackReference 
+//	@ForeignKey(name = "product_receivingItem_fk")
+//	private List<ReceivingItem> receivingItem;
+	
 	public Long getProductId() {
 		return productId;
 	}
