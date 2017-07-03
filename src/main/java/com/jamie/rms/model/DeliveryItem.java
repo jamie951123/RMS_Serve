@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -95,135 +96,256 @@ public class DeliveryItem implements Serializable {
 	 @JsonManagedReference
 	private ReceivingItem receivingItem;
 
+//	@OneToOne(fetch = FetchType.LAZY,
+//			mappedBy = "deliveryItem",
+//			cascade= {CascadeType.REFRESH,CascadeType.REMOVE},
+//			orphanRemoval = true
+//			)
+//	@ForeignKey(name = "deliveryItem_inventory_fk")
+//	@JsonBackReference
+//	private Inventory inventory;
+	
+	
+//	public Inventory newInventory(){
+//		Inventory inv = new Inventory();
+//		inv.setCreateDate(this.getItemCreateDate());
+//		inv.setCreateBy(this.getItemCreateBy());
+//		inv.setPartyId(this.getPartyId());
+//		inv.setStatus(this.getItemStatus());
+//		inv.setCreateDate(this.getItemCreateDate());
+//		inv.setOperationType(OperationType.OUT);
+////		inv.setStockOutDate(this.getItemStockOutDate());
+////		inv.setGrossWeight(this.getItemGrossWeight());
+////		inv.setQty(this.getItemQty());
+//		inv.setDeliveryItemId(deliveryItemId);
+//		return inv;
+//		
+//	}
+	
 	public Long getDeliveryItemId() {
 		return deliveryItemId;
 	}
+
+
+
 
 	public void setDeliveryItemId(Long deliveryItemId) {
 		this.deliveryItemId = deliveryItemId;
 	}
 
+
+
+
 	public Status getItemStatus() {
 		return itemStatus;
 	}
+
+
+
 
 	public void setItemStatus(Status itemStatus) {
 		this.itemStatus = itemStatus;
 	}
 
+
+
+
 	public Long getOrderId() {
 		return orderId;
 	}
+
+
+
 
 	public void setOrderId(Long orderId) {
 		this.orderId = orderId;
 	}
 
+
+
+
 	public String getPartyId() {
 		return partyId;
 	}
+
+
+
 
 	public void setPartyId(String partyId) {
 		this.partyId = partyId;
 	}
 
+
+
+
 	public Date getItemStockOutDate() {
 		return itemStockOutDate;
 	}
+
+
+
 
 	public void setItemStockOutDate(Date itemStockOutDate) {
 		this.itemStockOutDate = itemStockOutDate;
 	}
 
+
+
+
 	public Date getItemCreateDate() {
 		return itemCreateDate;
 	}
+
+
+
 
 	public void setItemCreateDate(Date itemCreateDate) {
 		this.itemCreateDate = itemCreateDate;
 	}
 
+
+
+
 	public String getItemCreateBy() {
 		return itemCreateBy;
 	}
+
+
+
 
 	public void setItemCreateBy(String itemCreateBy) {
 		this.itemCreateBy = itemCreateBy;
 	}
 
+
+
+
 	public Date getItemLastModifiedDate() {
 		return itemLastModifiedDate;
 	}
+
+
+
 
 	public void setItemLastModifiedDate(Date itemLastModifiedDate) {
 		this.itemLastModifiedDate = itemLastModifiedDate;
 	}
 
+
+
+
 	public String getItemLastModifiedBy() {
 		return itemLastModifiedBy;
 	}
+
+
+
 
 	public void setItemLastModifiedBy(String itemLastModifiedBy) {
 		this.itemLastModifiedBy = itemLastModifiedBy;
 	}
 
+
+
+
 	public Date getItemCloseDate() {
 		return itemCloseDate;
 	}
+
+
+
 
 	public void setItemCloseDate(Date itemCloseDate) {
 		this.itemCloseDate = itemCloseDate;
 	}
 
+
+
+
 	public String getItemRemark() {
 		return itemRemark;
 	}
+
+
+
 
 	public void setItemRemark(String itemRemark) {
 		this.itemRemark = itemRemark;
 	}
 
+
+
+
 	public BigDecimal getItemGrossWeight() {
 		return itemGrossWeight;
 	}
+
+
+
 
 	public void setItemGrossWeight(BigDecimal itemGrossWeight) {
 		this.itemGrossWeight = itemGrossWeight;
 	}
 
+
+
+
 	public Integer getItemQty() {
 		return itemQty;
 	}
+
+
+
 
 	public void setItemQty(Integer itemQty) {
 		this.itemQty = itemQty;
 	}
 
+
+
+
 	public Long getReceivingId() {
 		return receivingId;
 	}
+
+
+
 
 	public void setReceivingId(Long receivingId) {
 		this.receivingId = receivingId;
 	}
 
-	public ReceivingItem getReceivingItem() {
-		return receivingItem;
-	}
 
-	public void setReceivingItem(ReceivingItem receivingItem) {
-		this.receivingItem = receivingItem;
-	}
+
 
 	public DeliveryOrder getDeliveryOrder() {
 		return deliveryOrder;
 	}
 
+
+
+
 	public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
 		this.deliveryOrder = deliveryOrder;
 	}
 
-	
+
+
+
+	public ReceivingItem getReceivingItem() {
+		return receivingItem;
+	}
+
+
+
+
+	public void setReceivingItem(ReceivingItem receivingItem) {
+		this.receivingItem = receivingItem;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		return "DeliveryItem [deliveryItemId=" + deliveryItemId + ", itemStatus=" + itemStatus + ", orderId=" + orderId

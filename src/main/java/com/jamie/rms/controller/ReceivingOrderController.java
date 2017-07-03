@@ -1,6 +1,5 @@
 package com.jamie.rms.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,12 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.jamie.rms.model.Inventory;
 import com.jamie.rms.model.ReceivingItem;
 import com.jamie.rms.model.ReceivingOrder;
 import com.jamie.rms.model.ResponseMessage;
 import com.jamie.rms.searchcriteria.object.ReceivingOrderSearchObject;
-import com.jamie.rms.service.InventoryService;
 import com.jamie.rms.service.ReceivingItemService;
 import com.jamie.rms.service.ReceivingOrderService;
 import com.jamie.rms.util.GsonUtil;
@@ -41,8 +38,8 @@ public class ReceivingOrderController {
 	@Autowired 
 	private ReceivingItemService receivingItemService;
 	
-	@Autowired
-	private InventoryService inventoryService;
+//	@Autowired
+//	private InventoryService inventoryService;
 	
 	//Find
 	@RequestMapping(value ="/findAll")
@@ -221,13 +218,13 @@ public class ReceivingOrderController {
 		return null;
 	}
 	
-	public List<Inventory> receivingItemGetInventory(List<ReceivingItem> receivingItem){
-		 List<Inventory> inventorys = new ArrayList<>();
-		for(ReceivingItem rl :receivingItem) {
-			Inventory inv = rl.getInventory();
-			inventorys.add(inv);
-		}
-		return inventorys;
-	}
+//	public List<Inventory> receivingItemGetInventory(List<ReceivingItem> receivingItem){
+//		 List<Inventory> inventorys = new ArrayList<>();
+//		for(ReceivingItem rl :receivingItem) {
+//			Inventory inv = rl.newInventory();
+//			inventorys.add(inv);
+//		}
+//		return inventorys;
+//	}
 	
 }

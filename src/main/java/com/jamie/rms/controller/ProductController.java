@@ -1,8 +1,6 @@
 package com.jamie.rms.controller;
 
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.jamie.rms.model.Product;
 import com.jamie.rms.model.QuantityProfile;
 import com.jamie.rms.model.ReceivingItem;
@@ -40,8 +36,8 @@ public class ProductController {
 	@Autowired
 	private ReceivingItemController receivingItemController;
 	
-	@Autowired
-	private InventoryController inventoryController;
+//	@Autowired
+//	private InventoryController inventoryController;
 	
 	@Autowired 
 	private ReceivingItemService receivingItemService;
@@ -213,7 +209,7 @@ public class ProductController {
 		try{
 //			this.updateQuantityIdAndWeightIdNullByProductId(product_json);
 			receivingItemController.deleteByProductId(product_json);
-			inventoryController.deleteByProductId(product_json);
+//			inventoryController.deleteByProductId(product_json);
 			log.info("[Product]-[deleteByProductId]-Successful Clear All FK ");
 			
 		}catch(Exception e){

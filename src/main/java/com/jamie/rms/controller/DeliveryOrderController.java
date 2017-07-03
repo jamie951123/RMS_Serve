@@ -1,6 +1,5 @@
 package com.jamie.rms.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.jamie.rms.model.DeliveryItem;
 import com.jamie.rms.model.DeliveryOrder;
-import com.jamie.rms.model.ReceivingOrder;
 import com.jamie.rms.model.ResponseMessage;
-import com.jamie.rms.model.Status;
 import com.jamie.rms.searchcriteria.object.DeliveryOrderSearchObject;
 import com.jamie.rms.service.DeliveryItemService;
 import com.jamie.rms.service.DeliveryOrderService;
@@ -43,6 +40,8 @@ public class DeliveryOrderController {
 	@Autowired
 	private ReceivingOrderService receivingOrderService;
 	
+//	@Autowired
+//	private InventoryService inventoryService;
 	//Find
 	@RequestMapping(value ="/findAll")
 	public @ResponseBody List<DeliveryOrder> findAll(){
@@ -98,7 +97,7 @@ public class DeliveryOrderController {
 			log.info("[DeliveryOrder]-[saveOrderAndItem]-User Response(DeliveryItem) : "+ itemResult);
 			
 			//Save Inventory
-//			List<Inventory> inventoryList = inventoryService.saves(receivingItemGetInventory(itemResult));
+//			List<Inventory> inventoryList = inventoryService.saves(deliveryItemGetInventory(itemResult));
 //			log.info("[DeliveryOrder]-[saveInventory]-User Response(Inventory) : "+ inventoryList);
 
 			log.info("[DeliveryOrder]-[saveOrderAndItem]-User Response(insert Successful) !! ");
@@ -151,6 +150,16 @@ public class DeliveryOrderController {
 		}
 		return null;
 	}
+	
+	
+//	private List<Inventory> deliveryItemGetInventory(List<DeliveryItem> deliveryItem){
+//		 List<Inventory> inventorys = new ArrayList<>();
+//		for(DeliveryItem dItem :deliveryItem) {
+//			Inventory inv = dItem.newInventory();
+//			inventorys.add(inv);
+//		}
+//		return inventorys;
+//	}
 	
 	
 }

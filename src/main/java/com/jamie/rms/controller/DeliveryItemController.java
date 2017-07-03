@@ -112,12 +112,15 @@ public class DeliveryItemController {
 				e.printStackTrace();
 			}
 			log.info("[DeliveryItem]-[deleteByReceivingId]-User Request(GSON) : "+ receivingItem_json);
-			if(receivingItem != null && receivingItem.getReceivingId() != null){
+			try{
 				ResponseMessage responseMessage =  deliveryItemService.deleteByReceivingId(receivingItem.getReceivingId());
 				log.info("[DeliveryItem]-[deleteByReceivingId]-[Response] :" + responseMessage);
 				return responseMessage;
+			}catch(Exception e){
+				e.printStackTrace();
+				throw e;
+				
 			}
-			return null;
 		}
 		
 		@RequestMapping(value ="/deleteByReceivingIds",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST) 

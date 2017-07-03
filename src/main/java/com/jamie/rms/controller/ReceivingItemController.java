@@ -37,6 +37,9 @@ public class ReceivingItemController {
 	@Autowired
 	private DeliveryItemController deliveryItemController;
 	
+//	@Autowired
+//	private InventoryController inventoryController;
+	
 	//Find
 	@RequestMapping(value = "/findAll")
 	public @ResponseBody List<ReceivingItem> findAll(){
@@ -211,6 +214,10 @@ public class ReceivingItemController {
 		}
 		
 		try{
+			//Delete Inventory(FK)
+//			ResponseMessage inventoryItemResponseMessage =  inventoryController.deleteByReceivingItemId(receivingItem_json);
+//			log.info("[ReceivingItem]-[delete]-[Response] :" + inventoryItemResponseMessage);
+			
 			//Delete Delivery Item(FK)
 			ResponseMessage deliveryItemResponseMessage =  deliveryItemController.deleteByReceivingId(receivingItem_json);
 			log.info("[ReceivingItem]-[delete]-[Response] :" + deliveryItemResponseMessage);

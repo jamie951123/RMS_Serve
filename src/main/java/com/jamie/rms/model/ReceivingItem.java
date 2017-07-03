@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -96,28 +97,30 @@ public class ReceivingItem implements Serializable {
 	@JsonBackReference
 	private ReceivingOrder receivingOrder;
 	
-//	@OneToOne(fetch = FetchType.EAGER,
-//			mappedBy = "inventoryId",
+//	@OneToOne(fetch = FetchType.LAZY,
+//			mappedBy = "receivingItem",
 //			cascade= {CascadeType.REFRESH,CascadeType.REMOVE},
-//			orphanRemoval = false
+//			orphanRemoval = true
 //			)
-//	@JoinColumn(name="receivingId", insertable=false, updatable =false)
+//	@JsonBackReference
+//	@ForeignKey(name = "receivingItem_inventory_fk")
 //	private Inventory inventory;
 	
-	public Inventory getInventory(){
-		Inventory inv = new Inventory();
-		inv.setCreateDate(this.getItemCreateDate());
-		inv.setCreateBy(this.getItemCreateBy());
-		inv.setPartyId(this.getPartyId());
-		inv.setStatus(this.getItemStatus());
-		inv.setProductId(this.getProductId());
-		inv.setCreateDate(this.getItemCreateDate());
-		inv.setStockInDate(this.getItemReceivingDate());
-		inv.setGrossWeight(this.getItemGrossWeight());
-		inv.setQty(this.getItemQty());
-		return inv;
-		
-	}
+//	public Inventory newInventory(){
+//		Inventory inv = new Inventory();
+//		inv.setCreateDate(this.getItemCreateDate());
+//		inv.setCreateBy(this.getItemCreateBy());
+//		inv.setPartyId(this.getPartyId());
+//		inv.setStatus(this.getItemStatus());
+//		inv.setCreateDate(this.getItemCreateDate());
+//		inv.setOperationType(OperationType.IN);
+////		inv.setStockInDate(this.getItemReceivingDate());
+////		inv.setGrossWeight(this.getItemGrossWeight());
+////		inv.setQty(this.getItemQty());
+//		inv.setReceivingId(this.receivingId);
+//		return inv;
+//		
+//	}
 
 	public Long getReceivingId() {
 		return receivingId;

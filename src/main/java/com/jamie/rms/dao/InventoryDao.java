@@ -19,7 +19,13 @@ public interface InventoryDao extends JpaRepository<Inventory,Long> {
 	
 	List<Inventory> findByPartyIdAndStatus(String partyId, Status stauts);
 	
-	@Modifying(clearAutomatically = true)
-	@Query("delete from Inventory where productId = ?1")
-	int deleteByProductId(Long productId);
+	List<Inventory> findByPartyIdAndStatusOrderByProductIdAsc(String partyId, Status stauts);
+
+//	@Modifying(clearAutomatically = true)
+//	@Query("delete from Inventory where productId = ?1")
+//	int deleteByProductId(Long productId);
+//	
+//	@Modifying(clearAutomatically = true)
+//	@Query("delete from Inventory where receivingId = ?1")
+//	int deleteByReceivingItemId(Long receivingItemId);
 }
