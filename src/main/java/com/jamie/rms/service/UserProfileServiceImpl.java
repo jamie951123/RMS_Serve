@@ -25,4 +25,17 @@ public class UserProfileServiceImpl implements UserProfileService{
 		return userProfileDao.findByUsernameAndPassword(username,password);
 	}
 
+	@Override
+	public UserProfile save(UserProfile userProfile) {
+		// TODO Auto-generated method stub
+		return userProfileDao.save(userProfile);
+	}
+
+	@Override
+	public UserProfile findByFacebookId(String facebookId) {
+		// TODO Auto-generated method stub
+		return userProfileDao.findByFacebookId(facebookId);
+	}
+
+
 }

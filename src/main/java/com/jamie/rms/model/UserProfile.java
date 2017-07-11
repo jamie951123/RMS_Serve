@@ -4,33 +4,38 @@ package com.jamie.rms.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.ForeignKey;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * @author Jamie
  *
  */
-@Entity(name = "user_profile")
+@Entity(name = "UserProfile")
+@Table(name= "UserProfile")
 public class UserProfile implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "userProfileId",nullable = false, updatable=false)
 	private Long userProfileId;
-	
-	@Column(name = "username",nullable = false)
-	private String username;
-	
-	@Column(name = "password",nullable = false)
-	private String password;
 	
 	@Column(name = "partyId",nullable = false)
 	private String partyId;
@@ -46,6 +51,12 @@ public class UserProfile implements Serializable {
 	@Column(name = "createBy",nullable = false, updatable=false)
 	private String createBy;
 	
+	@Column(name = "username")
+	private String username;
+	
+	@Column(name = "password")
+	private String password;
+	
 	@Column(name = "lastModifiedDate")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastModifiedDate;
@@ -57,28 +68,22 @@ public class UserProfile implements Serializable {
 	@Column(name = "closeDate")
 	private Date closeDate;
 
+	
+	@OneToOne(fetch = FetchType.EAGER,
+	cascade= {CascadeType.ALL},
+	mappedBy="userProfile",
+	optional = true, orphanRemoval = true
+	)
+	@ForeignKey(name = "userProfile_facebook_fk")
+	@JsonManagedReference
+	private Facebook facebook;
+
 	public Long getUserProfileId() {
 		return userProfileId;
 	}
 
 	public void setUserProfileId(Long userProfileId) {
 		this.userProfileId = userProfileId;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getPartyId() {
@@ -113,15 +118,22 @@ public class UserProfile implements Serializable {
 		this.createBy = createBy;
 	}
 
-	public Date getCloseDate() {
-		return closeDate;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setCloseDate(Date closeDate) {
-		this.closeDate = closeDate;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
@@ -138,14 +150,37 @@ public class UserProfile implements Serializable {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	@Override
-	public String toString() {
-		return "UserProfile [userProfileId=" + userProfileId + ", username=" + username + ", password=" + password
-				+ ", partyId=" + partyId + ", status=" + status + ", createDate=" + createDate + ", createBy="
-				+ createBy + ", lastModifiedDate=" + lastModifiedDate + ", lastModifiedBy=" + lastModifiedBy
-				+ ", closeDate=" + closeDate + "]";
+	public Date getCloseDate() {
+		return closeDate;
 	}
 
+	public void setCloseDate(Date closeDate) {
+		this.closeDate = closeDate;
+	}
+
+	public Facebook getFacebook() {
+		return facebook;
+	}
+
+	public void setFacebook(Facebook facebook) {
+		this.facebook = facebook;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "UserProfile [userProfileId=" + userProfileId + ", partyId=" + partyId + ", status=" + status
+				+ ", createDate=" + createDate + ", createBy=" + createBy + ", username=" + username + ", password="
+				+ password + ", lastModifiedDate=" + lastModifiedDate + ", lastModifiedBy=" + lastModifiedBy
+				+ ", closeDate=" + closeDate + ", facebook=" + facebook + "]";
+	}
+
+	
+	
+	
 	
 	
 	

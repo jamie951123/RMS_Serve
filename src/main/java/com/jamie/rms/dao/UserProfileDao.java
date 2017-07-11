@@ -11,4 +11,6 @@ public interface UserProfileDao extends JpaRepository<UserProfile,Long>{
 	List<UserProfile> findAll();
 	
 	List<UserProfile> findByUsernameAndPassword(String username, String password);
+	
+	UserProfile findByFacebookId(String facebookId);
 }
