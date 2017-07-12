@@ -171,6 +171,34 @@ public class ReceivingItemController {
 	}
 	
 	//Delete
+	
+//	@RequestMapping(value = "/deleteByReceivingId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
+//	public @ResponseBody ResponseMessage deleteByReceivingId(@RequestBody String receivingItem_json){
+//		log.info("[ReceivingItem]-[deleteByReceivingId]-User Request(JSON) : "+ receivingItem_json);
+//		ReceivingItem receivingItem = new ReceivingItem();
+//		try{
+//			Gson gson = GsonUtil.getGson();
+//			receivingItem = gson.fromJson(receivingItem_json, ReceivingItem.class);
+//		}catch (Exception e){
+//			e.printStackTrace();
+//		}
+//		log.info("[ReceivingItem]-[deleteByReceivingId]-User Request(GSON) : "+ receivingItem);
+//		try{
+//			
+//			//Delete Delivery Item(FK)
+//			ResponseMessage deliveryItemResponseMessage =  deliveryItemController.deleteByReceivingId(product_json);
+//			log.info("[ReceivingItem]-[deleteByReceivingId]-[Response] :" + deliveryItemResponseMessage);
+//			//
+//			ResponseMessage responseMessage =  receivingItemService.deleteByProductId(product.getProductId());
+//			log.info("[ReceivingItem]-[deleteByReceivingId]-[Response] :" + responseMessage);
+//			return responseMessage;
+//		}catch(Exception e){
+//			log.info("[ReceivingItem]-[deleteByReceivingId]-[Response]-[ERROR] : The receivingItem is empty");
+//			e.printStackTrace();
+//			throw e;
+//		}
+//	}
+	
 	@Transactional(rollbackFor = Exception.class)
 	@RequestMapping(value = "/deleteByProductId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST)
 	public @ResponseBody ResponseMessage deleteByProductId(@RequestBody String product_json){
