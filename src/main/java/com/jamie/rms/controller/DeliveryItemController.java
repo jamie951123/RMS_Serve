@@ -19,8 +19,11 @@ import com.jamie.rms.model.DeliveryItem;
 import com.jamie.rms.model.DeliveryOrder;
 import com.jamie.rms.model.ReceivingItem;
 import com.jamie.rms.model.ResponseMessage;
+import com.jamie.rms.searchcriteria.object.DeliveryItemSearchObject;
+import com.jamie.rms.searchcriteria.object.DeliveryOrderSearchObject;
 import com.jamie.rms.service.DeliveryItemService;
 import com.jamie.rms.util.GsonUtil;
+import com.jamie.rms.util.ObjectUtil;
 
 @RequestMapping(value = "rms/delivery/item")
 @Controller
@@ -30,8 +33,6 @@ public class DeliveryItemController {
 	@Autowired
 	private DeliveryItemService deliveryItemService;
 	
-//	@Autowired
-//	private DeliveryItemService deliveryItemService;
 	
 	@RequestMapping(value ="/findAll")
 	public @ResponseBody List<DeliveryItem> findAll(){
@@ -39,6 +40,26 @@ public class DeliveryItemController {
 		log.info("[DeliveryItem]-[findAll]-User Response() : "+ deliveryItem);
 		return deliveryItem;
 	} 
+	
+	@RequestMapping(value ="/findByPartyIdAndStauts",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST) 
+	public @ResponseBody List<DeliveryItem> findByPartyIdAndStauts(@RequestBody String json) {	
+		log.info("[DeliveryItem]-[findByPartyIdAndStauts]-User Request(JSON) : "+ json);
+		DeliveryItemSearchObject deliveryItemSearchObject = new DeliveryItemSearchObject();
+		try{
+			Gson gson = GsonUtil.getGson();
+			deliveryItemSearchObject = gson.fromJson(json, DeliveryItemSearchObject.class);		
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		log.info("[DeliveryItem]-[findByPartyIdAndStauts]-User Request(GSON) : "+ deliveryItemSearchObject);
+		if(deliveryItemSearchObject != null && ObjectUtil.isNotNullEmpty(deliveryItemSearchObject.getPartyId()) && deliveryItemSearchObject.getStatus() != null){
+			List<DeliveryItem> deliveryItem = deliveryItemService.findByPartyIdAndStatus(deliveryItemSearchObject.getPartyId(),deliveryItemSearchObject.getStatus());	
+			log.info("[DeliveryItem]-[Response]-findByPartyIdAndStauts :" + deliveryItem);
+			return deliveryItem;
+		}
+		return null;
+	}
+	
 	
 	//Delete
 	@RequestMapping(value ="/delete",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST) 

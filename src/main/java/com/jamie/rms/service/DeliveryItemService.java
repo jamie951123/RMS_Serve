@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.jamie.rms.model.DeliveryItem;
 import com.jamie.rms.model.ResponseMessage;
+import com.jamie.rms.model.Status;
+import com.jamie.rms.searchcriteria.object.DeliveryItemSearchObject;
 
 
 
@@ -11,6 +13,8 @@ import com.jamie.rms.model.ResponseMessage;
 public interface DeliveryItemService {
 	//Find 
 	List<DeliveryItem> findAll();
+	
+	List<DeliveryItem> findByPartyIdAndStatus(String partyId,Status status);
 	
 	//Save 
 	List<DeliveryItem> saves(List<DeliveryItem> deliveryItem);

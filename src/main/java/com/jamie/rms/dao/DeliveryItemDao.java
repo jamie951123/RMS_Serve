@@ -9,11 +9,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jamie.rms.model.DeliveryItem;
+import com.jamie.rms.model.DeliveryOrder;
+import com.jamie.rms.model.Status;
 
 @Repository
 @Transactional
 public interface DeliveryItemDao extends JpaRepository<DeliveryItem,Long> {
 
+	//Find
+	List<DeliveryItem> findByPartyIdAndItemStatus(String partyId,Status status);
 	
 	//Delete
 	@Modifying(clearAutomatically = true)

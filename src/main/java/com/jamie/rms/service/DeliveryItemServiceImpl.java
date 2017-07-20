@@ -11,6 +11,8 @@ import com.jamie.rms.common.ResponseStatus;
 import com.jamie.rms.dao.DeliveryItemDao;
 import com.jamie.rms.model.DeliveryItem;
 import com.jamie.rms.model.ResponseMessage;
+import com.jamie.rms.model.Status;
+import com.jamie.rms.searchcriteria.object.DeliveryItemSearchObject;
 
 @Service
 public class DeliveryItemServiceImpl implements DeliveryItemService{
@@ -19,12 +21,23 @@ public class DeliveryItemServiceImpl implements DeliveryItemService{
 	@Autowired
 	private DeliveryItemDao deliveryItemDao;
 	
+	
+	//Find
 	@Override
 	public List<DeliveryItem> findAll() {
 		// TODO Auto-generated method stub
 		return deliveryItemDao.findAll();
 	}
+	
+	@Override
+	public List<DeliveryItem> findByPartyIdAndStatus(String partyId, Status status) {
+		// TODO Auto-generated method stub
+		return deliveryItemDao.findByPartyIdAndItemStatus(partyId,status);
+	}
 
+	
+	//Save
+	
 	@Override
 	public List<DeliveryItem> saves(List<DeliveryItem> deliveryItem) {
 		// TODO Auto-generated method stub
@@ -123,5 +136,7 @@ public class DeliveryItemServiceImpl implements DeliveryItemService{
 		}
 		return r;
 	}
+
+
 
 }
