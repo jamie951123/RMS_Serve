@@ -2,7 +2,7 @@ CREATE
     ALGORITHM = UNDEFINED 
     DEFINER = `root`@`%` 
     SQL SECURITY DEFINER
-VIEW `rms`.`v_delivery_item_sum` AS
+VIEW `v_delivery_item_sum` AS
     SELECT 
         UUID() AS `id`,
         `rms`.`product`.`product_id` AS `product_id`,

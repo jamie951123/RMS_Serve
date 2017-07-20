@@ -2,7 +2,7 @@ CREATE
     ALGORITHM = UNDEFINED 
     DEFINER = `root`@`%` 
     SQL SECURITY DEFINER
-VIEW `rms`.`v_inventory` AS
+VIEW `v_inventory` AS
     SELECT 
         `rms`.`product`.`product_id` AS `product_id`,
         `rms`.`product`.`party_id` AS `party_id`,
