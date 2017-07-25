@@ -78,6 +78,15 @@ public class UserProfile implements Serializable {
 	@JsonManagedReference
 	private Facebook facebook;
 
+	@OneToOne(fetch = FetchType.EAGER,
+			cascade= {CascadeType.ALL},
+			mappedBy="userProfile",
+			optional = true, orphanRemoval = true
+			)
+	@JsonManagedReference
+	private Setting setting;
+	
+	
 	public Long getUserProfileId() {
 		return userProfileId;
 	}
@@ -170,14 +179,23 @@ public class UserProfile implements Serializable {
 		return serialVersionUID;
 	}
 
+	public Setting getSetting() {
+		return setting;
+	}
+
+	public void setSetting(Setting setting) {
+		this.setting = setting;
+	}
+
 	@Override
 	public String toString() {
 		return "UserProfile [userProfileId=" + userProfileId + ", partyId=" + partyId + ", status=" + status
 				+ ", createDate=" + createDate + ", createBy=" + createBy + ", username=" + username + ", password="
 				+ password + ", lastModifiedDate=" + lastModifiedDate + ", lastModifiedBy=" + lastModifiedBy
-				+ ", closeDate=" + closeDate + ", facebook=" + facebook + "]";
+				+ ", closeDate=" + closeDate + ", facebook=" + facebook + ", setting=" + setting + "]";
 	}
 
+	
 	
 	
 	

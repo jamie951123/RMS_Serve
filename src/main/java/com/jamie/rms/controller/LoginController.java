@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.jamie.rms.model.Facebook;
+import com.jamie.rms.model.Setting;
 import com.jamie.rms.model.UserProfile;
 import com.jamie.rms.searchcriteria.object.FacebookSearchObject;
 import com.jamie.rms.searchcriteria.object.UserProfileSearchObject;
 import com.jamie.rms.service.FacebookService;
+import com.jamie.rms.service.SettingService;
 import com.jamie.rms.service.UserProfileService;
 import com.jamie.rms.util.GsonUtil;
 import com.jamie.rms.util.ObjectUtil;
@@ -36,6 +38,10 @@ public class LoginController {
 	
 	@Autowired
 	private FacebookService facebookService;
+	
+	@Autowired 
+	private SettingService settingService;
+	
 	
 	final static String loginFail 			= "LoginFail";
 	final static String worngAccount 		= "Worng Account";
@@ -89,6 +95,28 @@ public class LoginController {
 		return loginResponse;
 	}
 	
+	@RequestMapping(value="/findByPartyId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST) 
+	public @ResponseBody UserProfile findByPartyId (@RequestBody String userProfileSearchObject_json) {	
+		log.info("[UserProfile]-[findByPartyId]-User Request(JSON) : "+ userProfileSearchObject_json);
+		UserProfile userProfile = new UserProfile();
+		try{
+			UserProfileSearchObject userProfileSearchObject = new UserProfileSearchObject();
+			
+			Gson gson = GsonUtil.getGson();
+			userProfileSearchObject = gson.fromJson(userProfileSearchObject_json, UserProfileSearchObject.class);
+			
+			if(userProfileSearchObject !=null && ObjectUtil.isNotNullEmpty(userProfileSearchObject.getPartyId())){
+				userProfile = userProfileService.findByPartyId(userProfileSearchObject.getPartyId());
+			}
+		
+		}catch (Exception e){
+			log.error("[UserProfile]-[checklogin]-User Request(JSON-Format) :"+ "Wrong Format");
+		}
+		log.info("[UserProfile]-[findByPartyId]-User Response() : "+ userProfile);
+		
+		return userProfile;
+	}
+	
 	@RequestMapping(value="/findByFacebookId",produces="application/json;charset=UTF-8" ,method = RequestMethod.POST) 
 	public @ResponseBody UserProfile findByFacebookId (@RequestBody String facebookSearchObject_json) {	
 		log.info("[UserProfile]-[findByFacebookId]-User Request(JSON) : "+ facebookSearchObject_json);
@@ -139,11 +167,21 @@ public class LoginController {
 				log.info("[UserProfile]-[save]-User Response(Model) :"+ result_userProfile);
 				
 				//Update FaceBook UserProfileId
-				if(result_userProfile.getFacebook() != null && result_userProfile.getFacebook().getFacebookId() != null && result_userProfile.getUserProfileId()!=null){
+				if(result_userProfile != null && result_userProfile.getFacebook() != null && result_userProfile.getFacebook().getFacebookId() != null && result_userProfile.getUserProfileId()!=null){
 					result_userProfile.getFacebook().setUserProfileId(result_userProfile.getUserProfileId());
 					UserProfile update_userProfile = userProfileService.save(result_userProfile);
 					log.info("[UserProfile]-[save]-User Response(Model) :"+ update_userProfile);
 				}
+				
+			
+				//Update Setting
+				if(result_userProfile != null && result_userProfile.getUserProfileId() != null) {
+					Setting setting = new Setting();
+					setting.setUserProfileId(result_userProfile.getUserProfileId());
+					setting.setDateRange(364);
+					result_userProfile.setSetting(settingService.save(setting));
+				}
+				
 //				//Save FaceBook
 //				if(result_userProfile.getFacebook() != null && result_userProfile.getFacebook().getFacebookId() != null && result_userProfile.getUserProfileId()!=null){
 //					userProfile.getFacebook().setUserProfileId(result_userProfile.getUserProfileId());

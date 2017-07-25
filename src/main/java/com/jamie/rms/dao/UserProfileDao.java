@@ -8,9 +8,13 @@ import com.jamie.rms.model.UserProfile;
 
 public interface UserProfileDao extends JpaRepository<UserProfile,Long>{
 
+	//Find
+	
 	List<UserProfile> findAll();
 	
 	List<UserProfile> findByUsernameAndPassword(String username, String password);
 	
 	UserProfile findByFacebookId(String facebookId);
+	
+	UserProfile findByPartyId(String partyId);
 }

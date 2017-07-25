@@ -45,7 +45,7 @@ public class ReceivingOrderController {
 	@RequestMapping(value ="/findAll")
 	public @ResponseBody List<ReceivingOrder> findAll(){
 		List<ReceivingOrder> receivingOrder = receivingOrderService.findAll();
-		log.info("[ReceivingOrder]-[getReceivingOrder]-User Response() : "+ receivingOrder);
+		log.info("[ReceivingOrder]-[findAll]-User Response() : "+ receivingOrder);
 		return receivingOrder;
 	}
 	

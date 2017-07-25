@@ -37,5 +37,11 @@ public class UserProfileServiceImpl implements UserProfileService{
 		return userProfileDao.findByFacebookId(facebookId);
 	}
 
+	@Override
+	public UserProfile findByPartyId(String partyId) {
+		// TODO Auto-generated method stub
+		return userProfileDao.findByPartyId(partyId);
+	}
+
 
 }
