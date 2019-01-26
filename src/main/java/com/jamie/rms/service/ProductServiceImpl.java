@@ -1,13 +1,20 @@
 package com.jamie.rms.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jamie.rms.common.ResponseStatus;
+import com.jamie.rms.dao.ImageDao;
 import com.jamie.rms.dao.ProductDao;
 import com.jamie.rms.model.Product;
+import com.jamie.rms.model.Image;
 import com.jamie.rms.model.ResponseMessage;
 
 @Service
@@ -15,6 +22,10 @@ public class ProductServiceImpl implements ProductService{
 
 	@Autowired
 	private ProductDao productDao;
+	
+	@Autowired
+	private ImageDao imageDao;
+	
 	@Override
 	public List<Product> findAll() {
 		// TODO Auto-generated method stub
@@ -88,4 +99,33 @@ public class ProductServiceImpl implements ProductService{
 		}
 		return r;
 	}
+	
+	@Override
+	public Boolean createProductImage(MultipartFile file, String folderFilePath,Long productId) {
+		// TODO Auto-generated method stub
+		File folder = new File(folderFilePath);
+    	
+    	if(!folder.exists()){
+    		folder.mkdirs();
+    	}
+    	
+    	
+		String imageFileName = UUID.randomUUID().toString()+".jpg";
+		File imageFile = new File(folder,imageFileName);
+		try {
+			FileCopyUtils.copy(file.getBytes(), imageFile);
+			
+			Image thatImage = Image.createImage(productId,imageFileName);
+			imageDao.save(thatImage);
+			
+			return true;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+    	
+	}
+	
+	
 }

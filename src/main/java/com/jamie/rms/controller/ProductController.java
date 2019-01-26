@@ -1,17 +1,21 @@
 package com.jamie.rms.controller;
 
 
+import java.io.File;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.jamie.rms.model.Product;
@@ -42,6 +46,9 @@ public class ProductController {
 	@Autowired 
 	private ReceivingItemService receivingItemService;
 	
+	
+	@Value("${productImage.folder}")
+    private String filePath;
 	
 //	Find
 	@RequestMapping(value="/findAll")
@@ -272,6 +279,29 @@ public class ProductController {
 		}
 		log.warn("[Product]-[delete]-[Error] : Product is empty");
 		return null;
+	}
+	
+//	Find
+	@RequestMapping(value="/uploadProductImage",method = RequestMethod.POST)
+	public @ResponseBody String uploadProductImage(
+			@RequestParam("productId") String productId,
+			@RequestParam("file") MultipartFile file
+			){
+		
+		File folder = new File(filePath);
+    	
+    	if(!folder.exists()){
+    		folder.mkdirs();
+    	}
+    	
+    	Boolean insertImageResult = this.productService.createProductImage( file, filePath,Long.parseLong(productId));
+    	if(!insertImageResult) {
+    		return "false";
+    	}
+    	
+    	
+    	
+		return "true";
 	}
 	
 }
