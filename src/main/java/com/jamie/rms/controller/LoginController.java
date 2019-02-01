@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.jamie.rms.http.LoginRequeset;
+import com.jamie.rms.http.LoginResponse;
 import com.jamie.rms.model.Facebook;
 import com.jamie.rms.model.Setting;
 import com.jamie.rms.model.UserProfile;
@@ -200,60 +202,3 @@ public class LoginController {
 	}
 	
 }
-
-class LoginRequeset{
-	private String username;
-	private String password;
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	@Override
-	public String toString() {
-		return "LoginRequeset [username=" + username + ", password=" + password + "]";
-	}
-	
-	
-}
-class LoginResponse{
-	private UserProfile userProfile;
-	private String loginStatus;
-	private String loginMessage;
-	public UserProfile getUserProfile() {
-		return userProfile;
-	}
-	public void setUserProfile(UserProfile userProfile) {
-		this.userProfile = userProfile;
-	}
-	public String getLoginStatus() {
-		return loginStatus;
-	}
-	public void setLoginStatus(String loginStatus) {
-		this.loginStatus = loginStatus;
-	}
-	public String getLoginMessage() {
-		return loginMessage;
-	}
-	public void setLoginMessage(String loginMessage) {
-		this.loginMessage = loginMessage;
-	}
-	@Override
-	public String toString() {
-		return "LoginResponse [userProfile=" + userProfile + ", loginStatus=" + loginStatus + ", loginMessage="
-				+ loginMessage + "]";
-	}
-	
-	
-	
-	
-	
-}
-
