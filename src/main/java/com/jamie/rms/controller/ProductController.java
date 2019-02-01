@@ -2,14 +2,17 @@ package com.jamie.rms.controller;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -281,9 +284,9 @@ public class ProductController {
 		return null;
 	}
 	
-//	Find
+//	upload product image
 	@RequestMapping(value="/uploadProductImage",method = RequestMethod.POST)
-	public @ResponseBody String uploadProductImage(
+	public @ResponseBody Boolean uploadProductImage(
 			@RequestParam("productId") String productId,
 			@RequestParam("file") MultipartFile file
 			){
@@ -296,12 +299,48 @@ public class ProductController {
     	
     	Boolean insertImageResult = this.productService.createProductImage( file, filePath,Long.parseLong(productId));
     	if(!insertImageResult) {
-    		return "false";
+    		return false;
     	}
     	
     	
     	
-		return "true";
+		return true;
+	}
+	@RequestMapping(value="/image/{id}",method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
+	public @ResponseBody byte[] getProductImage(
+			@PathVariable("id") Long id
+			){
+		
+		File folder = new File(filePath);
+    	
+    	if(!folder.exists()){
+    		folder.mkdirs();
+    	}
+    	try {
+    		byte[] imageByte = this.productService.getProductImageById( filePath,id);
+    		return imageByte;
+    	}catch (IOException e) {
+    		return null;
+    	}
+    	
+	}
+	@RequestMapping(value="/imagea/{name}",method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
+	public @ResponseBody byte[] getProductImageA(
+			@PathVariable("name") String name
+			){
+		
+		File folder = new File(filePath);
+    	
+    	if(!folder.exists()){
+    		folder.mkdirs();
+    	}
+    	try {
+    		byte[] imageByte = this.productService.getProductImageByFileNameLike( filePath,name);
+    		return imageByte;
+    	}catch (IOException e) {
+    		return null;
+    	}
+    	
 	}
 	
 }

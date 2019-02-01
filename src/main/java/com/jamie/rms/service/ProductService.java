@@ -1,5 +1,7 @@
 package com.jamie.rms.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +26,8 @@ public interface ProductService {
 	 * @param folderFilePath the folder file path
 	 */
 	Boolean createProductImage(MultipartFile file, String folderFilePath,Long productId);
-	
-	
+	byte[] getProductImage(String folderFilePath,Long productId) throws IOException;
+	byte[] getProductImage(String folderFilePath,String fileName) throws IOException;
+	byte[] getProductImageById(String folderFilePath,Long photoId) throws IOException;
+	byte[] getProductImageByFileNameLike(String folderFilePath,String fileName) throws IOException;
 }

@@ -20,6 +20,10 @@ public interface ImageDao extends JpaRepository<Image,Long> {
 	//Find
 	Image findByProductId(Long productId);
 	
+	Image findByFileName(String fileName);
+	@Query("from Image where fileName like %?1%")
+	Image findByFileNameLike(String fileName);
+	
 	//Delete
 	@Modifying(clearAutomatically = true)
 	@Query("delete from Image where productId = ?1")
